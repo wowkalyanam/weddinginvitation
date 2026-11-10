@@ -1,0 +1,2813 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Dharani & Manu — Wedding Invitation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Pinyon+Script&family=Tangerine:wght@400;700&display=swap">
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    :root {
+      --ivory-bg: #faf6ee;
+      --backdrop-bg: #0b152c;
+      --blue-deep: #16305c;
+      --gold-bright: #d8a957;
+      --gold-deep: #a8813f;
+      --ink: #2a2335;
+      --ink-soft: #5a4f5e;
+      --app-max-width: 480px;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #0b152c;
+      color: var(--ink);
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.intro-active {
+      overflow: hidden !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      touch-action: none !important;
+    }
+
+    body.intro-active .app-container {
+      overflow: hidden !important;
+      height: 100vh !important;
+      height: 100dvh !important;
+      touch-action: none !important;
+      overscroll-behavior: none !important;
+    }
+
+    body.intro-active .hero-section,
+    body.intro-active .section {
+      pointer-events: none !important;
+      user-select: none !important;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: var(--app-max-width);
+      margin: 0 auto;
+      height: 100dvh;
+      height: 100vh;
+      background-color: #0b152c;
+      position: relative;
+      overflow-y: auto;
+      overflow-x: hidden;
+      scroll-snap-type: y proximity;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      display: block;
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.6);
+    }
+
+    /* SECTION 2: Hero Section (Courtyard Fountain Video & Royal Typography) */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      min-height: 100svh;
+      height: 100vh;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+      background-color: #0b152c;
+      overflow: hidden;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      text-align: center;
+      padding: 7vh 20px 0;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background-color: #0b152c;
+      z-index: 0;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+      min-width: 100% !important;
+      min-height: 100% !important;
+      object-fit: cover !important;
+      object-position: center 32% !important;
+      display: block;
+      background-color: #0b152c;
+    }
+
+    /* Hero Royal Wedding Typography Overlay */
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: 100%;
+      max-width: 380px;
+      margin: 0 auto;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.8s ease;
+    }
+
+    .hero-content.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .hero-names {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 400;
+      font-style: italic;
+      line-height: 0.94;
+      color: var(--blue-deep);
+      font-size: clamp(3.8rem, 17.5vw, 6.2rem);
+      letter-spacing: 0.012em;
+      text-shadow: 0 2px 24px rgba(250, 244, 232, 0.85);
+      margin-bottom: 2px;
+    }
+
+    .hero-name {
+      display: block;
+    }
+
+    .hero-amp {
+      display: block;
+      font-family: 'Pinyon Script', cursive;
+      font-style: normal;
+      font-size: 0.44em;
+      color: var(--gold-deep);
+      margin: -0.04em 0;
+    }
+
+    .hero-divider {
+      margin: 14px auto 16px;
+      width: min(190px, 46vw);
+    }
+
+    .hero-divider-img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 3px;
+    }
+
+    .hero-date {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.2rem, 5.2vw, 1.55rem);
+      letter-spacing: 0.06em;
+      color: #221c2b;
+      line-height: 1.25;
+      font-weight: 600;
+      text-shadow: 0 1px 12px rgba(250, 244, 232, 0.9);
+    }
+
+    .date-ord {
+      font-size: 0.62em;
+      vertical-align: super;
+    }
+
+    /* Staggered Royal Entrance Animations: Dharani -> & -> Manu -> Divider -> Date */
+    .hero-names .hero-name,
+    .hero-names .hero-amp,
+    .hero-divider,
+    .hero-meta {
+      opacity: 0;
+    }
+
+    /* 1. Dharani appears first */
+    .hero-content.is-visible #heroBride {
+      animation: heroNameIn 1.1s cubic-bezier(0.25, 1, 0.5, 1) both 0.15s;
+    }
+
+    /* 2. Ampersand appears next */
+    .hero-content.is-visible .hero-amp {
+      animation: heroNameIn 0.9s cubic-bezier(0.25, 1, 0.5, 1) both 0.65s;
+    }
+
+    /* 3. Manu appears after Dharani and & */
+    .hero-content.is-visible #heroGroom {
+      animation: heroNameIn 1.1s cubic-bezier(0.25, 1, 0.5, 1) both 1.15s;
+    }
+
+    /* 4. Gold flourish divider appears */
+    .hero-content.is-visible .hero-divider {
+      animation: heroFadeUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) both 1.65s;
+    }
+
+    /* 5. Date appears */
+    .hero-content.is-visible .hero-meta {
+      animation: heroFadeUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) both 1.95s;
+    }
+
+    @keyframes heroNameIn {
+      0% {
+        opacity: 0;
+        transform: translateY(22px) scale(0.95);
+        filter: blur(4px);
+      }
+      60% {
+        opacity: 0.9;
+        filter: blur(0);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes heroFadeUp {
+      0% {
+        opacity: 0;
+        transform: translateY(14px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Scroll Cue */
+    .hero-scroll {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      z-index: 3;
+      transform: translate(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      text-decoration: none;
+      cursor: pointer;
+      pointer-events: auto;
+      animation: hintIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) 3.0s forwards;
+    }
+
+    .hero-scroll-label {
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: #fff;
+      text-shadow: 0 1px 7px rgba(0, 0, 0, 0.55);
+    }
+
+    .hero-scroll-chevrons {
+      position: relative;
+      width: 24px;
+      height: 30px;
+    }
+
+    .hero-chevron {
+      position: absolute;
+      left: 50%;
+      margin-left: -7px;
+      width: 14px;
+      height: 14px;
+      border-right: 3px solid #fff;
+      border-bottom: 3px solid #fff;
+      transform: rotate(45deg);
+      opacity: 0;
+      filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
+      animation: chevWave 1.8s ease-in-out infinite;
+    }
+
+    .hero-chevron:nth-child(1) { top: 0; animation-delay: 0s; }
+    .hero-chevron:nth-child(2) { top: 8px; animation-delay: 0.18s; }
+    .hero-chevron:nth-child(3) { top: 16px; animation-delay: 0.36s; }
+
+    @keyframes chevWave {
+      0%, 100% { opacity: 0; transform: rotate(45deg) translate(-2px, -2px); }
+      50% { opacity: 0.9; transform: rotate(45deg) translate(0, 0); }
+    }
+
+    /* Floating Action Buttons (Audio + Navigation) */
+    .fab-cluster {
+      position: fixed;
+      right: max(14px, calc(50% - 240px + 14px));
+      bottom: 14px;
+      z-index: 60;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      opacity: 0;
+      transform: translateY(12px);
+      pointer-events: none;
+      transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .fab-cluster.is-ready {
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+    }
+
+    /* Navigation Popup Panel */
+    .nav-panel {
+      position: absolute;
+      right: 0;
+      bottom: calc(100% + 14px);
+      width: 236px;
+      max-width: calc(100vw - 32px);
+      background: radial-gradient(120% 90% at 50% 0%, #fffefb 0%, #faf3e5 100%);
+      border: 1.5px solid #c89e4b;
+      border-radius: 2px;
+      box-shadow: 0 16px 44px rgba(12, 23, 48, 0.28), 0 2px 10px rgba(0, 0, 0, 0.08);
+      padding: 20px 18px 22px;
+      opacity: 0;
+      transform: translateY(14px) scale(0.95);
+      transform-origin: bottom right;
+      pointer-events: none;
+      transition: opacity 0.32s cubic-bezier(0.25, 1, 0.5, 1), transform 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: 70;
+    }
+
+    /* Inner gold ornamental frame */
+    .nav-panel::before {
+      content: '';
+      position: absolute;
+      inset: 5px;
+      border: 1px solid rgba(184, 142, 60, 0.42);
+      border-radius: 1px;
+      pointer-events: none;
+    }
+
+    .fab-cluster.nav-open .nav-panel {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    /* Header: EXPLORE + Diamond Divider */
+    .nav-panel-head {
+      text-align: center;
+      margin-bottom: 10px;
+      user-select: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-panel-eyebrow {
+      font-family: 'Cinzel', Georgia, serif;
+      font-size: 0.72rem;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: #b38838;
+      font-weight: 500;
+      display: block;
+      margin-left: 0.36em;
+    }
+
+    .nav-panel-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin: 8px auto 6px;
+      width: 86px;
+    }
+
+    .nav-panel-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(184, 142, 60, 0.1), rgba(184, 142, 60, 0.75));
+    }
+
+    .nav-panel-divider .nav-panel-line:last-child {
+      background: linear-gradient(270deg, rgba(184, 142, 60, 0.1), rgba(184, 142, 60, 0.75));
+    }
+
+    .nav-panel-diamond {
+      font-size: 0.48rem;
+      color: #b38838;
+      line-height: 1;
+      display: block;
+      transform: translateY(-0.5px);
+    }
+
+    /* Navigation Menu Links */
+    .nav-menu {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 8px 12px 8px 22px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 1.15rem;
+      font-weight: 500;
+      color: #16305c;
+      text-decoration: none;
+      line-height: 1.3;
+      letter-spacing: 0.02em;
+      transition: color 0.22s ease, transform 0.22s ease;
+      position: relative;
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      color: #b38838;
+      transform: translateX(4px);
+    }
+
+    /* Staggered link reveal when panel opens */
+    .fab-cluster.nav-open .nav-link {
+      animation: navLinkIn 0.34s cubic-bezier(0.25, 1, 0.5, 1) both;
+    }
+
+    .fab-cluster.nav-open .nav-menu li:nth-child(1) .nav-link { animation-delay: 0.03s; }
+    .fab-cluster.nav-open .nav-menu li:nth-child(2) .nav-link { animation-delay: 0.06s; }
+    .fab-cluster.nav-open .nav-menu li:nth-child(3) .nav-link { animation-delay: 0.09s; }
+    .fab-cluster.nav-open .nav-menu li:nth-child(4) .nav-link { animation-delay: 0.12s; }
+    .fab-cluster.nav-open .nav-menu li:nth-child(5) .nav-link { animation-delay: 0.15s; }
+    .fab-cluster.nav-open .nav-menu li:nth-child(6) .nav-link { animation-delay: 0.18s; }
+    .fab-cluster.nav-open .nav-menu li:nth-child(7) .nav-link { animation-delay: 0.21s; }
+
+    @keyframes navLinkIn {
+      from {
+        opacity: 0;
+        transform: translateX(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    /* Rotation on nav button icon when active */
+    .fab-cluster.nav-open .fab-nav .fab-img {
+      transform: rotate(45deg);
+    }
+    .fab-nav .fab-img {
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .fab {
+      width: 52px;
+      height: 52px;
+      flex: none;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      pointer-events: auto;
+      filter: drop-shadow(0 4px 12px rgba(12, 23, 48, 0.42)) drop-shadow(0 0 9px rgba(216, 169, 87, 0.22));
+      transition: filter 0.3s ease, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+    }
+
+    .fab:hover, .fab:active {
+      transform: scale(1.05);
+      filter: drop-shadow(0 6px 18px rgba(12, 23, 48, 0.52)) drop-shadow(0 0 18px rgba(216, 169, 87, 0.45));
+    }
+
+    .fab-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .fab-music {
+      opacity: 0.7;
+    }
+
+    .fab-music.is-playing {
+      opacity: 1;
+      filter: drop-shadow(0 4px 12px rgba(12, 23, 48, 0.42)) drop-shadow(0 0 16px rgba(216, 169, 87, 0.55));
+    }
+
+    .fab-music.is-playing .fab-img {
+      transform-origin: center;
+      animation: fabMusicSpin 9s linear infinite;
+    }
+
+    @keyframes fabMusicSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Transition Screen Bloom (Dark moody blue screen shown between videos) */
+    .screen-bloom {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      background: radial-gradient(120% 120% at 50% 45%, rgba(32, 51, 92, 0.92) 0%, rgba(12, 23, 48, 0.96) 100%);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.65s ease;
+    }
+
+    .screen-bloom.is-blooming {
+      opacity: 1;
+    }
+
+    .screen-bloom.is-retreating {
+      opacity: 0;
+      transition: opacity 1.6s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .screen-bloom.is-gone {
+      display: none;
+    }
+
+    /* SECTION 1: Intro Section (Pichwai Palace Bell Video) */
+    .intro-section {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: var(--app-max-width);
+      height: 100vh;
+      height: 100dvh;
+      z-index: 100;
+      cursor: pointer;
+      overflow: hidden;
+      background-color: #0b152c;
+      touch-action: none;
+      transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .intro-section.is-fading {
+      opacity: 0;
+      pointer-events: none !important;
+      touch-action: auto !important;
+    }
+
+    .intro-section.is-gone {
+      display: none !important;
+      pointer-events: none !important;
+      visibility: hidden !important;
+    }
+
+    .intro-video {
+      position: absolute;
+      inset: 0;
+      width: 100% !important;
+      height: 100% !important;
+      min-width: 100% !important;
+      min-height: 100% !important;
+      object-fit: cover !important;
+      object-position: center !important;
+      display: block;
+      background-color: #0b152c;
+    }
+
+    /* Animated Floating Prompt */
+    .intro-hint {
+      position: absolute;
+      left: 50%;
+      bottom: 8.5%;
+      transform: translate(-50%, 0);
+      text-align: center;
+      z-index: 55;
+      padding: 10px 24px;
+      pointer-events: none;
+      animation: hintIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards, hintFloat 3.2s ease-in-out 0.8s infinite;
+      will-change: transform;
+      transition: opacity 0.4s ease;
+    }
+
+    .intro-hint.is-gone {
+      opacity: 0 !important;
+      animation: none !important;
+      pointer-events: none;
+    }
+
+    .intro-hint::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 160%;
+      height: 220%;
+      transform: translate(-50%, -50%);
+      z-index: -1;
+      pointer-events: none;
+      background: radial-gradient(ellipse at center, rgba(11, 21, 44, 0.45) 0%, rgba(11, 21, 44, 0.22) 45%, rgba(11, 21, 44, 0.05) 70%, transparent 85%);
+      border-radius: 50%;
+    }
+
+    .intro-hint-label {
+      font-family: 'Cinzel', Georgia, serif;
+      font-weight: 600;
+      font-size: clamp(0.85rem, 3.8vw, 1.15rem);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: #fffef8;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+      animation: hintGlow 2.8s ease-in-out infinite;
+      line-height: 1.2;
+    }
+
+    .intro-hint-sub {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-weight: 600;
+      font-size: clamp(0.95rem, 4.4vw, 1.25rem);
+      letter-spacing: 0.03em;
+      white-space: nowrap;
+      color: var(--gold-bright);
+      margin-top: 3px;
+      text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+      line-height: 1.2;
+    }
+
+    @keyframes hintIn {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, 12px);
+      }
+      100% {
+        opacity: 1;
+        transform: translate(-50%, 0);
+      }
+    }
+
+    @keyframes hintFloat {
+      0%, 100% {
+        transform: translate(-50%, 0);
+      }
+      50% {
+        transform: translate(-50%, -6px);
+      }
+    }
+
+    @keyframes hintGlow {
+      0%, 100% {
+        text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+      }
+      50% {
+        text-shadow: 0 0 16px rgba(223, 186, 106, 0.85), 0 0 28px rgba(223, 186, 106, 0.45);
+      }
+    }
+
+    /* SECTION 3: Royal Pichwai Invitation Card Section */
+    .invite-section {
+      position: relative;
+      width: 100%;
+      min-height: 100svh;
+      height: 100vh;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+      overflow: hidden;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(32px, 6vh, 64px) 16px;
+      background-color: var(--ivory-bg);
+      box-sizing: border-box;
+    }
+
+    .invite-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .invite-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .invite-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(85% 70% at 50% 48%, rgba(250, 244, 232, 0.52) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    /* Foreground Hanging Royal Jhoomer Chandeliers */
+    .invite-fg {
+      position: absolute;
+      top: -4%;
+      left: 50%;
+      transform: translate(-50%);
+      width: min(504px, 98%);
+      z-index: 4;
+      pointer-events: none;
+      opacity: 0.95;
+      animation: lampSway 5s ease-in-out infinite;
+      transform-origin: top center;
+    }
+
+    @keyframes lampSway {
+      0%, 100% {
+        transform: translate(-50%) rotate(-1.5deg);
+      }
+      50% {
+        transform: translate(-50%) rotate(1.5deg);
+      }
+    }
+
+    /* Central Scalloped Arch Placard Card ("Part Chart") */
+    .invite-card {
+      position: relative;
+      z-index: 2;
+      width: min(420px, 88vw);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      filter: drop-shadow(0 24px 50px rgba(22, 48, 92, 0.22));
+      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .invite-card-frame {
+      width: 100%;
+      height: auto;
+      display: block;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .invite-card-text {
+      position: absolute;
+      inset: 26% 0 8%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 9%;
+      overflow: hidden;
+      box-sizing: border-box;
+      pointer-events: none;
+    }
+
+    .invite-overline {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(0.82rem, 3.4vw, 1.0rem);
+      font-weight: 500;
+      color: #1c5a6e;
+      margin-bottom: 7px;
+      white-space: pre-line;
+      letter-spacing: 0.02em;
+      line-height: 1.25;
+    }
+
+    .invite-kicker {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(0.78rem, 3.1vw, 0.92rem);
+      color: var(--ink-soft);
+      letter-spacing: 0.02em;
+      line-height: 1.48;
+    }
+
+    .invite-rule {
+      display: block;
+      width: min(24px, 8vw);
+      height: auto;
+      margin: 11px auto;
+      opacity: 0.9;
+    }
+
+    .invite-names {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .invite-person {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .invite-name {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(2.1rem, 9.6vw, 3.2rem);
+      line-height: 1.02;
+      color: var(--blue-deep);
+      letter-spacing: 0.012em;
+    }
+
+    .invite-parent {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(0.76rem, 3.0vw, 0.92rem);
+      letter-spacing: 0.01em;
+      color: var(--ink-soft);
+      line-height: 1.38;
+      margin-top: 3px;
+      max-width: 25em;
+    }
+
+    .invite-amp {
+      font-family: 'Pinyon Script', cursive;
+      color: var(--gold-deep);
+      font-size: clamp(1.4rem, 6.0vw, 2.0rem);
+      line-height: 1;
+      margin: -3px 0 -1px;
+    }
+
+    .invite-meta {
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .invite-date {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.78rem, 3.2vw, 0.92rem);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: var(--blue-deep);
+      line-height: 1.25;
+    }
+
+    .invite-venue {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(0.78rem, 3.0vw, 0.92rem);
+      font-weight: 500;
+      color: var(--ink-soft);
+      letter-spacing: 0.01em;
+      line-height: 1.25;
+      margin-top: 3px;
+    }
+
+    /* Staggered Reveal Animations for Invite Card */
+    .invite-card-text > * {
+      opacity: 0;
+    }
+
+    .invite-card.is-in .invite-card-text > * {
+      animation: invTextIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    .invite-card.is-in .invite-overline { animation-delay: 0.15s; }
+    .invite-card.is-in .invite-kicker { animation-delay: 0.32s; }
+    .invite-card.is-in .invite-rule:nth-of-type(1) { animation-delay: 0.42s; }
+    .invite-card.is-in .invite-names { animation-delay: 0.52s; }
+    .invite-card.is-in .invite-rule:nth-of-type(2) { animation-delay: 0.62s; }
+    .invite-card.is-in .invite-meta { animation-delay: 0.74s; }
+
+    @keyframes invTextIn {
+      0% {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* SECTION 4: Celebration Journey / Our Events Section */
+    .events-section {
+      position: relative;
+      width: 100%;
+      min-height: 100vh;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+      overflow: hidden;
+      padding: clamp(24px, 4.2vh, 38px) 0 clamp(48px, 8vh, 90px);
+      background: radial-gradient(120% 80% at 50% 0%, rgba(29, 63, 122, 0.06), transparent 60%),
+                  linear-gradient(180deg, #faf4e8, #f4ebd9 120%);
+      text-align: center;
+      z-index: 10;
+      box-sizing: border-box;
+    }
+
+    .events-header,
+    .events-list {
+      position: relative;
+      z-index: 2;
+    }
+
+    .events-decor {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .evt-decor {
+      position: absolute;
+      opacity: 0.45;
+      filter: drop-shadow(0 10px 20px rgba(22, 48, 92, 0.18));
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .evt-decor--jhoomer {
+      top: -8px;
+      width: 100px;
+      transform-origin: top center;
+      animation: evtSway 6.5s ease-in-out infinite;
+    }
+
+    .evt-decor--jhoomer-l {
+      left: -28px;
+    }
+
+    .evt-decor--jhoomer-r {
+      right: -28px;
+      animation-duration: 7.2s;
+      animation-delay: 0.6s;
+    }
+
+    .evt-decor--chandelier {
+      width: 92px;
+      transform-origin: top center;
+      animation: evtSway 7s ease-in-out infinite;
+    }
+
+    .evt-decor--chandelier-1 {
+      top: 48%;
+      left: -24px;
+    }
+
+    .evt-decor--chandelier-2 {
+      top: 46%;
+      right: -24px;
+      animation-duration: 6.2s;
+      animation-delay: 0.5s;
+    }
+
+    .evt-decor--nazar {
+      width: 58px;
+      transform-origin: top center;
+      animation: evtSway 5.6s ease-in-out infinite;
+    }
+
+    .evt-decor--nazar-1 {
+      top: 13%;
+      right: -14px;
+    }
+
+    .evt-decor--nazar-2 {
+      top: 30%;
+      right: -12px;
+      animation-duration: 6s;
+      animation-delay: 0.3s;
+    }
+
+    .evt-decor--nazar-3 {
+      top: 88%;
+      left: -12px;
+      animation-duration: 5.2s;
+      animation-delay: 0.7s;
+    }
+
+    .evt-decor--peacock {
+      top: 34%;
+      left: -38px;
+      width: 104px;
+      animation: evtDrift 8s ease-in-out infinite;
+    }
+
+    .evt-decor--camel {
+      top: 66%;
+      left: -26px;
+      width: 110px;
+    }
+
+    .evt-decor--horse {
+      top: 78%;
+      right: -30px;
+      width: 110px;
+    }
+
+    .events-header {
+      padding: 0 22px;
+      margin-bottom: clamp(16px, 3.2vh, 28px);
+    }
+
+    .events-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+    }
+
+    .events-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(2.1rem, 8vw, 3rem);
+      color: var(--blue-deep);
+      margin-top: 6px;
+      line-height: 1.1;
+    }
+
+    .events-title-rule {
+      display: block;
+      width: min(180px, 48vw);
+      height: auto;
+      margin: 12px auto 0;
+    }
+
+    .events-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(22px, 3.5vh, 44px);
+      padding: 6px 14px 28px;
+    }
+
+    .event-card {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
+
+    .event-card-inner {
+      position: relative;
+      width: min(390px, 92vw);
+      aspect-ratio: 1024 / 1535;
+      perspective: 1500px;
+    }
+
+    .event-card--left .event-card-inner {
+      perspective-origin: left center;
+    }
+
+    .event-card--right .event-card-inner {
+      perspective-origin: right center;
+    }
+
+    .event-card-panel {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: transform 1.25s cubic-bezier(0.2, 0.9, 0.25, 1), opacity 0.55s ease;
+      will-change: transform, opacity;
+      backface-visibility: hidden;
+    }
+
+    .event-card--left .event-card-panel {
+      transform-origin: left center;
+      transform: rotateY(-92deg) scale(0.98);
+    }
+
+    .event-card--right .event-card-panel {
+      transform-origin: right center;
+      transform: rotateY(92deg) scale(0.98);
+    }
+
+    .event-card.is-open .event-card-panel {
+      transform: rotateY(0) scale(1);
+      opacity: 1;
+    }
+
+    .event-card-frame {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 36px rgba(22, 48, 92, 0.22));
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .event-card-body {
+      position: absolute;
+      inset: 7% 13% 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.6s ease, transform 0.7s cubic-bezier(0.2, 0.9, 0.25, 1);
+      box-sizing: border-box;
+    }
+
+    .event-card--left .event-card-body {
+      left: 14%;
+      right: 12%;
+    }
+
+    .event-card--right .event-card-body {
+      left: 12%;
+      right: 14%;
+    }
+
+    .event-card.is-open .event-card-body {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.3s;
+    }
+
+    .event-illustration {
+      width: 44%;
+      max-width: 160px;
+      aspect-ratio: 1 / 1;
+      object-fit: contain;
+      margin-top: -7%;
+      filter: drop-shadow(0 8px 14px rgba(22, 48, 92, 0.16));
+      animation: evtFloat 3.8s ease-in-out infinite;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .event-name {
+      font-family: 'Tangerine', cursive;
+      font-weight: 700;
+      font-size: clamp(2.8rem, 11vw, 3.8rem);
+      color: var(--blue-deep);
+      letter-spacing: 0;
+      text-transform: none;
+      margin-top: 1px;
+      line-height: 0.98;
+    }
+
+    .event-rule {
+      width: 46px;
+      height: 1px;
+      margin: 9px auto;
+      background: linear-gradient(90deg, transparent, var(--gold-deep), transparent);
+    }
+
+    .event-datetime {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.72rem, 3vw, 0.86rem);
+      letter-spacing: 0.1em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+    }
+
+    .event-date {
+      color: #1c5a6e;
+      font-weight: 600;
+    }
+
+    .event-time {
+      color: #c4748c;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      font-size: clamp(0.70rem, 2.8vw, 0.84rem);
+    }
+
+    .event-ord {
+      font-size: 0.6em;
+      vertical-align: super;
+      line-height: 0;
+      letter-spacing: 0;
+      margin-left: 1px;
+      color: var(--gold-deep);
+      text-transform: uppercase;
+    }
+
+    .event-venue {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+      color: #1d3f7a;
+      font-weight: 500;
+      margin-top: 6px;
+    }
+
+    .event-note {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(0.82rem, 3.2vw, 0.95rem);
+      line-height: 1.4;
+      color: var(--ink-soft);
+      margin-top: 6px;
+      opacity: 0.88;
+      max-width: 90%;
+      white-space: pre-line;
+    }
+
+    .event-map {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 10px;
+      font-family: 'Cinzel', serif;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold-deep);
+      border-bottom: 1px solid rgba(168, 129, 63, 0.4);
+      padding-bottom: 2px;
+      text-decoration: none;
+      transition: color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .event-map:hover,
+    .event-map:active {
+      color: #8c672b;
+      border-bottom-color: #8c672b;
+    }
+
+    @keyframes evtSway {
+      0%, 100% { transform: rotate(-1.6deg); }
+      50% { transform: rotate(1.6deg); }
+    }
+
+    @keyframes evtDrift {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes evtFloat {
+      0%, 100% { transform: translateY(0) rotate(0); }
+      50% { transform: translateY(-6px) rotate(-1.6deg); }
+    }
+
+    /* ==========================================================================
+       SECTION 5: Meet the Couple / A Love Story Section
+       ========================================================================== */
+    .couple-section {
+      position: relative;
+      min-height: 100svh;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(56px, 9vh, 100px) 20px;
+      background: #faf4e8;
+      overflow: hidden;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+    }
+
+    .couple-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .couple-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .couple-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(70% 56% at 50% 46%, rgba(250, 244, 232, 0.45) 0%, transparent 72%);
+      pointer-events: none;
+    }
+
+    .couple-content {
+      position: relative;
+      z-index: 3;
+      width: min(560px, 86vw);
+      text-align: center;
+      padding: clamp(24px, 5vw, 46px) clamp(18px, 4vw, 38px);
+    }
+
+    /* Butterflies Floating & Fluttering Animations */
+    .couple-butterfly {
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      pointer-events: none;
+      opacity: 0;
+      filter: drop-shadow(0 6px 8px rgba(22, 48, 92, 0.14));
+      will-change: transform, opacity, left;
+    }
+
+    .couple-butterfly-clip {
+      display: block;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .couple-butterfly-sheet {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 600%;
+      height: 100%;
+      max-width: none;
+      will-change: transform;
+    }
+
+    .couple-butterfly--1 {
+      width: clamp(38px, 9.5vw, 56px);
+      aspect-ratio: 362 / 724;
+      top: 4%;
+      animation: flutterDriftR 20s linear infinite;
+    }
+
+    .couple-butterfly--1 .couple-butterfly-sheet {
+      animation: flutterFlap 0.9s steps(6, jump-none) infinite;
+    }
+
+    .couple-butterfly--2 {
+      width: clamp(32px, 8vw, 48px);
+      aspect-ratio: 362 / 426;
+      top: 60%;
+      animation: flutterDriftL 24s linear -11s infinite;
+    }
+
+    .couple-butterfly--2 .couple-butterfly-sheet {
+      animation: flutterFlap 1.04s steps(6, jump-none) infinite;
+    }
+
+    .couple-header,
+    .couple-story {
+      position: relative;
+      z-index: 1;
+    }
+
+    .couple-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.42em;
+      text-transform: uppercase;
+      color: #a8813f;
+      margin: 0 0 6px 0;
+      --cpl-faded: rgba(168, 129, 63, 0.26);
+      --cpl-final: #a8813f;
+      --cpl-dur: 2.6s;
+    }
+
+    .couple-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+      font-size: clamp(2rem, 8vw, 2.9rem);
+      color: #16305c;
+      margin: 6px 0 0 0;
+      line-height: 1.15;
+      --cpl-faded: rgba(22, 48, 92, 0.14);
+      --cpl-final: #16305c;
+      --cpl-dur: 3.2s;
+    }
+
+    .couple-ornament {
+      display: block;
+      width: min(170px, 44vw);
+      height: auto;
+      margin: 12px auto 22px;
+    }
+
+    .couple-story-body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.05rem, 4.2vw, 1.25rem);
+      font-style: italic;
+      line-height: 1.7;
+      color: #2a2335;
+      letter-spacing: 0.01em;
+      --cpl-faded: rgba(90, 79, 94, 0.2);
+      --cpl-final: #2a2335;
+      margin-bottom: 8px;
+    }
+
+    .couple-story-p {
+      margin: 0 0 1rem 0;
+    }
+
+    .couple-story-p:last-child {
+      margin-bottom: 0;
+    }
+
+    .couple-hashtag {
+      margin-top: 18px;
+      font-family: 'Pinyon Script', cursive;
+      font-size: clamp(1.7rem, 7.5vw, 2.3rem);
+      color: #a8813f;
+      letter-spacing: 0.02em;
+      line-height: 1.2;
+    }
+
+    .couple-section .cpl-alive {
+      color: var(--cpl-faded, rgba(90, 79, 94, 0.2));
+      will-change: color, filter, opacity, transform;
+    }
+
+    .couple-section .cpl-alive.is-in {
+      animation: cplInkAlive var(--cpl-dur, 2.8s) cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .couple-story-line {
+      display: block;
+      margin: 0.12em 0;
+    }
+
+    .couple-story-line.is-para {
+      margin-top: 0.9em;
+    }
+
+    @keyframes flutterFlap {
+      0% { transform: translate(0); }
+      to { transform: translate(-83.3333%); }
+    }
+
+    @keyframes flutterDriftR {
+      0% { left: -14%; transform: translateY(0) rotate(-4deg); opacity: 0; }
+      6% { opacity: 0.9; }
+      18% { transform: translateY(-16px) rotate(5deg); }
+      31% { transform: translateY(7px) rotate(-4deg); }
+      45% { left: 45%; transform: translateY(-11px) rotate(4deg); }
+      59% { transform: translateY(8px) rotate(-5deg); }
+      73% { transform: translateY(-14px) rotate(5deg); }
+      87% { transform: translateY(5px) rotate(-3deg); }
+      94% { opacity: 0.9; }
+      to { left: 114%; transform: translateY(-4px) rotate(3deg); opacity: 0; }
+    }
+
+    @keyframes flutterDriftL {
+      0% { left: 114%; transform: translateY(0) rotate(4deg); opacity: 0; }
+      6% { opacity: 0.82; }
+      18% { transform: translateY(14px) rotate(-5deg); }
+      31% { transform: translateY(-6px) rotate(4deg); }
+      45% { left: 45%; transform: translateY(12px) rotate(-4deg); }
+      59% { transform: translateY(-8px) rotate(5deg); }
+      73% { transform: translateY(15px) rotate(-5deg); }
+      87% { transform: translateY(-5px) rotate(3deg); }
+      94% { opacity: 0.82; }
+      to { left: -14%; transform: translateY(5px) rotate(-3deg); opacity: 0; }
+    }
+
+    @keyframes cplInkAlive {
+      0% {
+        color: var(--cpl-faded, rgba(90, 79, 94, 0.2));
+        opacity: 0.25;
+        filter: blur(4px);
+        transform: translateY(7px) scale(0.99);
+        text-shadow: none;
+      }
+      30% {
+        opacity: 0.72;
+        filter: blur(1.4px);
+        transform: translateY(2px) scale(1);
+        text-shadow: 0 0 20px rgba(216, 169, 87, 0.5);
+      }
+      60% {
+        color: var(--cpl-final, var(--ink));
+        opacity: 1;
+        filter: blur(0);
+        transform: translateY(0);
+        text-shadow: 0 0 24px rgba(216, 169, 87, 0.92), 0 0 56px rgba(196, 116, 140, 0.5);
+      }
+      to {
+        color: var(--cpl-final, var(--ink));
+        opacity: 1;
+        filter: blur(0);
+        transform: none;
+        text-shadow: 0 0 0 rgba(216, 169, 87, 0);
+      }
+    }
+
+    /* ==========================================================================
+       SECTION 6: Photo Gallery
+       ========================================================================== */
+    .gallery-section {
+      position: relative;
+      min-height: 100svh;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(52px, 9vh, 90px) 16px clamp(48px, 8vh, 80px);
+      background: var(--ivory, #faf4e8);
+      overflow: hidden;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+    }
+
+    .gallery-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .gallery-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      opacity: 0.92;
+      display: block;
+    }
+
+    .gallery-bg::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(80% 60% at 50% 40%, rgba(250, 244, 232, 0.4), transparent 75%);
+      pointer-events: none;
+    }
+
+    .gallery-inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 560px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .gallery-header {
+      margin-bottom: clamp(14px, 2.6vh, 22px);
+    }
+
+    .gallery-title {
+      font-family: 'Cinzel', serif;
+      font-weight: 500;
+      font-size: clamp(1.7rem, 6.5vw, 2.4rem);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #16305c;
+      margin: 6px 0;
+      line-height: 1.2;
+    }
+
+    .gallery-flourish {
+      display: block;
+      width: 50px;
+      height: 12px;
+      margin: 0 auto;
+      color: #a8813f;
+      -webkit-mask: center / contain no-repeat var(--fl);
+      mask: center / contain no-repeat var(--fl);
+      background: currentColor;
+      --fl: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 16'%3E%3Cpath fill='%23000' d='M30 2c1.6 1.6 1.6 4.4 0 6-1.6-1.6-1.6-4.4 0-6Zm0 5.4c-1.3-.9-3-.9-4.3 0 .9 1.3 2.4 1.7 4.3 1.1 1.9.6 3.4.2 4.3-1.1-1.3-.9-3-.9-4.3 0Z'/%3E%3Cpath stroke='%23000' stroke-width='.8' d='M28 8H6M32 8h22'/%3E%3Ccircle cx='4' cy='8' r='1.4' fill='%23000'/%3E%3Ccircle cx='56' cy='8' r='1.4' fill='%23000'/%3E%3C/svg%3E");
+    }
+
+    .gallery-flourish--top {
+      margin-bottom: 6px;
+    }
+
+    .gallery-flourish--bot {
+      margin-top: 6px;
+      transform: rotate(180deg);
+    }
+
+    .gallery-featured {
+      position: relative;
+      width: min(320px, 78vw);
+      margin: 0 auto;
+      aspect-ratio: 1086 / 1448;
+      cursor: pointer;
+    }
+
+    .gallery-featured-photo {
+      position: absolute;
+      top: 9.5%;
+      left: 14%;
+      width: 72%;
+      height: 77.7%;
+      object-fit: cover;
+      object-position: center;
+      transition: opacity 0.35s ease;
+      border-radius: 4px;
+    }
+
+    .gallery-featured-art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      pointer-events: none;
+      filter: drop-shadow(0 14px 30px rgba(22, 48, 92, 0.22));
+    }
+
+    .gallery-featured.is-fading .gallery-featured-photo {
+      opacity: 0;
+    }
+
+    .gallery-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 3;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      background: rgba(250, 244, 232, 0.94);
+      color: #16305c;
+      border: 1px solid rgba(196, 152, 90, 0.65);
+      box-shadow: 0 4px 14px rgba(22, 48, 92, 0.2);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .gallery-arrow:hover {
+      background: #ffffff;
+      color: #a8813f;
+    }
+
+    .gallery-arrow:active {
+      transform: translateY(-50%) scale(0.92);
+    }
+
+    .gallery-arrow svg {
+      width: 18px;
+      height: 18px;
+      display: block;
+    }
+
+    .gallery-arrow--prev {
+      left: -14px;
+    }
+
+    .gallery-arrow--next {
+      right: -14px;
+    }
+
+    .gallery-caption {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(1.05rem, 4.2vw, 1.25rem);
+      color: #a8813f;
+      margin: 14px 0 10px;
+      letter-spacing: 0.02em;
+    }
+
+    .gallery-dots {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .gallery-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(22, 48, 92, 0.22);
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .gallery-dot.is-active {
+      background: #a8813f;
+      transform: scale(1.35);
+    }
+
+    .gallery-thumbs {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      align-items: center;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 4px 4px;
+      scroll-snap-type: x proximity;
+    }
+
+    .gallery-thumbs::-webkit-scrollbar {
+      display: none;
+    }
+
+    .gallery-thumb {
+      position: relative;
+      flex: 0 0 auto;
+      width: clamp(48px, 15vw, 62px);
+      aspect-ratio: 1086 / 1448;
+      cursor: pointer;
+      scroll-snap-align: center;
+      opacity: 0.65;
+      transition: opacity 0.3s cubic-bezier(0.22, 1, 0.36, 1), transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .gallery-thumb-photo {
+      position: absolute;
+      top: 9.5%;
+      left: 14%;
+      width: 72%;
+      height: 77.7%;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 2px;
+    }
+
+    .gallery-thumb-art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: fill;
+      pointer-events: none;
+    }
+
+    .gallery-thumb.is-active {
+      opacity: 1;
+      transform: translateY(-2px) scale(1.06);
+      filter: drop-shadow(0 4px 10px rgba(22, 48, 92, 0.3));
+    }
+
+    .gallery-thumb:hover {
+      opacity: 0.92;
+    }
+
+    /* Lightbox Modal */
+    .gallery-lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(11, 21, 44, 0.94);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 24px 16px;
+    }
+
+    .gallery-lightbox[hidden] {
+      display: none;
+    }
+
+    .gallery-lb-inner {
+      max-width: 90vw;
+      max-height: 86vh;
+      text-align: center;
+      position: relative;
+    }
+
+    .gallery-lb-img {
+      max-width: 90vw;
+      max-height: 76vh;
+      object-fit: contain;
+      border: 1px solid rgba(196, 152, 90, 0.5);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
+      border-radius: 4px;
+    }
+
+    .gallery-lb-caption {
+      margin-top: 14px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      color: #faf4e8;
+      font-size: 1.15rem;
+      letter-spacing: 0.02em;
+    }
+
+    .gallery-lb-close,
+    .gallery-lb-prev,
+    .gallery-lb-next {
+      position: absolute;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #faf4e8;
+      opacity: 0.85;
+      transition: opacity 0.2s, transform 0.2s;
+      z-index: 10000;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .gallery-lb-close:hover,
+    .gallery-lb-prev:hover,
+    .gallery-lb-next:hover {
+      opacity: 1;
+    }
+
+    .gallery-lb-close {
+      top: 16px;
+      right: 18px;
+      font-size: 2rem;
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+    }
+
+    .gallery-lb-prev,
+    .gallery-lb-next {
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 3rem;
+      padding: 0 12px;
+      user-select: none;
+    }
+
+    .gallery-lb-prev {
+      left: 6px;
+    }
+
+    .gallery-lb-next {
+      right: 6px;
+    }
+
+    /* ==========================================================================
+       SECTION 7: RSVP / Join the Celebration
+       ========================================================================== */
+    .rsvp-section {
+      position: relative;
+      min-height: 100svh;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: clamp(64px, 12vh, 130px) 22px;
+      overflow: hidden;
+      color: #faf6ee;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+    }
+
+    .rsvp-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: url(images/rsvp/rsvp_bg.webp) center / cover no-repeat;
+      background-color: #0a1226;
+      pointer-events: none;
+    }
+
+    .rsvp-veil {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: radial-gradient(66% 56% at 50% 44%, rgba(8, 16, 34, 0.32), rgba(8, 16, 34, 0.68)),
+                  linear-gradient(180deg, rgba(8, 16, 34, 0.4) 0%, transparent 30%);
+      pointer-events: none;
+    }
+
+    .rsvp-fireworks {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      width: 100%;
+      height: 100%;
+    }
+
+    .rsvp-content {
+      position: relative;
+      z-index: 3;
+      max-width: 620px;
+      width: 100%;
+    }
+
+    .rsvp-reveal {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+
+    .rsvp-section.rsvp-alive .rsvp-reveal {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1), transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .rsvp-section.rsvp-alive .rsvp-reveal:nth-child(1) { transition-delay: 0.05s; }
+    .rsvp-section.rsvp-alive .rsvp-reveal:nth-child(2) { transition-delay: 0.15s; }
+    .rsvp-section.rsvp-alive .rsvp-reveal:nth-child(3) { transition-delay: 0.25s; }
+    .rsvp-section.rsvp-alive .rsvp-reveal:nth-child(4) { transition-delay: 0.35s; }
+    .rsvp-section.rsvp-alive .rsvp-reveal:nth-child(5) { transition-delay: 0.45s; }
+
+    .rsvp-eyebrow {
+      font-family: 'Cinzel', serif;
+      font-size: 0.68rem;
+      letter-spacing: 0.44em;
+      text-transform: uppercase;
+      color: #d8a957;
+      text-shadow: 0 1px 14px rgba(0, 0, 0, 0.55);
+      margin-bottom: 8px;
+    }
+
+    .rsvp-headline {
+      font-family: 'Pinyon Script', cursive;
+      font-weight: 400;
+      font-size: clamp(3rem, 13vw, 4.8rem);
+      line-height: 1.05;
+      color: #fdf8ee;
+      margin: 14px 0 18px;
+      text-shadow: 0 2px 32px rgba(0, 0, 0, 0.6), 0 1px 4px rgba(0, 0, 0, 0.45);
+    }
+
+    .rsvp-body {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(1.05rem, 4.2vw, 1.22rem);
+      line-height: 1.7;
+      color: rgba(252, 247, 236, 0.92);
+      max-width: 30em;
+      margin: 0 auto;
+      text-shadow: 0 1px 12px rgba(0, 0, 0, 0.55);
+    }
+
+    .rsvp-cta-wrap {
+      margin-top: 30px;
+    }
+
+    .rsvp-btn {
+      display: inline-block;
+      font-family: 'Cinzel', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #0c1730;
+      font-weight: 600;
+      padding: 16px 40px;
+      background: linear-gradient(180deg, #d8a957, #a8813f);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(216, 169, 87, 0.5);
+      border-radius: 2px;
+      text-decoration: none;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.25s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .rsvp-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(216, 169, 87, 0.7);
+    }
+
+    .rsvp-helper {
+      margin-top: 14px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: 0.95rem;
+      color: rgba(250, 244, 232, 0.75);
+      letter-spacing: 0.02em;
+    }
+
+    .rsvp-std {
+      margin-top: 36px;
+    }
+
+    .rsvp-std-heading {
+      font-family: 'Cinzel', serif;
+      font-size: 0.65rem;
+      letter-spacing: 0.36em;
+      text-transform: uppercase;
+      color: rgba(216, 169, 87, 0.85);
+      margin-bottom: 16px;
+      position: relative;
+      display: inline-block;
+      padding: 0 20px;
+    }
+
+    .rsvp-std-heading::before,
+    .rsvp-std-heading::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      width: 28px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(216, 169, 87, 0.6));
+    }
+
+    .rsvp-std-heading::before {
+      right: 100%;
+      transform: scaleX(-1);
+    }
+
+    .rsvp-std-heading::after {
+      left: 100%;
+    }
+
+    .rsvp-std-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+
+    .rsvp-cal-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: 0.95rem;
+      letter-spacing: 0.04em;
+      color: rgba(250, 244, 232, 0.9);
+      padding: 10px 20px;
+      border: 1px solid rgba(216, 169, 87, 0.45);
+      background: rgba(255, 255, 255, 0.05);
+      text-decoration: none;
+      transition: background 0.25s, border-color 0.25s;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .rsvp-cal-btn:hover {
+      background: rgba(216, 169, 87, 0.16);
+      border-color: rgba(216, 169, 87, 0.7);
+    }
+
+    .rsvp-cal-icon {
+      width: 18px;
+      height: 18px;
+      color: #d8a957;
+    }
+
+    /* ==========================================================================
+       SECTION 8: Counting Down to Forever (Finale Section)
+       ========================================================================== */
+    .countdown-section {
+      position: relative;
+      min-height: 100svh;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding: clamp(40px, 7vh, 72px) 16px clamp(36px, 6vh, 56px);
+      text-align: center;
+      overflow: hidden;
+      color: #faf6ee;
+      background: radial-gradient(80% 50% at 50% 25%, rgba(29, 63, 122, 0.4), transparent 70%),
+                  radial-gradient(60% 40% at 50% 75%, rgba(196, 152, 90, 0.12), transparent 70%),
+                  linear-gradient(180deg, #091326 0%, #0b1832 45%, #081022 100%);
+      flex-shrink: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: normal;
+    }
+
+    .cd-glow {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(30px);
+      opacity: 0.55;
+      z-index: 0;
+    }
+
+    .cd-glow--l {
+      width: 220px;
+      height: 220px;
+      top: 20%;
+      left: 4%;
+      background: radial-gradient(circle at 45% 45%, rgba(196, 152, 90, 0.28), transparent 70%);
+      animation: cdGlow 12s ease-in-out infinite;
+    }
+
+    .cd-glow--r {
+      width: 180px;
+      height: 180px;
+      bottom: 16%;
+      right: 6%;
+      background: radial-gradient(circle at 45% 45%, rgba(29, 63, 122, 0.24), transparent 70%);
+      animation: cdGlow 15s ease-in-out infinite reverse;
+    }
+
+    .countdown-header {
+      position: relative;
+      z-index: 2;
+      margin-bottom: clamp(6px, 1.5vh, 14px);
+      width: 100%;
+    }
+
+    .countdown-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 500;
+      margin: 0;
+      line-height: 1;
+      color: #fdf8ee;
+      text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+    }
+
+    .cd-title-lead {
+      display: block;
+      font-size: clamp(1.6rem, 6.2vw, 2.2rem);
+      letter-spacing: 0.02em;
+    }
+
+    .cd-title-forever {
+      display: block;
+      font-family: 'Tangerine', 'Pinyon Script', cursive;
+      font-weight: 700;
+      font-size: clamp(2.8rem, 11vw, 4rem);
+      color: #d8a957;
+      line-height: 0.84;
+      margin-top: 0.04em;
+      text-shadow: 0 2px 24px rgba(216, 169, 87, 0.5), 0 2px 26px rgba(0, 0, 0, 0.4);
+    }
+
+    .countdown-title-rule {
+      display: block;
+      width: min(180px, 46vw);
+      height: auto;
+      margin: 8px auto 0;
+    }
+
+    .countdown-stage {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      margin: 8px auto 0;
+    }
+
+    .countdown-frame {
+      position: relative;
+      width: min(580px, 94vw);
+      margin: 0 auto;
+      aspect-ratio: 1672 / 941;
+    }
+
+    .countdown-frame::before {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 56%;
+      transform: translate(-50%, -50%);
+      width: 84%;
+      height: 46%;
+      border-radius: 50%;
+      z-index: 0;
+      background: radial-gradient(ellipse at center, rgba(216, 169, 87, 0.32), transparent 70%);
+      filter: blur(16px);
+      animation: cdHalo 4.6s ease-in-out infinite;
+    }
+
+    .countdown-art {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 16px 30px rgba(22, 48, 92, 0.22));
+    }
+
+    .countdown-cells {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+    }
+
+    .cd-cell {
+      position: absolute;
+      top: var(--cd-y, 59%);
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.12em;
+      text-align: center;
+      width: 19%;
+    }
+
+    .cd-cell--1 { left: 17.9%; }
+    .cd-cell--2 { left: 39.6%; }
+    .cd-cell--3 { left: 60.4%; }
+    .cd-cell--4 { left: 81.9%; }
+
+    .cd-num {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      font-size: clamp(1.25rem, 5.8vw, 2.4rem);
+      line-height: 1;
+      color: #16305c;
+      letter-spacing: 0.01em;
+      font-variant-numeric: tabular-nums;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.55);
+    }
+
+    .cd-label {
+      display: block;
+      width: 100%;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: clamp(0.42rem, 1.8vw, 0.65rem);
+      letter-spacing: 0.13em;
+      line-height: 1;
+      color: #a8813f;
+    }
+
+    .cd-num.is-tick {
+      animation: cdTick 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    @keyframes cdHalo {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 0.92; }
+    }
+
+    @keyframes cdGlow {
+      0%, 100% { transform: translate(0); }
+      50% { transform: translate(18px, -16px); }
+    }
+
+    @keyframes cdTick {
+      0% { transform: translateY(-34%) scale(1.16); opacity: 0; filter: blur(2px); }
+      55% { opacity: 1; filter: blur(0); }
+      100% { transform: none; opacity: 1; }
+    }
+
+    /* Finale Couple & Details */
+    .countdown-footer {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      margin-top: clamp(24px, 4vh, 44px);
+      padding-top: 12px;
+      text-align: center;
+    }
+
+    .ft-border {
+      display: block;
+      width: min(340px, 76vw);
+      height: auto;
+      margin: 0 auto 20px;
+    }
+
+    .ft-names {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 300;
+      font-style: italic;
+      font-size: clamp(2.4rem, 9.5vw, 3.5rem);
+      line-height: 1.05;
+      color: #faf6ee;
+    }
+
+    .ft-amp {
+      color: #d8a957;
+      margin: 0 0.1em;
+      font-size: 0.68em;
+      font-style: normal;
+    }
+
+    .ft-date {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.78rem, 3.2vw, 0.95rem);
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #d8a957;
+      margin-top: 14px;
+    }
+
+    .ft-tagline {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(1.15rem, 4.6vw, 1.45rem);
+      color: rgba(250, 244, 232, 0.85);
+      margin-top: 10px;
+    }
+
+    .ft-bottom-rule {
+      width: 70px;
+      height: 1px;
+      margin: 24px auto 18px;
+      background: linear-gradient(90deg, transparent, rgba(216, 169, 87, 0.5), transparent);
+    }
+
+    .ft-credit {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(0.92rem, 3.8vw, 1.1rem);
+      letter-spacing: 0.04em;
+      color: rgba(216, 169, 87, 0.92);
+      text-transform: none;
+    }
+
+    .ft-credit a {
+      color: #d8a957;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(216, 169, 87, 0.5);
+      transition: color 0.2s, border-color 0.2s;
+      font-weight: 500;
+    }
+
+    .ft-credit a:hover {
+      color: #fff;
+      border-color: #fff;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .event-card-panel,
+      .event-card-body {
+        transform: none !important;
+        opacity: 1 !important;
+        transition: none !important;
+      }
+      .event-illustration,
+      .evt-decor,
+      .couple-butterfly,
+      .couple-butterfly-sheet {
+        animation: none !important;
+      }
+      .couple-butterfly {
+        opacity: 0.85;
+      }
+      .couple-section .cpl-alive {
+        opacity: 1 !important;
+        transform: none !important;
+        filter: none !important;
+        color: var(--cpl-final, var(--ink)) !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        background-color: #0b152c;
+      }
+      .app-container {
+        max-width: 100%;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body class="mobile-viewport intro-active">
+  <div class="app-container" id="appContainer">
+
+    <!-- SECTION 2: Hero Section (Courtyard Fountain Video from Google Drive) -->
+    <section class="hero-section" id="heroSection">
+      <div class="hero-bg" aria-hidden="true">
+        <video 
+          id="heroVideo" 
+          class="hero-video" 
+          src="videos/hero.mp4" 
+          poster="videos/hero_poster.jpg"
+          playsinline 
+          webkit-playsinline
+          loop 
+          muted 
+          preload="auto">
+        </video>
+      </div>
+
+      <!-- Hero Royal Wedding Typography -->
+      <div class="hero-content" id="heroContent">
+        <h1 class="hero-names">
+          <span class="hero-name" id="heroBride">Dharani</span>
+          <span class="hero-amp" aria-hidden="true">&amp;</span>
+          <span class="hero-name" id="heroGroom">Manu</span>
+        </h1>
+
+        <div class="hero-divider" aria-hidden="true">
+          <img class="hero-divider-img" src="images/hero-divider.webp" alt="" decoding="async" draggable="false">
+        </div>
+
+        <div class="hero-meta">
+          <p class="hero-date" id="heroDate">19<sup class="date-ord">th</sup> Nov 2026</p>
+        </div>
+      </div>
+
+      <!-- Scroll cue -->
+      <a href="#invite" class="hero-scroll" id="heroScroll" aria-label="Scroll to invitation card">
+        <span class="hero-scroll-label">Scroll</span>
+        <span class="hero-scroll-chevrons">
+          <span class="hero-chevron"></span>
+          <span class="hero-chevron"></span>
+          <span class="hero-chevron"></span>
+        </span>
+      </a>
+    </section>
+
+    <!-- SECTION 3: Royal Pichwai Invitation Card Section ("Part Chart") -->
+    <section class="section invite-section" id="invite" aria-labelledby="inviteNames">
+      <!-- Layer 1: Clean Pichwai Wallpaper Background -->
+      <div class="invite-bg" aria-hidden="true">
+        <img src="images/invite/invite_bg.webp" alt="Royal Wedding Background" decoding="async" draggable="false">
+      </div>
+
+      <!-- Layer 3: Foreground Hanging Royal Jhoomer Chandeliers -->
+      <img class="invite-fg" src="images/invite/invite_fg.webp"
+           alt="" aria-hidden="true" decoding="async" draggable="false">
+
+      <!-- Layer 2: Ornate Scalloped Arch Placard Card -->
+      <div class="invite-card reveal-item" id="inviteCard">
+        <img class="invite-card-frame" src="images/invite/invite_card.webp"
+             alt="" aria-hidden="true" decoding="async" draggable="false">
+
+        <div class="invite-card-text">
+          <p class="invite-overline">With the blessings of the divine</p>
+
+          <p class="invite-kicker">we request the honour of your presence<br>at the wedding celebration of</p>
+
+          <img class="invite-rule" src="images/invite/element_1.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+
+          <h2 class="invite-names" id="inviteNames">
+            <span class="invite-person">
+              <span class="invite-name">Dharani</span>
+              <span class="invite-parent">(D/o Smt. Jalajakshi V. and Ram Murthy N.)</span>
+            </span>
+            <span class="invite-amp" aria-hidden="true">&amp;</span>
+            <span class="invite-person">
+              <span class="invite-name">Manu</span>
+              <span class="invite-parent">(S/o Smt. Narasamma K.S. and Lakshmikanth S.K.)</span>
+            </span>
+          </h2>
+
+          <img class="invite-rule" src="images/invite/element_1.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+
+          <div class="invite-meta">
+            <p class="invite-date" id="inviteDate">19<sup class="date-ord">TH</sup> NOVEMBER 2026</p>
+            <p class="invite-venue" id="inviteVenue">BWSSB Rajatha Bhavan<br>Malleshwaram, Bangalore</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Celebration Journey / Our Events Fan Cards Section -->
+    <section class="section events-section" id="events" aria-labelledby="eventsTitle">
+      <!-- Decorative Pichwai motifs scattered behind the cards -->
+      <div class="events-decor" aria-hidden="true">
+        <!-- Matching jhoomers hanging in both top corners -->
+        <img class="evt-decor evt-decor--jhoomer evt-decor--jhoomer-l" src="images/events/event_3.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--jhoomer evt-decor--jhoomer-r" src="images/events/event_3.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <!-- Two chandeliers hanging halfway down, in the left & right corners -->
+        <img class="evt-decor evt-decor--chandelier evt-decor--chandelier-1" src="images/events/event_1.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--chandelier evt-decor--chandelier-2" src="images/events/event_1.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <!-- Nazar (evil-eye) charms scattered down the sides -->
+        <img class="evt-decor evt-decor--nazar evt-decor--nazar-1" src="images/events/event_6.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--nazar evt-decor--nazar-2" src="images/events/event_6.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--nazar evt-decor--nazar-3" src="images/events/event_6.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <!-- Peacock + grounded animals tucked between cards -->
+        <img class="evt-decor evt-decor--peacock" src="images/events/event_4.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--camel"   src="images/events/event_2.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--horse"   src="images/events/event_5.webp" alt="" decoding="async" loading="lazy" draggable="false">
+      </div>
+
+      <div class="events-header">
+        <p class="events-eyebrow">Celebration Journey</p>
+        <h2 class="events-title" id="eventsTitle">Our Events</h2>
+        <img class="events-title-rule" src="images/events/border_4.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+      </div>
+
+      <!-- Each ceremony is an ornate royal hand-fan that opens on its handle -->
+      <div class="events-list" id="eventsList" role="list" aria-label="Wedding events">
+        
+        <!-- 1. Reception (Left Fan) -->
+        <article class="event-card event-card--left" role="listitem" aria-label="1 of 2: Reception">
+          <div class="event-card-inner">
+            <div class="event-card-panel">
+              <img class="event-card-frame" src="images/events/Event_Card_left.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+              <div class="event-card-body">
+                <img class="event-illustration" src="images/events/reception_mandap.webp" alt="Reception" decoding="async" draggable="false">
+                <h3 class="event-name">Reception</h3>
+                <div class="event-rule" aria-hidden="true"></div>
+                <p class="event-datetime">
+                  <span class="event-date">19<sup class="event-ord">TH</sup> NOV 2026</span>
+                  <span class="event-time">7:00 PM</span>
+                </p>
+                <p class="event-venue">BWSSB Rajatha Bhavan<br>Malleshwaram, Bangalore</p>
+                <a class="event-map" href="https://www.google.com/maps/search/?api=1&amp;query=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore" target="_blank" rel="noopener noreferrer">
+                  <svg width="10" height="12" viewBox="0 0 11 14" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:-1px"><path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 4.12 5.5 8.5 5.5 8.5S11 9.62 11 5.5C11 2.46 8.54 0 5.5 0Z" fill="currentColor" opacity=".7"/><circle cx="5.5" cy="5.5" r="2" fill="#faf4e8"/></svg>
+                  OPEN IN MAPS
+                </a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. Muhurtham (Right Fan) -->
+        <article class="event-card event-card--right" role="listitem" aria-label="2 of 2: Muhurtham">
+          <div class="event-card-inner">
+            <div class="event-card-panel">
+              <img class="event-card-frame" src="images/events/Event_Card_right.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+              <div class="event-card-body">
+                <img class="event-illustration" src="images/events/shaadi.webp" alt="Muhurtham" decoding="async" draggable="false">
+                <h3 class="event-name">Muhurtham</h3>
+                <div class="event-rule" aria-hidden="true"></div>
+                <p class="event-datetime">
+                  <span class="event-date">Friday, 20<sup class="event-ord">TH</sup> Nov 2026</span>
+                  <span class="event-time">between 9:15 AM and 10:15 AM</span>
+                </p>
+                <p class="event-note">(Dhanus Lagna)</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- SECTION 5: Meet the Couple / A Love Story Section -->
+    <section class="section couple-section" id="couple" aria-labelledby="coupleTitle">
+      <div class="couple-bg" aria-hidden="true">
+        <img src="images/couple/meet_the_couple_bg.webp" alt="" decoding="async" draggable="false">
+      </div>
+      <div class="couple-content reveal-item">
+        <!-- Floating Animated Butterflies -->
+        <div class="couple-butterfly couple-butterfly--1" aria-hidden="true">
+          <span class="couple-butterfly-clip">
+            <img class="couple-butterfly-sheet" src="images/couple/butterfly_2.webp" alt="" decoding="async" draggable="false">
+          </span>
+        </div>
+        <div class="couple-butterfly couple-butterfly--2" aria-hidden="true">
+          <span class="couple-butterfly-clip">
+            <img class="couple-butterfly-sheet" src="images/couple/butterfly.webp" alt="" decoding="async" draggable="false">
+          </span>
+        </div>
+
+        <div class="couple-header">
+          <p class="couple-eyebrow">A Love Story</p>
+          <h2 class="couple-title" id="coupleTitle">Meet the Couple</h2>
+          <img class="couple-ornament" src="images/couple/border_3.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+        </div>
+
+        <div class="couple-story">
+          <div class="couple-story-body" id="coupleStory">
+            <p class="couple-story-p">A beautiful Bengaluru evening, a city full of dreams, and two hearts destined to find each other.</p>
+            <p class="couple-story-p">Surrounded by love, laughter, and countless beautiful moments, Dharani &amp; Manu are ready to begin their most beautiful chapter yet.</p>
+          </div>
+          <p class="couple-hashtag" id="coupleHashtag">#DharaniWedsManu</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Photo Gallery -->
+    <section class="section gallery-section" id="gallery" aria-labelledby="galleryTitle">
+      <div class="gallery-bg" aria-hidden="true">
+        <img src="images/gallery/gallery_bg.webp" alt="" decoding="async" draggable="false">
+      </div>
+
+      <div class="gallery-inner">
+        <div class="gallery-header reveal-item">
+          <span class="gallery-flourish gallery-flourish--top" aria-hidden="true"></span>
+          <h2 class="gallery-title" id="galleryTitle">Gallery</h2>
+          <span class="gallery-flourish gallery-flourish--bot" aria-hidden="true"></span>
+        </div>
+
+        <!-- Featured photo in the ornate frame -->
+        <div class="gallery-featured reveal-item" id="galleryFeatured" role="button" tabindex="0" aria-label="View photo full screen">
+          <img class="gallery-featured-photo" id="galleryFeaturedPhoto" src="images/gallery/couple_1.webp" alt="Moments we love" decoding="async">
+          <img class="gallery-featured-art" src="images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
+          <button class="gallery-arrow gallery-arrow--prev" id="galleryPrev" type="button" aria-label="Previous photo">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button class="gallery-arrow gallery-arrow--next" id="galleryNext" type="button" aria-label="Next photo">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+
+        <p class="gallery-caption" id="galleryCaption">Moments we love</p>
+        <div class="gallery-dots" id="galleryDots" role="tablist" aria-label="Gallery navigation">
+          <button class="gallery-dot is-active" role="tab" aria-label="Photo 1"></button>
+          <button class="gallery-dot" role="tab" aria-label="Photo 2"></button>
+          <button class="gallery-dot" role="tab" aria-label="Photo 3"></button>
+          <button class="gallery-dot" role="tab" aria-label="Photo 4"></button>
+        </div>
+
+        <!-- Thumbnail strip -->
+        <div class="gallery-thumbs" id="galleryThumbs" role="list" aria-label="Photo thumbnails">
+          <div class="gallery-thumb is-active" role="listitem" aria-label="Show photo 1">
+            <img class="gallery-thumb-photo" src="images/gallery/couple_1.webp" alt="" decoding="async">
+            <img class="gallery-thumb-art" src="images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
+          </div>
+          <div class="gallery-thumb" role="listitem" aria-label="Show photo 2">
+            <img class="gallery-thumb-photo" src="images/gallery/couple_2.webp" alt="" decoding="async">
+            <img class="gallery-thumb-art" src="images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
+          </div>
+          <div class="gallery-thumb" role="listitem" aria-label="Show photo 3">
+            <img class="gallery-thumb-photo" src="images/gallery/couple_3.webp" alt="" decoding="async">
+            <img class="gallery-thumb-art" src="images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
+          </div>
+          <div class="gallery-thumb" role="listitem" aria-label="Show photo 4">
+            <img class="gallery-thumb-photo" src="images/gallery/couple_4.webp" alt="" decoding="async">
+            <img class="gallery-thumb-art" src="images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
+          </div>
+        </div>
+      </div>
+
+      <!-- Lightbox Modal -->
+      <div class="gallery-lightbox" id="galleryLightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+        <button class="gallery-lb-close" id="galleryLbClose" aria-label="Close">&#x2715;</button>
+        <button class="gallery-lb-prev" id="galleryLbPrev" aria-label="Previous photo">&#8249;</button>
+        <button class="gallery-lb-next" id="galleryLbNext" aria-label="Next photo">&#8250;</button>
+        <div class="gallery-lb-inner">
+          <img class="gallery-lb-img" id="galleryLbImg" alt="" decoding="async">
+          <p class="gallery-lb-caption" id="galleryLbCaption"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: RSVP / Join the Celebration -->
+    <section class="section rsvp-section" id="rsvp" aria-labelledby="rsvpHeadline">
+      <div class="rsvp-bg" aria-hidden="true"></div>
+      <div class="rsvp-veil" aria-hidden="true"></div>
+      <canvas class="rsvp-fireworks" id="rsvpFireworks" aria-hidden="true"></canvas>
+
+      <div class="rsvp-content">
+        <p class="rsvp-eyebrow rsvp-reveal">Join the celebration</p>
+
+        <h2 class="rsvp-headline rsvp-reveal" id="rsvpHeadline">Will you join us?</h2>
+
+        <p class="rsvp-body rsvp-reveal" id="rsvpBody">
+          We've saved a seat for you — at our table, in our hearts, and under the
+          royal sky. Come celebrate with us as we begin this new chapter together.
+        </p>
+
+        <div class="rsvp-cta-wrap rsvp-reveal">
+          <a class="rsvp-btn" id="rsvpBtn"
+             href="https://wa.me/?text=Hi%2C%20I%27ll%20be%20attending%20Dharani%20%26%20Manu%27s%20Wedding%21"
+             target="_blank" rel="noreferrer">
+            <span class="rsvp-btn-inner" id="rsvpBtnText">YES, I'LL BE THERE</span>
+          </a>
+          <p class="rsvp-helper" id="rsvpHelper">You'll be redirected to WhatsApp to confirm your attendance.</p>
+        </div>
+
+        <div class="rsvp-std rsvp-reveal">
+          <p class="rsvp-std-heading">Save the Date</p>
+          <div class="rsvp-std-btns">
+            <a class="rsvp-cal-btn" id="rsvpGcalBtn" href="#" target="_blank" rel="noreferrer">
+              <svg class="rsvp-cal-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <rect x="2" y="3" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M7 1v4M13 1v4M2 8h16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              Google Calendar
+            </a>
+            <a class="rsvp-cal-btn" id="rsvpIcalBtn" href="#">
+              <svg class="rsvp-cal-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <rect x="2" y="3" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.4"/>
+                <path d="M7 1v4M13 1v4M2 8h16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+                <path d="M10 11v3M8.5 14h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              </svg>
+              Apple Calendar
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 8: Counting Down to Forever (Finale Section) -->
+    <section class="section countdown-section" id="countdown" aria-labelledby="countdownTitle">
+      <div class="cd-glow cd-glow--l" aria-hidden="true"></div>
+      <div class="cd-glow cd-glow--r" aria-hidden="true"></div>
+
+      <div class="countdown-header reveal-item">
+        <h2 class="countdown-title" id="countdownTitle">
+          <span class="cd-title-lead">Counting Down to</span>
+          <span class="cd-title-forever">Forever</span>
+        </h2>
+        <img class="countdown-title-rule" src="images/countdown/border_4.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+      </div>
+
+      <div class="countdown-stage reveal-item">
+        <div class="countdown-frame">
+          <img class="countdown-art" src="images/countdown/countdown.webp" alt="" decoding="async" draggable="false">
+          <div class="countdown-cells" id="countdownCells" role="timer" aria-label="Time remaining until the wedding">
+            <div class="cd-cell cd-cell--1"><span class="cd-num" id="cdDays">00</span><span class="cd-label">Days</span></div>
+            <div class="cd-cell cd-cell--2"><span class="cd-num" id="cdHours">00</span><span class="cd-label">Hours</span></div>
+            <div class="cd-cell cd-cell--3"><span class="cd-num" id="cdMins">00</span><span class="cd-label">Minutes</span></div>
+            <div class="cd-cell cd-cell--4"><span class="cd-num" id="cdSecs">00</span><span class="cd-label">Seconds</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Finale Couple & Wedding Date Details -->
+      <div class="countdown-footer reveal-item">
+        <img class="ft-border" src="images/countdown/border_5.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+
+        <p class="ft-names">
+          <span class="ft-name" id="ftBride">Dharani</span>
+          <span class="ft-amp" aria-hidden="true">&amp;</span>
+          <span class="ft-name" id="ftGroom">Manu</span>
+        </p>
+
+        <p class="ft-date" id="ftDate">19<sup class="date-ord">TH</sup> NOVEMBER 2026</p>
+        <p class="ft-tagline">Forever begins today</p>
+
+        <div class="ft-bottom-rule" aria-hidden="true"></div>
+
+        <p class="ft-credit">Crafted with love on <a href="https://wowkalyanam.com" target="_blank" rel="noopener">Wow Kalyanam</a></p>
+      </div>
+    </section>
+
+    <!-- Floating Action Buttons (Music + Nav) & Popup Navigation Panel -->
+    <div class="fab-cluster" id="fabCluster" aria-label="Site controls">
+      <!-- Ornate Navigation Popup Menu -->
+      <nav class="nav-panel" id="navPanel" aria-label="Page navigation" aria-hidden="true">
+        <div class="nav-panel-head" aria-hidden="true">
+          <span class="nav-panel-eyebrow">E X P L O R E</span>
+          <div class="nav-panel-divider">
+            <span class="nav-panel-line"></span>
+            <span class="nav-panel-diamond">◆</span>
+            <span class="nav-panel-line"></span>
+          </div>
+        </div>
+        <ul class="nav-menu" role="menu">
+          <li role="none"><a class="nav-link" href="#heroSection" role="menuitem"><span class="nav-link-label">Home</span></a></li>
+          <li role="none"><a class="nav-link" href="#invite" role="menuitem"><span class="nav-link-label">Invitation</span></a></li>
+          <li role="none"><a class="nav-link" href="#events" role="menuitem"><span class="nav-link-label">Events</span></a></li>
+          <li role="none"><a class="nav-link" href="#couple" role="menuitem"><span class="nav-link-label">Meet the Couple</span></a></li>
+          <li role="none"><a class="nav-link" href="#gallery" role="menuitem"><span class="nav-link-label">Gallery</span></a></li>
+          <li role="none"><a class="nav-link" href="#rsvp" role="menuitem"><span class="nav-link-label">RSVP</span></a></li>
+          <li role="none"><a class="nav-link" href="#countdown" role="menuitem"><span class="nav-link-label">Countdown</span></a></li>
+        </ul>
+      </nav>
+
+      <button class="fab fab-music" id="musicToggle" type="button" aria-label="Toggle music">
+        <img class="fab-img" src="images/music_button.webp" alt="Music" decoding="async" draggable="false">
+      </button>
+      <button class="fab fab-nav" id="navToggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="navPanel">
+        <img class="fab-img" src="images/navigation_button.webp" alt="Navigation" decoding="async" draggable="false">
+      </button>
+    </div>
+
+    <!-- Background Music Audio Element -->
+    <audio id="bgMusic" src="audio/music.mp3" loop preload="auto"></audio>
+
+    <!-- Transition Bloom Overlay (Screen color shown between videos) -->
+    <div class="screen-bloom" id="screenBloom" aria-hidden="true"></div>
+
+    <!-- SECTION 1: Intro Section (Pichwai Palace Bell Video - Frozen until tap) -->
+    <section class="intro-section" id="introSection" role="button" tabindex="0" aria-label="Tap to ring the bell and begin celebration">
+      <video 
+        id="introVideo" 
+        class="intro-video" 
+        src="videos/intro.mp4" 
+        poster="videos/intro_poster.jpg"
+        playsinline 
+        webkit-playsinline
+        preload="auto"
+        muted>
+      </video>
+
+      <!-- Tap-To-Begin Floating Animated Text Overlay -->
+      <div class="intro-hint" id="introHint" aria-hidden="true">
+        <div class="intro-hint-label">RING THE BELL</div>
+        <div class="intro-hint-sub">to begin the celebration</div>
+      </div>
+    </section>
+
+  </div>
+
+  <script type="module" src="template2.js?v=33"></script>
+</body>
+</html>

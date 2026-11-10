@@ -1,0 +1,507 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:root {
+  --ivory-bg: #faf6ee;
+  --backdrop-bg: #0b152c;
+  --blue-deep: #16305c;
+  --gold-bright: #d8a957;
+  --gold-deep: #a8813f;
+  --ink: #2a2335;
+  --ink-soft: #5a4f5e;
+  --app-max-width: 480px;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #0b152c;
+  color: var(--ink);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app-container {
+  width: 100%;
+  max-width: var(--app-max-width);
+  margin: 0 auto;
+  height: 100dvh;
+  height: 100vh;
+  background-color: #0b152c;
+  position: relative;
+  overflow: hidden;
+  display: block;
+  box-shadow: 0 0 45px rgba(0, 0, 0, 0.6);
+}
+
+/* SECTION 2: Hero Section (Courtyard Fountain Video & Royal Typography) */
+.hero-section {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0b152c;
+  overflow: hidden;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  padding: 7vh 20px 0;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #0b152c;
+  z-index: 0;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  object-position: center 32% !important;
+  display: block;
+  background-color: #0b152c;
+}
+
+/* Hero Royal Wedding Typography Overlay */
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  width: 100%;
+  max-width: 380px;
+  margin: 0 auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.8s ease;
+}
+
+.hero-content.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.hero-names {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 400;
+  font-style: italic;
+  line-height: 0.94;
+  color: var(--blue-deep);
+  font-size: clamp(3.8rem, 17.5vw, 6.2rem);
+  letter-spacing: 0.012em;
+  text-shadow: 0 2px 24px rgba(250, 244, 232, 0.85);
+  margin-bottom: 2px;
+}
+
+.hero-name {
+  display: block;
+}
+
+.hero-amp {
+  display: block;
+  font-family: 'Pinyon Script', cursive;
+  font-style: normal;
+  font-size: 0.44em;
+  color: var(--gold-deep);
+  margin: -0.04em 0;
+}
+
+.hero-divider {
+  margin: 14px auto 16px;
+  width: min(190px, 46vw);
+}
+
+.hero-divider-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.hero-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.hero-date {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(1.2rem, 5.2vw, 1.55rem);
+  letter-spacing: 0.06em;
+  color: #221c2b;
+  line-height: 1.25;
+  font-weight: 600;
+  text-shadow: 0 1px 12px rgba(250, 244, 232, 0.9);
+}
+
+.date-ord {
+  font-size: 0.62em;
+  vertical-align: super;
+}
+
+/* Staggered Royal Entrance Animations: Dharani -> & -> Manu -> Divider -> Date */
+.hero-names .hero-name,
+.hero-names .hero-amp,
+.hero-divider,
+.hero-meta {
+  opacity: 0;
+}
+
+/* 1. Dharani appears first */
+.hero-content.is-visible #heroBride {
+  animation: heroNameIn 1.1s cubic-bezier(0.25, 1, 0.5, 1) both 0.15s;
+}
+
+/* 2. Ampersand appears next */
+.hero-content.is-visible .hero-amp {
+  animation: heroNameIn 0.9s cubic-bezier(0.25, 1, 0.5, 1) both 0.65s;
+}
+
+/* 3. Manu appears after Dharani and & */
+.hero-content.is-visible #heroGroom {
+  animation: heroNameIn 1.1s cubic-bezier(0.25, 1, 0.5, 1) both 1.15s;
+}
+
+/* 4. Gold flourish divider appears */
+.hero-content.is-visible .hero-divider {
+  animation: heroFadeUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) both 1.65s;
+}
+
+/* 5. Date appears */
+.hero-content.is-visible .hero-meta {
+  animation: heroFadeUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) both 1.95s;
+}
+
+@keyframes heroNameIn {
+  0% {
+    opacity: 0;
+    transform: translateY(22px) scale(0.95);
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 0.9;
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes heroFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scroll Cue */
+.hero-scroll {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  z-index: 3;
+  transform: translate(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  opacity: 0;
+  animation: hintIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) 3.0s forwards;
+}
+
+.hero-scroll-label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #fff;
+  text-shadow: 0 1px 7px rgba(0, 0, 0, 0.55);
+}
+
+.hero-scroll-chevrons {
+  position: relative;
+  width: 24px;
+  height: 30px;
+}
+
+.hero-chevron {
+  position: absolute;
+  left: 50%;
+  margin-left: -7px;
+  width: 14px;
+  height: 14px;
+  border-right: 3px solid #fff;
+  border-bottom: 3px solid #fff;
+  transform: rotate(45deg);
+  opacity: 0;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.5));
+  animation: chevWave 1.8s ease-in-out infinite;
+}
+
+.hero-chevron:nth-child(1) { top: 0; animation-delay: 0s; }
+.hero-chevron:nth-child(2) { top: 8px; animation-delay: 0.18s; }
+.hero-chevron:nth-child(3) { top: 16px; animation-delay: 0.36s; }
+
+@keyframes chevWave {
+  0%, 100% { opacity: 0; transform: rotate(45deg) translate(-2px, -2px); }
+  50% { opacity: 0.9; transform: rotate(45deg) translate(0, 0); }
+}
+
+/* Floating Action Buttons (Audio + Navigation) */
+.fab-cluster {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
+  transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1), transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.fab-cluster.is-ready {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.fab {
+  width: 52px;
+  height: 52px;
+  flex: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  pointer-events: auto;
+  filter: drop-shadow(0 4px 12px rgba(12, 23, 48, 0.42)) drop-shadow(0 0 9px rgba(216, 169, 87, 0.22));
+  transition: filter 0.3s ease, transform 0.25s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.3s ease;
+}
+
+.fab:hover, .fab:active {
+  transform: scale(1.05);
+  filter: drop-shadow(0 6px 18px rgba(12, 23, 48, 0.52)) drop-shadow(0 0 18px rgba(216, 169, 87, 0.45));
+}
+
+.fab-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  pointer-events: none;
+  user-select: none;
+}
+
+.fab-music {
+  opacity: 0.7;
+}
+
+.fab-music.is-playing {
+  opacity: 1;
+  filter: drop-shadow(0 4px 12px rgba(12, 23, 48, 0.42)) drop-shadow(0 0 16px rgba(216, 169, 87, 0.55));
+}
+
+.fab-music.is-playing .fab-img {
+  transform-origin: center;
+  animation: fabMusicSpin 9s linear infinite;
+}
+
+@keyframes fabMusicSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Transition Screen Bloom (Dark moody blue screen shown between videos) */
+.screen-bloom {
+  position: absolute;
+  inset: 0;
+  z-index: 60;
+  background: radial-gradient(120% 120% at 50% 45%, rgba(32, 51, 92, 0.92) 0%, rgba(12, 23, 48, 0.96) 100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.65s ease;
+}
+
+.screen-bloom.is-blooming {
+  opacity: 1;
+}
+
+.screen-bloom.is-retreating {
+  opacity: 0;
+  transition: opacity 1.6s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.screen-bloom.is-gone {
+  display: none;
+}
+
+/* SECTION 1: Intro Section (Pichwai Palace Bell Video) */
+.intro-section {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  cursor: pointer;
+  overflow: hidden;
+  background-color: #0b152c;
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), visibility 0.8s;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.intro-section.is-fading {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.intro-section.is-gone {
+  display: none;
+}
+
+.intro-video {
+  position: absolute;
+  inset: 0;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 100% !important;
+  min-height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  display: block;
+  background-color: #0b152c;
+}
+
+/* Animated Floating Prompt */
+.intro-hint {
+  position: absolute;
+  left: 50%;
+  bottom: 8.5%;
+  transform: translate(-50%, 0);
+  text-align: center;
+  z-index: 55;
+  padding: 10px 24px;
+  pointer-events: none;
+  animation: hintIn 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards, hintFloat 3.2s ease-in-out 0.8s infinite;
+  will-change: transform;
+  transition: opacity 0.4s ease;
+}
+
+.intro-hint.is-gone {
+  opacity: 0 !important;
+  animation: none !important;
+  pointer-events: none;
+}
+
+.intro-hint::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 160%;
+  height: 220%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, rgba(11, 21, 44, 0.45) 0%, rgba(11, 21, 44, 0.22) 45%, rgba(11, 21, 44, 0.05) 70%, transparent 85%);
+  border-radius: 50%;
+}
+
+.intro-hint-label {
+  font-family: 'Cinzel', Georgia, serif;
+  font-weight: 600;
+  font-size: clamp(0.85rem, 3.8vw, 1.15rem);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fffef8;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  animation: hintGlow 2.8s ease-in-out infinite;
+  line-height: 1.2;
+}
+
+.intro-hint-sub {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(0.95rem, 4.4vw, 1.25rem);
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+  color: var(--gold-bright);
+  margin-top: 3px;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  line-height: 1.2;
+}
+
+@keyframes hintIn {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+@keyframes hintFloat {
+  0%, 100% {
+    transform: translate(-50%, 0);
+  }
+  50% {
+    transform: translate(-50%, -6px);
+  }
+}
+
+@keyframes hintGlow {
+  0%, 100% {
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.6);
+  }
+  50% {
+    text-shadow: 0 0 16px rgba(223, 186, 106, 0.85), 0 0 28px rgba(223, 186, 106, 0.45);
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    background-color: #0b152c;
+  }
+  .app-container {
+    max-width: 100%;
+    box-shadow: none;
+  }
+}

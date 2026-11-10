@@ -6,10 +6,11 @@
   <title>Vishu &amp; Kavya — Wedding Invitation</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap">
-  <link rel="preload" as="image" href="images/meenaya-sky.webp" type="image/webp">
-  <link rel="preload" as="image" href="images/meenaya-temple.webp" type="image/webp">
-  <link rel="stylesheet" href="meenaya.css?v=1">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap">
+  <link rel="preload" as="image" href="images/meenaya-canvas-bg.webp" type="image/webp">
+  <link rel="preload" as="image" href="images/meenaya-lamps.webp" type="image/webp">
+  <link rel="preload" as="image" href="images/meenaya-temple-sticker.webp" type="image/webp">
+  <link rel="stylesheet" href="meenaya.css?v=2">
 </head>
 <body class="motion-ready">
   <!-- Background Music -->
@@ -19,34 +20,31 @@
     <!-- HERO SECTION WITH SCROLL TRAVEL -->
     <section class="hero" id="hero">
       <div class="hero-sticky" id="heroStage">
-        <!-- Painted Blue Canvas Sky & Lanterns -->
+        
+        <!-- 1. Pure Blue Painted Canvas Background (Completely Clean) -->
         <div class="hero-bg-wrap">
-          <img src="images/meenaya-sky.webp" alt="Painted Blue Night Sky with Sky Lanterns" class="hero-bg" fetchpriority="high">
+          <img src="images/meenaya-canvas-bg.webp" alt="Painted Blue Night Sky" class="hero-bg" fetchpriority="high">
         </div>
 
-        <!-- Floating Lantern Glow Particle Effects -->
-        <div class="lantern-particles" aria-hidden="true">
-          <span class="lantern l1"></span>
-          <span class="lantern l2"></span>
-          <span class="lantern l3"></span>
-          <span class="lantern l4"></span>
-          <span class="lantern l5"></span>
+        <!-- 2. Floating Sky Lamps Layer (Comes DOWN as user scrolls) -->
+        <div class="hero-lamps-wrap" id="heroLampsWrap">
+          <img src="images/meenaya-lamps.webp" alt="Glowing Sky Lanterns" class="hero-lamps" fetchpriority="high">
         </div>
 
-        <!-- Couple Title & Date -->
+        <!-- 3. Couple Typography (Centered, crisp single rendering, zero duplicate text) -->
         <div class="hero-title" id="heroTitle">
           <h1 class="groom-name">VISHU</h1>
           <div class="weds-wrap">
-            <i class="weds-line"></i>
             <span class="weds-text">W E D S</span>
-            <i class="weds-line"></i>
           </div>
           <h1 class="bride-name">KAVYA</h1>
           <p class="invite-subtitle">WE INVITE YOU TO CELEBRATE OUR WEDDING</p>
         </div>
 
-        <!-- Temple Gopuram Sticker: Ascends as user scrolls -->
-        <img src="images/meenaya-temple.webp" alt="Sacred Dravidian Gopuram" class="hero-temple" id="heroTemple" fetchpriority="high">
+        <!-- 4. Temple Sticker (Ascends UP as user scrolls) -->
+        <div class="hero-temple-wrap" id="heroTempleWrap">
+          <img src="images/meenaya-temple-sticker.webp" alt="Sacred Dravidian Gopuram" class="hero-temple" id="heroTemple" fetchpriority="high">
+        </div>
 
         <!-- Scroll Indicator -->
         <div class="scroll-cue" id="heroScrollCue" role="button" tabindex="0" aria-label="Tap to enter wedding invitation and play music">
@@ -54,20 +52,20 @@
           <div class="scroll-mouse"><span class="wheel"></span></div>
         </div>
 
-        <!-- Floating Sound Control Button (Replaces pricing and watermark) -->
+        <!-- Discreet Audio Pill Button -->
         <button id="audioToggle" class="audio-pill-btn" aria-label="Toggle background music">
           <span class="audio-bars">
             <i></i><i></i><i></i><i></i>
           </span>
-          <span class="audio-label">Music</span>
+          <span class="audio-label">MUSIC</span>
         </button>
 
-        <!-- Atmospheric Vignette -->
+        <!-- Subtle Ambient Vignette -->
         <div class="hero-vignette" aria-hidden="true"></div>
       </div>
     </section>
   </div>
 
-  <script type="module" src="meenaya.js?v=1"></script>
+  <script type="module" src="meenaya.js?v=2"></script>
 </body>
 </html>

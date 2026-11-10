@@ -7,81 +7,139 @@ import {
   Share2, 
   Sparkles,
   Calendar,
-  MapPin,
-  Clock,
-  Heart,
   SlidersHorizontal,
-  Eye
+  Eye,
+  LayoutGrid
 } from 'lucide-react';
 
-interface CardItem {
+interface TemplateFormData {
+  bride: string;
+  groom: string;
+  date: string;
+  time: string;
+  functionName: string;
+  venue: string;
+  address: string;
+  mapUrl: string;
+}
+
+interface TemplateItem {
   id: string;
   title: string;
   subtitle: string;
   badge: string;
   image: string;
   demoUrl: string;
+  defaultData: TemplateFormData;
 }
 
-// Templates Catalog
-const CARDS: CardItem[] = [
+// All Templates Catalog — Maintained in Separate, Independent Boxes
+const TEMPLATES: TemplateItem[] = [
+  {
+    id: 'pichwai-palace',
+    title: 'Royal Pichwai Palace',
+    subtitle: 'Elephant Bell Intro · Courtyard Fountain · 3D Fan Events',
+    badge: 'New Template',
+    image: '/images/cards/pichwai-cover.webp',
+    demoUrl: '/template2.html',
+    defaultData: {
+      bride: 'Dharani',
+      groom: 'Manu',
+      date: '19 November 2026',
+      time: '07:00 PM',
+      functionName: 'Wedding Ceremony & Reception',
+      venue: 'BWSSB Rajatha Bhavan',
+      address: 'Malleshwaram, Bangalore',
+      mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+    },
+  },
   {
     id: 'meenaya-pastel',
     title: 'Meenaya Traditional Pastel',
     subtitle: 'Blue Canvas Sky · Sacred Gopuram · Floating Lanterns',
-    badge: 'New Template',
+    badge: 'Popular',
     image: '/images/cards/meenaya-cover.webp',
     demoUrl: '/meenaya.html',
+    defaultData: {
+      bride: 'Kavya',
+      groom: 'Vishu',
+      date: '19 November 2026',
+      time: '07:00 PM',
+      functionName: 'Wedding Ceremony & Reception',
+      venue: 'Meenakshi Sundareswarar Temple Gardens',
+      address: 'Madurai, Tamil Nadu',
+      mapUrl: 'https://maps.google.com/?q=Meenakshi+Temple+Madurai',
+    },
   },
   {
     id: 'tirupati-vedic',
     title: 'Sacred Vedic Union',
     subtitle: 'Tirupati Mandap · Vedic Rituals · Music & RSVP',
-    badge: 'Classic Template',
+    badge: 'Classic Vedic',
     image: '/images/cards/tirupati-cover.webp',
     demoUrl: '/invite.html',
+    defaultData: {
+      bride: 'Tanya',
+      groom: 'Rohan',
+      date: '12 December 2026',
+      time: '11:00 AM',
+      functionName: 'Vedic Kalyanam & Lunch',
+      venue: 'The Oberoi Udaivilas',
+      address: 'Udaipur, Rajasthan',
+      mapUrl: 'https://maps.google.com/?q=Oberoi+Udaivilas+Udaipur',
+    },
   },
 ];
 
 export default function App() {
-  const [selectedCardIndex, setSelectedCardIndex] = useState(0);
-  const currentCard = CARDS[selectedCardIndex];
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filterId, setFilterId] = useState<string>('all');
+  const [activeModalTemplateId, setActiveModalTemplateId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
 
-  // Form State for dynamic invitation link
-  const [formData, setFormData] = useState({
-    bride: 'Kavya',
-    groom: 'Vishu',
-    date: '19 November 2026',
-    time: '07:00 PM',
-    functionName: 'Wedding Ceremony & Reception',
-    venue: 'Meenakshi Sundareswarar Temple Gardens',
-    address: 'Madurai, Tamil Nadu',
-    mapUrl: 'https://maps.google.com/?q=Meenakshi+Temple+Madurai',
+  // Separate, independent form state per template — ensuring data never mixes
+  const [templateForms, setTemplateForms] = useState<Record<string, TemplateFormData>>({
+    'pichwai-palace': { ...TEMPLATES[0].defaultData },
+    'meenaya-pastel': { ...TEMPLATES[1].defaultData },
+    'tirupati-vedic': { ...TEMPLATES[2].defaultData },
   });
 
-  const generateInviteLink = () => {
-    const params = new URLSearchParams({
-      bride: formData.bride,
-      groom: formData.groom,
-      date: formData.date,
-      time: formData.time,
-      venue: formData.venue,
-      address: formData.address,
-      map: formData.mapUrl,
-    });
-    const baseUrl = window.location.origin;
-    return `${baseUrl}${currentCard.demoUrl}?${params.toString()}`;
+  const activeTemplate = TEMPLATES.find((t) => t.id === activeModalTemplateId) || TEMPLATES[0];
+  const activeFormData = templateForms[activeTemplate.id] || activeTemplate.defaultData;
+
+  const updateFormData = (templateId: string, updates: Partial<TemplateFormData>) => {
+    setTemplateForms((prev) => ({
+      ...prev,
+      [templateId]: {
+        ...(prev[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData),
+        ...updates,
+      },
+    }));
   };
 
-  const inviteLink = generateInviteLink();
+  const generateInviteLink = (template: TemplateItem) => {
+    const data = templateForms[template.id] || template.defaultData;
+    const params = new URLSearchParams({
+      bride: data.bride,
+      groom: data.groom,
+      date: data.date,
+      time: data.time,
+      venue: data.venue,
+      address: data.address,
+      map: data.mapUrl,
+    });
+    const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
+    return `${baseUrl}${template.demoUrl}?${params.toString()}`;
+  };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(inviteLink);
+  const handleCopy = (link: string) => {
+    navigator.clipboard.writeText(link);
     setCopied(true);
     setTimeout(() => setCopied(false), 2200);
   };
+
+  const filteredTemplates = filterId === 'all' 
+    ? TEMPLATES 
+    : TEMPLATES.filter((t) => t.id === filterId);
 
   return (
     <div className="min-h-screen bg-[#faf9f6] text-neutral-900 font-sans flex flex-col justify-between selection:bg-neutral-900 selection:text-white">
@@ -99,14 +157,11 @@ export default function App() {
             />
           </div>
 
-          {/* Action Button */}
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="bg-black hover:bg-neutral-800 text-white font-medium text-xs sm:text-[13px] px-5 sm:px-6 py-2.5 rounded-full transition-all active:scale-95 shadow-sm flex items-center gap-2"
-          >
-            <SlidersHorizontal className="w-3.5 h-3.5" />
-            <span>Customize Card</span>
-          </button>
+          {/* Quick Header Badge */}
+          <div className="hidden sm:flex items-center gap-2 bg-neutral-100 border border-neutral-200/80 px-4 py-2 rounded-full text-xs font-medium text-neutral-700">
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <span>3 Exclusive Wedding Templates</span>
+          </div>
         </div>
 
         {/* Notched Architectural Line */}
@@ -118,120 +173,149 @@ export default function App() {
         </div>
       </header>
 
-      {/* ── CENTER STAGE: ONLY THE CARD ── */}
+      {/* ── MAIN CATALOG: SEPARATE BOXES FOR EACH TEMPLATE ── */}
       <main className="flex-1 flex flex-col items-center justify-center px-4 py-6 sm:py-10">
         
-        {/* Subtle Header */}
-        <div className="text-center mb-6">
-          <span className="text-[11px] font-bold uppercase tracking-widest text-amber-800 bg-amber-50 border border-amber-200/60 px-3 py-1 rounded-full inline-block mb-2">
-            Wedding Invitation Card
+        {/* Section Heading */}
+        <div className="text-center mb-8 max-w-xl mx-auto">
+          <span className="text-[11px] font-bold uppercase tracking-widest text-amber-800 bg-amber-50 border border-amber-200/60 px-3.5 py-1 rounded-full inline-block mb-2.5">
+            Wedding Invitation Templates
           </span>
           <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-neutral-900">
-            {formData.bride} &amp; {formData.groom}
+            Curated Digital Wedding Cards
           </h1>
-          <p className="text-xs text-neutral-500 mt-1">
-            Click on the card to customize details and generate your shareable guest link
+          <p className="text-xs sm:text-sm text-neutral-500 mt-1.5">
+            Each template has its own separate design box. Click to preview or customize details to generate your guest link.
           </p>
         </div>
 
-        {/* Template Selector Tabs */}
-        <div className="flex items-center gap-2 mb-6 bg-neutral-200/60 p-1.5 rounded-full">
-          {CARDS.map((card, idx) => (
+        {/* Filter Pills */}
+        <div className="flex flex-wrap items-center justify-center gap-2 mb-8 bg-neutral-200/60 p-1.5 rounded-full max-w-full">
+          <button
+            onClick={() => setFilterId('all')}
+            className={`text-xs font-semibold px-4 py-2 rounded-full transition-all flex items-center gap-1.5 ${
+              filterId === 'all'
+                ? 'bg-white text-neutral-900 shadow-sm'
+                : 'text-neutral-600 hover:text-neutral-900'
+            }`}
+          >
+            <LayoutGrid className="w-3.5 h-3.5" />
+            <span>All Templates (3)</span>
+          </button>
+          {TEMPLATES.map((t) => (
             <button
-              key={card.id}
-              onClick={() => setSelectedCardIndex(idx)}
+              key={t.id}
+              onClick={() => setFilterId(t.id)}
               className={`text-xs font-semibold px-4 py-2 rounded-full transition-all ${
-                selectedCardIndex === idx
+                filterId === t.id
                   ? 'bg-white text-neutral-900 shadow-sm'
                   : 'text-neutral-600 hover:text-neutral-900'
               }`}
             >
-              {card.title}
+              {t.title}
             </button>
           ))}
         </div>
 
-        {/* ── THE CARD ── */}
-        <div className="flex flex-col items-center">
-          <div
-            onClick={() => setIsModalOpen(true)}
-            className="group relative cursor-pointer w-[280px] sm:w-[330px] md:w-[360px] aspect-[1/1.48] rounded-[26px] overflow-hidden bg-neutral-900 shadow-[0_20px_50px_rgba(0,0,0,0.18)] hover:shadow-[0_28px_65px_rgba(0,0,0,0.25)] transition-all duration-300 hover:scale-[1.02] border border-neutral-200/80 select-none"
-          >
-            {/* Card Image */}
-            <img
-              src={currentCard.image}
-              alt={currentCard.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
+        {/* ── TEMPLATE BOXES GRID ── */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 max-w-6xl w-full px-4 justify-items-center">
+          {filteredTemplates.map((template) => {
+            const data = templateForms[template.id] || template.defaultData;
+            const cardInviteLink = generateInviteLink(template);
 
-            {/* Subtle Gradient Vignette */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent pointer-events-none"></div>
+            return (
+              <div 
+                key={template.id} 
+                className="flex flex-col items-center w-full max-w-[340px] bg-white p-4 pb-5 rounded-[32px] border border-neutral-200 shadow-sm hover:shadow-lg transition-all duration-300"
+              >
+                {/* ── CARD BOX ── */}
+                <div
+                  onClick={() => setActiveModalTemplateId(template.id)}
+                  className="group relative cursor-pointer w-full aspect-[1/1.48] rounded-[24px] overflow-hidden bg-neutral-900 shadow-[0_16px_40px_rgba(0,0,0,0.16)] group-hover:shadow-[0_24px_55px_rgba(0,0,0,0.22)] transition-all duration-300 group-hover:scale-[1.01] border border-neutral-200 select-none"
+                >
+                  {/* Card Image */}
+                  <img
+                    src={template.image}
+                    alt={template.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
 
-            {/* Card Badge */}
-            <div className="absolute top-4 left-4 z-10">
-              <span className="bg-white/95 backdrop-blur-md text-neutral-900 text-[11px] font-bold px-3 py-1 rounded-full shadow-sm flex items-center gap-1.5">
-                <Sparkles className="w-3 h-3 text-amber-600" />
-                <span>{currentCard.badge}</span>
-              </span>
-            </div>
+                  {/* Subtle Gradient Vignette */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none"></div>
 
-            {/* Hover overlay hint */}
-            <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-              <span className="bg-white text-black text-xs font-bold px-4 py-2 rounded-full shadow-lg transform -translate-y-2 group-hover:translate-y-0 transition-transform">
-                Click to Customize
-              </span>
-            </div>
+                  {/* Card Badge */}
+                  <div className="absolute top-3.5 left-3.5 z-10">
+                    <span className="bg-white/95 backdrop-blur-md text-neutral-900 text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm flex items-center gap-1.5">
+                      <Sparkles className="w-3 h-3 text-amber-600" />
+                      <span>{template.badge}</span>
+                    </span>
+                  </div>
 
-            {/* Bottom Card Info Overlay */}
-            <div className="absolute bottom-5 left-5 right-5 text-white z-10 pointer-events-none">
-              <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 block mb-0.5">
-                {currentCard.title}
-              </span>
-              <h3 className="text-lg font-bold leading-tight">
-                {formData.bride} &amp; {formData.groom}
-              </h3>
-              <p className="text-[11px] text-neutral-200 mt-1 flex items-center gap-1.5">
-                <Calendar className="w-3 h-3 text-amber-300 shrink-0" />
-                <span>{formData.date}</span>
-              </p>
-            </div>
-          </div>
+                  {/* Hover overlay hint */}
+                  <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                    <span className="bg-white text-black text-xs font-bold px-4 py-2 rounded-full shadow-lg transform -translate-y-2 group-hover:translate-y-0 transition-transform">
+                      Click to Customize
+                    </span>
+                  </div>
 
-          {/* Quick Action Buttons Below Card */}
-          <div className="flex items-center gap-3 mt-6">
-            <button
-              onClick={() => setIsModalOpen(true)}
-              className="bg-black hover:bg-neutral-800 text-white font-medium text-xs sm:text-[13px] px-6 py-3 rounded-full transition-all active:scale-95 shadow-md flex items-center gap-2"
-            >
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>Customize &amp; Create Link</span>
-            </button>
+                  {/* Bottom Card Info Overlay */}
+                  <div className="absolute bottom-4 left-4 right-4 text-white z-10 pointer-events-none">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-amber-300 block mb-0.5">
+                      {template.title}
+                    </span>
+                    <h3 className="text-base sm:text-lg font-bold leading-tight drop-shadow-sm">
+                      {data.bride} &amp; {data.groom}
+                    </h3>
+                    <p className="text-[11px] text-neutral-200 mt-1 flex items-center gap-1.5">
+                      <Calendar className="w-3 h-3 text-amber-300 shrink-0" />
+                      <span>{data.date}</span>
+                    </p>
+                  </div>
+                </div>
 
-            <a
-              href={inviteLink}
-              target="_blank"
-              rel="noreferrer"
-              className="bg-white hover:bg-neutral-100 text-neutral-800 border border-neutral-300 font-medium text-xs sm:text-[13px] px-5 py-3 rounded-full transition-all shadow-sm flex items-center gap-2"
-              title="Preview Invitation as a Guest"
-            >
-              <Eye className="w-3.5 h-3.5 text-neutral-500" />
-              <span>Preview Invite</span>
-            </a>
-          </div>
+                {/* Subtitle / Theme description */}
+                <p className="text-[11px] text-neutral-500 text-center mt-3 px-1 line-clamp-1">
+                  {template.subtitle}
+                </p>
+
+                {/* Separate Action Buttons Below Each Card Box */}
+                <div className="flex items-center gap-2 mt-4 w-full">
+                  <button
+                    onClick={() => setActiveModalTemplateId(template.id)}
+                    className="flex-1 bg-black hover:bg-neutral-800 text-white font-medium text-xs py-2.5 px-3 rounded-full transition-all active:scale-95 shadow-sm flex items-center justify-center gap-1.5"
+                  >
+                    <SlidersHorizontal className="w-3.5 h-3.5" />
+                    <span>Customize</span>
+                  </button>
+
+                  <a
+                    href={template.demoUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-200 font-medium text-xs py-2.5 px-3.5 rounded-full transition-all flex items-center justify-center gap-1.5 shrink-0"
+                    title="Preview Invitation in New Tab"
+                  >
+                    <Eye className="w-3.5 h-3.5 text-neutral-600" />
+                    <span>Preview</span>
+                  </a>
+                </div>
+              </div>
+            );
+          })}
         </div>
 
       </main>
 
       {/* ── MINIMAL FOOTER ── */}
-      <footer className="w-full py-4 text-center text-xs text-neutral-400">
+      <footer className="w-full py-5 text-center text-xs text-neutral-400 border-t border-neutral-200/60 mt-10">
         <p>© {new Date().getFullYear()} Wow Kalyanam · Digital Wedding Invitations</p>
       </footer>
 
       {/* ── MODAL: CUSTOMIZE & GENERATE SHAREABLE LINK ── */}
-      {isModalOpen && (
+      {activeModalTemplateId && (
         <div 
           className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
-          onClick={() => setIsModalOpen(false)}
+          onClick={() => setActiveModalTemplateId(null)}
         >
           <div 
             className="bg-white rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-neutral-200"
@@ -241,13 +325,13 @@ export default function App() {
             <div className="flex items-center justify-between p-6 sm:p-7 border-b border-neutral-100 sticky top-0 bg-white/95 backdrop-blur-md z-10">
               <div className="flex items-center gap-3.5">
                 <img 
-                  src={currentCard.image} 
-                  alt={currentCard.title} 
+                  src={activeTemplate.image} 
+                  alt={activeTemplate.title} 
                   className="w-10 h-14 object-cover rounded-lg border border-neutral-200 shadow-sm"
                 />
                 <div>
                   <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700">
-                    Invitation Customizer
+                    {activeTemplate.title}
                   </span>
                   <h3 className="text-lg sm:text-xl font-bold text-neutral-900 mt-0.5">
                     Customize Wedding Details
@@ -255,7 +339,7 @@ export default function App() {
                 </div>
               </div>
               <button
-                onClick={() => setIsModalOpen(false)}
+                onClick={() => setActiveModalTemplateId(null)}
                 className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-500 hover:text-black transition-colors"
               >
                 <X className="w-4 h-4" />
@@ -273,8 +357,8 @@ export default function App() {
                   </label>
                   <input
                     type="text"
-                    value={formData.bride}
-                    onChange={(e) => setFormData({ ...formData, bride: e.target.value })}
+                    value={activeFormData.bride}
+                    onChange={(e) => updateFormData(activeTemplate.id, { bride: e.target.value })}
                     placeholder="e.g. Dharani"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
                   />
@@ -286,8 +370,8 @@ export default function App() {
                   </label>
                   <input
                     type="text"
-                    value={formData.groom}
-                    onChange={(e) => setFormData({ ...formData, groom: e.target.value })}
+                    value={activeFormData.groom}
+                    onChange={(e) => updateFormData(activeTemplate.id, { groom: e.target.value })}
                     placeholder="e.g. Manu"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
                   />
@@ -302,8 +386,8 @@ export default function App() {
                   </label>
                   <input
                     type="text"
-                    value={formData.date}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    value={activeFormData.date}
+                    onChange={(e) => updateFormData(activeTemplate.id, { date: e.target.value })}
                     placeholder="e.g. 19 November 2026"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
                   />
@@ -315,8 +399,8 @@ export default function App() {
                   </label>
                   <input
                     type="text"
-                    value={formData.time}
-                    onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                    value={activeFormData.time}
+                    onChange={(e) => updateFormData(activeTemplate.id, { time: e.target.value })}
                     placeholder="e.g. 07:00 PM onwards"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
                   />
@@ -330,8 +414,8 @@ export default function App() {
                 </label>
                 <input
                   type="text"
-                  value={formData.functionName}
-                  onChange={(e) => setFormData({ ...formData, functionName: e.target.value })}
+                  value={activeFormData.functionName}
+                  onChange={(e) => updateFormData(activeTemplate.id, { functionName: e.target.value })}
                   placeholder="e.g. Wedding Ceremony & Reception"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
                 />
@@ -345,8 +429,8 @@ export default function App() {
                   </label>
                   <input
                     type="text"
-                    value={formData.venue}
-                    onChange={(e) => setFormData({ ...formData, venue: e.target.value })}
+                    value={activeFormData.venue}
+                    onChange={(e) => updateFormData(activeTemplate.id, { venue: e.target.value })}
                     placeholder="e.g. BWSSB Rajatha Bhavan"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
                   />
@@ -358,8 +442,8 @@ export default function App() {
                   </label>
                   <input
                     type="text"
-                    value={formData.address}
-                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+                    value={activeFormData.address}
+                    onChange={(e) => updateFormData(activeTemplate.id, { address: e.target.value })}
                     placeholder="e.g. Malleshwaram, Bangalore"
                     className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
                   />
@@ -373,8 +457,8 @@ export default function App() {
                 </label>
                 <input
                   type="text"
-                  value={formData.mapUrl}
-                  onChange={(e) => setFormData({ ...formData, mapUrl: e.target.value })}
+                  value={activeFormData.mapUrl}
+                  onChange={(e) => updateFormData(activeTemplate.id, { mapUrl: e.target.value })}
                   placeholder="Paste Google Maps URL"
                   className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-xs font-mono"
                 />
@@ -396,11 +480,11 @@ export default function App() {
                   <input
                     type="text"
                     readOnly
-                    value={inviteLink}
+                    value={generateInviteLink(activeTemplate)}
                     className="flex-1 bg-white px-3 py-2 rounded-xl border border-neutral-300 text-xs text-neutral-600 font-mono select-all focus:outline-none"
                   />
                   <button
-                    onClick={handleCopy}
+                    onClick={() => handleCopy(generateInviteLink(activeTemplate))}
                     className="bg-black hover:bg-neutral-800 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 shrink-0"
                   >
                     {copied ? (
@@ -418,14 +502,14 @@ export default function App() {
                 </div>
 
                 <p className="text-[11px] text-neutral-500">
-                  Guests opening this link land <strong>directly on the full-screen invitation card</strong> with these details, with zero business website elements.
+                  Guests opening this link land <strong>directly on the full-screen invitation</strong> ({activeTemplate.title}) with these details.
                 </p>
               </div>
 
               {/* Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-3 pt-2">
                 <a
-                  href={inviteLink}
+                  href={generateInviteLink(activeTemplate)}
                   target="_blank"
                   rel="noreferrer"
                   className="flex-1 bg-black hover:bg-neutral-800 text-white font-semibold text-sm py-3 px-6 rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all text-center"
@@ -436,7 +520,7 @@ export default function App() {
 
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(false)}
+                  onClick={() => setActiveModalTemplateId(null)}
                   className="px-5 py-3 rounded-xl border border-neutral-300 hover:border-black text-sm font-semibold text-neutral-700 transition-colors"
                 >
                   Done

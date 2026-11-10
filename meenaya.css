@@ -1,13 +1,12 @@
 /* ==========================================================================
    MEENAYA TEMPLATE — SOUTH INDIAN PASTEL & CANVAS AESTHETICS
-   Clean restoration of Section 1 without watermarks or pricing
+   Exact restoration matching reference image 2 without watermark/pricing
    ========================================================================== */
 
 :root {
-  --color-sky-blue: #1b4975;
+  --color-sky-blue: #16385c;
   --color-gold: #e5b967;
   --color-warm-white: #fdfbf7;
-  --color-lantern-glow: rgba(255, 180, 200, 0.45);
 }
 
 *, *::before, *::after {
@@ -35,7 +34,7 @@ html, body {
   background: #143557;
 }
 
-/* ── HERO SECTION ── */
+/* ── HERO SECTION SCROLL TRACK ── */
 .hero {
   position: relative;
   width: 100%;
@@ -44,7 +43,7 @@ html, body {
 
 @media (max-width: 600px) {
   .hero {
-    height: 900px;
+    height: 1200px;
   }
 }
 
@@ -63,7 +62,7 @@ html, body {
   background: #143557;
 }
 
-/* ── BACKGROUND BLUE CANVAS & LANTERNS ── */
+/* ── 1. BLUE CANVAS BACKGROUND ── */
 .hero-bg-wrap {
   position: absolute;
   inset: 0;
@@ -81,132 +80,119 @@ html, body {
   display: block;
 }
 
-/* ── FLOATING LANTERNS GLOW PARTICLES ── */
-.lantern-particles {
+/* ── 2. SKY LAMPS (COMES DOWN ON SCROLL) ── */
+.hero-lamps-wrap {
   position: absolute;
   inset: 0;
-  pointer-events: none;
+  width: 100%;
+  height: 100%;
   z-index: 2;
-  overflow: hidden;
+  pointer-events: none;
+  transform: translate3d(0, var(--hero-lamps-y, 0px), 0);
+  will-change: transform;
 }
 
-.lantern {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 210, 230, 0.8) 0%, rgba(255, 140, 180, 0.3) 50%, transparent 70%);
-  filter: blur(8px);
-  animation: lanternFloat 6s ease-in-out infinite alternate;
+.hero-lamps {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  filter: drop-shadow(0 0 16px rgba(255, 170, 200, 0.4));
 }
 
-.l1 { width: 90px; height: 110px; top: 12%; left: 15%; animation-duration: 5.5s; }
-.l2 { width: 120px; height: 150px; top: 8%; left: 35%; animation-duration: 7s; }
-.l3 { width: 80px; height: 100px; top: 15%; right: 20%; animation-duration: 6s; }
-.l4 { width: 100px; height: 130px; top: 38%; left: 10%; animation-duration: 8s; }
-.l5 { width: 90px; height: 120px; top: 40%; right: 12%; animation-duration: 6.5s; }
-
-@keyframes lanternFloat {
-  0% { transform: translateY(0px) scale(1); opacity: 0.6; }
-  50% { opacity: 0.9; }
-  100% { transform: translateY(-16px) scale(1.06); opacity: 0.7; }
-}
-
-/* ── COUPLE TITLE ── */
+/* ── 3. COUPLE TYPOGRAPHY (MATCHING REFERENCE IMAGE 2) ── */
 .hero-title {
   position: absolute;
-  top: 26%;
+  top: 24%;
   left: 50%;
   transform: translate(-50%, var(--hero-title-y, 0px)) scale(var(--hero-title-scale, 1));
   opacity: var(--hero-title-opacity, 1);
   text-align: center;
-  z-index: 4;
+  z-index: 3;
   width: 90%;
   max-width: 580px;
   pointer-events: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transition: opacity 0.1s linear;
+  will-change: transform, opacity;
 }
 
 .hero-title h1 {
   font-family: 'Cinzel', serif;
-  font-size: clamp(34px, 7.5vw, 62px);
+  font-size: clamp(34px, 8vw, 64px);
   font-weight: 500;
   letter-spacing: 0.22em;
   color: #ffffff;
-  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 230, 200, 0.3);
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.5), 0 0 28px rgba(255, 230, 205, 0.25);
   line-height: 1.15;
   margin: 0;
-  padding-left: 0.22em; /* visual balance for tracking */
+  padding-left: 0.22em; /* balance letter spacing */
 }
 
 .weds-wrap {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 14px;
-  margin: 8px 0;
-  width: 100%;
-  max-width: 260px;
-}
-
-.weds-line {
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+  margin: 6px 0;
 }
 
 .weds-text {
   font-family: 'Cinzel', serif;
   font-size: clamp(12px, 2.8vw, 16px);
   font-weight: 400;
-  letter-spacing: 0.35em;
-  color: #fcebd2;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-  padding-left: 0.35em;
+  letter-spacing: 0.4em;
+  color: #faebd7;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  padding-left: 0.4em;
 }
 
 .invite-subtitle {
-  margin-top: 14px;
+  margin-top: 12px;
   font-family: 'Inter', sans-serif;
-  font-size: clamp(9px, 2.2vw, 12px);
+  font-size: clamp(8.5px, 2vw, 11px);
   font-weight: 500;
   letter-spacing: 0.28em;
   text-transform: uppercase;
   color: #d1e2f3;
-  opacity: 0.9;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  opacity: 0.95;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   padding-left: 0.28em;
 }
 
-/* ── TEMPLE GOPURAM ── */
-.hero-temple {
+/* ── 4. FULL CONTINUOUS TEMPLE STICKER (ASCENDS UP ON SCROLL) ── */
+.hero-temple-wrap {
   position: absolute;
   bottom: 0;
   left: 50%;
-  width: min(100vw, 680px);
-  height: auto;
-  max-width: none;
+  width: min(108vw, 700px);
   transform-origin: 50% 100%;
-  transform: translate3d(-50%, var(--hero-temple-y, 52%), 0) scale(var(--hero-temple-scale, 1.0));
-  z-index: 3;
+  transform: translate3d(-50%, var(--hero-temple-y, 74%), 0) scale(var(--hero-temple-scale, 1.0));
+  z-index: 4;
   pointer-events: none;
-  filter: drop-shadow(0 -8px 24px rgba(10, 25, 45, 0.5));
+  filter: drop-shadow(0 -10px 28px rgba(8, 20, 42, 0.6));
   will-change: transform;
 }
 
 @media (min-width: 1025px) {
-  .hero-temple {
-    width: min(65vw, 760px);
-    transform: translate3d(-50%, var(--hero-temple-y, 48%), 0) scale(var(--hero-temple-scale, 1.0));
+  .hero-temple-wrap {
+    width: min(58vw, 780px);
+    transform: translate3d(-50%, var(--hero-temple-y, 70%), 0) scale(var(--hero-temple-scale, 1.0));
   }
+}
+
+.hero-temple {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* ── SCROLL CUE ── */
 .scroll-cue {
   position: absolute;
   bottom: 24px;
-  right: 24px;
+  right: 20px;
   z-index: 6;
   display: flex;
   flex-direction: column;
@@ -219,19 +205,19 @@ html, body {
 
 .scroll-cue span {
   font-family: 'Inter', sans-serif;
-  font-size: 8px;
+  font-size: 7.5px;
   font-weight: 600;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: #f7e6ce;
-  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.8);
 }
 
 .scroll-mouse {
-  width: 16px;
-  height: 26px;
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
-  border-radius: 10px;
+  width: 15px;
+  height: 25px;
+  border: 1.5px solid rgba(255, 255, 255, 0.65);
+  border-radius: 9px;
   position: relative;
 }
 
@@ -240,7 +226,7 @@ html, body {
   top: 4px;
   left: 50%;
   width: 2px;
-  height: 6px;
+  height: 5px;
   background: #ffffff;
   border-radius: 1px;
   transform: translateX(-50%);
@@ -250,33 +236,33 @@ html, body {
 @keyframes mouseWheel {
   0% { transform: translate(-50%, 0); opacity: 0; }
   40% { opacity: 1; }
-  100% { transform: translate(-50%, 10px); opacity: 0; }
+  100% { transform: translate(-50%, 9px); opacity: 0; }
 }
 
 /* ── DISCREET AUDIO TOGGLE PILL ── */
 .audio-pill-btn {
   position: absolute;
   bottom: 24px;
-  left: 24px;
+  left: 20px;
   z-index: 10;
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 16px;
-  background: rgba(20, 45, 75, 0.75);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  gap: 7px;
+  padding: 8px 15px;
+  background: rgba(18, 40, 68, 0.8);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.28);
   border-radius: 9999px;
   color: #ffffff;
   cursor: pointer;
   transition: all 0.25s ease;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
 .audio-pill-btn:hover {
-  background: rgba(30, 65, 105, 0.9);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(28, 60, 98, 0.95);
+  border-color: rgba(255, 255, 255, 0.45);
   transform: translateY(-2px);
 }
 
@@ -285,24 +271,24 @@ html, body {
 }
 
 .audio-label {
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
 }
 
 .audio-bars {
   display: flex;
   align-items: flex-end;
-  gap: 2.5px;
-  height: 12px;
+  gap: 2px;
+  height: 11px;
 }
 
 .audio-bars i {
   display: block;
   width: 2px;
-  height: 4px;
-  background: #fcebd2;
+  height: 3px;
+  background: #faebd7;
   border-radius: 1px;
   transition: height 0.2s ease;
 }
@@ -322,7 +308,7 @@ html, body {
 
 @keyframes barBounce {
   0%, 100% { height: 3px; }
-  50% { height: 12px; }
+  50% { height: 11px; }
 }
 
 /* ── ATMOSPHERIC VIGNETTE ── */
@@ -331,5 +317,5 @@ html, body {
   inset: 0;
   z-index: 5;
   pointer-events: none;
-  background: radial-gradient(circle at center, transparent 40%, rgba(10, 25, 45, 0.4) 100%);
+  background: radial-gradient(circle at center, transparent 35%, rgba(10, 24, 45, 0.42) 100%);
 }

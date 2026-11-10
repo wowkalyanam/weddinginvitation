@@ -1,6 +1,6 @@
 // ==========================================================================
 // MEENAYA TEMPLATE INTERACTIVE SCRIPT
-// Smooth Scroll Temple Ascent & Audio Handling
+// Temple sticker ascension & downward lamps drift on scroll
 // ==========================================================================
 
 function initMeenaya() {
@@ -12,20 +12,19 @@ function initMeenaya() {
 
   let isMobile = window.innerWidth <= 600;
   let isTablet = window.innerWidth > 600 && window.innerWidth <= 1024;
-  let heroTravel = isMobile ? 500 : (isTablet ? 700 : 1000);
+  let heroTravel = isMobile ? 800 : (isTablet ? 1100 : 1400);
   let vh = window.innerHeight;
 
   function handleResize() {
     isMobile = window.innerWidth <= 600;
     isTablet = window.innerWidth > 600 && window.innerWidth <= 1024;
-    heroTravel = isMobile ? 500 : (isTablet ? 700 : 1000);
+    heroTravel = isMobile ? 800 : (isTablet ? 1100 : 1400);
     vh = window.innerHeight;
     updateScroll();
   }
 
   window.addEventListener('resize', handleResize, { passive: true });
 
-  // Clamp helper
   const clamp = (val, min, max) => Math.min(Math.max(val, min), max);
 
   let lastProgress = -1;
@@ -37,22 +36,25 @@ function initMeenaya() {
     if (progress !== lastProgress) {
       lastProgress = progress;
 
-      // Temple ascends smoothly:
-      // Mobile: starts at 52% down and ascends to 10%
-      // Desktop: starts at 48% down and ascends to 8%
-      const startY = isMobile ? 52.0 : 48.0;
-      const endY = isMobile ? 12.0 : 8.0;
-      const templeY = startY - progress * (startY - endY);
-      const templeScale = 1.0 + progress * 0.08;
+      // 1. Full Temple Sticker: Starts showing top spires and ascends all the way to base
+      const templeStart = isMobile ? 74.0 : 70.0;
+      const templeEnd = isMobile ? 0.0 : -2.0;
+      const templeY = templeStart - progress * (templeStart - templeEnd);
+      const templeScale = 1.0 + progress * 0.05;
 
-      const titleY = -progress * vh * 0.3;
-      const titleScale = 1.0 - progress * 0.1;
-      const titleOpacity = clamp(1.0 - progress * 2.5, 0, 1);
+      // 2. Sky Lamps: Moves DOWN as user scrolls (downward parallax)
+      const lampsY = progress * (isMobile ? 180.0 : 220.0);
+
+      // 3. Title: Moves up and fades out
+      const titleY = -progress * vh * 0.28;
+      const titleScale = 1.0 - progress * 0.08;
+      const titleOpacity = clamp(1.0 - progress * 2.6, 0, 1);
       const cueOpacity = clamp(1.0 - progress * 3.0, 0, 1);
 
       if (stage) {
         stage.style.setProperty('--hero-temple-y', `${templeY.toFixed(1)}%`);
         stage.style.setProperty('--hero-temple-scale', templeScale.toFixed(3));
+        stage.style.setProperty('--hero-lamps-y', `${lampsY.toFixed(1)}px`);
         stage.style.setProperty('--hero-title-y', `${titleY.toFixed(1)}px`);
         stage.style.setProperty('--hero-title-scale', titleScale.toFixed(3));
         stage.style.setProperty('--hero-title-opacity', titleOpacity.toFixed(3));
@@ -73,7 +75,7 @@ function initMeenaya() {
     }
   }, { passive: true });
 
-  // Initial trigger
+  // Initial calculation
   updateScroll();
 
   // Audio Toggle Handling
@@ -108,7 +110,6 @@ function initMeenaya() {
       });
     }
 
-    // First user interaction anywhere plays audio
     const handleFirstGesture = () => {
       if (!isPlaying) {
         audio.play().then(() => {

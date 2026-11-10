@@ -921,11 +921,13 @@
       }
     }
 
-    /* SECTION 4: Celebration Journey / Our Events Section */
-    .events-section {
+    /* SECTION 4 & 5: Events & Venue Sections */
+    .events-section,
+    .venue-section {
       position: relative;
       width: 100%;
       min-height: 100vh;
+      min-height: 100svh;
       flex-shrink: 0;
       scroll-snap-align: start;
       scroll-snap-stop: normal;
@@ -939,7 +941,8 @@
     }
 
     .events-header,
-    .events-list {
+    .events-list,
+    .venue-card-wrapper {
       position: relative;
       z-index: 2;
     }
@@ -2505,7 +2508,7 @@
       <div class="events-list" id="eventsList" role="list" aria-label="Wedding events">
         
         <!-- 1. Reception (Left Fan) -->
-        <article class="event-card event-card--left" role="listitem" aria-label="1 of 3: Reception">
+        <article class="event-card event-card--left" role="listitem" aria-label="1 of 2: Reception">
           <div class="event-card-inner">
             <div class="event-card-panel">
               <img class="event-card-frame" src="images/events/Event_Card_left.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
@@ -2524,7 +2527,7 @@
         </article>
 
         <!-- 2. Muhurtham (Right Fan) -->
-        <article class="event-card event-card--right" role="listitem" aria-label="2 of 3: Muhurtham">
+        <article class="event-card event-card--right" role="listitem" aria-label="2 of 2: Muhurtham">
           <div class="event-card-inner">
             <div class="event-card-panel">
               <img class="event-card-frame" src="images/events/Event_Card_right.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
@@ -2542,22 +2545,47 @@
           </div>
         </article>
 
-        <!-- 3. Venue & Location (Left Fan) -->
-        <article class="event-card event-card--left" role="listitem" aria-label="3 of 3: Venue & Location" id="venueCard">
+      </div>
+    </section>
+
+    <!-- SECTION 5: Dedicated Venue & Location Page (Next Page after Muhurtham) -->
+    <section class="section venue-section" id="venue" aria-labelledby="venueTitle">
+      <!-- Decorative Pichwai motifs scattered behind the card -->
+      <div class="events-decor" aria-hidden="true">
+        <img class="evt-decor evt-decor--jhoomer evt-decor--jhoomer-l" src="images/events/event_3.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--jhoomer evt-decor--jhoomer-r" src="images/events/event_3.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--chandelier evt-decor--chandelier-1" src="images/events/event_1.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--chandelier evt-decor--chandelier-2" src="images/events/event_1.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--nazar evt-decor--nazar-1" src="images/events/event_6.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--nazar evt-decor--nazar-2" src="images/events/event_6.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--peacock" src="images/events/event_4.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--camel"   src="images/events/event_2.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        <img class="evt-decor evt-decor--horse"   src="images/events/event_5.webp" alt="" decoding="async" loading="lazy" draggable="false">
+      </div>
+
+      <div class="events-header">
+        <p class="events-eyebrow">Location &amp; Directions</p>
+        <h2 class="events-title" id="venueTitle">The Venue</h2>
+        <img class="events-title-rule" src="images/events/border_4.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+      </div>
+
+      <!-- Centered Royal Fan Card — EXACT SAME FRAME AS MUHURTHAM (Event_Card_right.webp) -->
+      <div class="venue-card-wrapper" style="display: flex; justify-content: center; width: 100%; margin-top: clamp(14px, 2.5vh, 28px);">
+        <article class="event-card event-card--right" role="region" aria-label="Venue and Location" id="venueCard">
           <div class="event-card-inner">
             <div class="event-card-panel">
-              <img class="event-card-frame" src="images/events/Event_Card_left.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+              <img class="event-card-frame" src="images/events/Event_Card_right.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
               <div class="event-card-body">
-                <img class="event-illustration" src="images/events/reception_mandap.webp" alt="Venue & Location" decoding="async" draggable="false">
-                <h3 class="event-name" style="font-size: clamp(2.6rem, 10vw, 3.5rem);">Venue</h3>
+                <img class="event-illustration" src="images/events/shaadi.webp" alt="Wedding Venue Mandap" decoding="async" draggable="false">
+                <h3 class="event-name" style="font-size: clamp(2.8rem, 11vw, 3.8rem);">Venue</h3>
                 <div class="event-rule" aria-hidden="true"></div>
-                <p class="event-venue-name" id="evtVenueName" style="font-family: 'Cinzel', serif; font-size: clamp(0.88rem, 3.4vw, 1.05rem); font-weight: 600; color: #16305c; letter-spacing: 0.08em; margin-top: 4px;">
-                  BWSSB Rajatha Bhavan
+                <p class="event-venue-name" id="evtVenueName" style="font-family: 'Cinzel', serif; font-size: clamp(0.95rem, 3.8vw, 1.15rem); font-weight: 600; color: #16305c; letter-spacing: 0.08em; margin-top: 6px;">
+                  BWSSB RAJATHA BHAVAN
                 </p>
-                <p class="event-venue-address" id="evtVenueAddress" style="font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: clamp(0.92rem, 3.4vw, 1.08rem); color: #3a4a6b; margin-top: 4px; line-height: 1.35;">
+                <p class="event-venue-address" id="evtVenueAddress" style="font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: clamp(0.95rem, 3.6vw, 1.12rem); color: #3a4a6b; margin-top: 6px; line-height: 1.4;">
                   18th Cross, Malleshwaram<br>Bengaluru, Karnataka
                 </p>
-                <a class="event-map" id="evtVenueMap" href="https://www.google.com/maps/search/?api=1&amp;query=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore" target="_blank" rel="noopener noreferrer" style="margin-top: 12px;">
+                <a class="event-map" id="evtVenueMap" href="https://www.google.com/maps/search/?api=1&amp;query=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore" target="_blank" rel="noopener noreferrer" style="margin-top: 14px;">
                   <svg width="10" height="12" viewBox="0 0 11 14" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:-1px"><path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 4.12 5.5 8.5 5.5 8.5S11 9.62 11 5.5C11 2.46 8.54 0 5.5 0Z" fill="currentColor" opacity=".7"/><circle cx="5.5" cy="5.5" r="2" fill="#faf4e8"/></svg>
                   OPEN IN MAPS
                 </a>
@@ -2565,7 +2593,6 @@
             </div>
           </div>
         </article>
-
       </div>
     </section>
 
@@ -2777,6 +2804,7 @@
           <li role="none"><a class="nav-link" href="#heroSection" role="menuitem"><span class="nav-link-label">Home</span></a></li>
           <li role="none"><a class="nav-link" href="#invite" role="menuitem"><span class="nav-link-label">Invitation</span></a></li>
           <li role="none"><a class="nav-link" href="#events" role="menuitem"><span class="nav-link-label">Events</span></a></li>
+          <li role="none"><a class="nav-link" href="#venue" role="menuitem"><span class="nav-link-label">Venue</span></a></li>
           <li role="none"><a class="nav-link" href="#couple" role="menuitem"><span class="nav-link-label">Meet the Couple</span></a></li>
           <li role="none"><a class="nav-link" href="#gallery" role="menuitem"><span class="nav-link-label">Gallery</span></a></li>
           <li role="none"><a class="nav-link" href="#rsvp" role="menuitem"><span class="nav-link-label">RSVP</span></a></li>
@@ -2820,6 +2848,6 @@
 
   </div>
 
-  <script type="module" src="template2.js?v=35"></script>
+  <script type="module" src="template2.js?v=36"></script>
 </body>
 </html>

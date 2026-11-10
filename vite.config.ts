@@ -20,6 +20,7 @@ export default defineConfig({
         invite: path.resolve(__dirname, 'invite.html'),
         meenaya: path.resolve(__dirname, 'meenaya.html'),
         template2: path.resolve(__dirname, 'template2.html'),
+        kasavu: path.resolve(__dirname, 'kasavu.html'),
       },
     },
   },

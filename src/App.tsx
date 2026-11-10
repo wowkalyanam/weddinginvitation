@@ -93,6 +93,24 @@ const TEMPLATES: TemplateItem[] = [
       mapUrl: 'https://maps.google.com/?q=Oberoi+Udaivilas+Udaipur',
     },
   },
+  {
+    id: 'kasavu-kerala',
+    title: 'Kerala Kasavu Backwaters',
+    subtitle: "God's Own Country · 3-Layer Parallax · Nilavilakku Ceremony",
+    badge: 'Exclusive',
+    image: '/images/cards/kasavu-cover.webp',
+    demoUrl: '/kasavu.html',
+    defaultData: {
+      bride: 'Lakshmi',
+      groom: 'Vishnu',
+      date: '12 December 2026',
+      time: '08:00 AM',
+      functionName: 'Kalyanam & Backwater Feast',
+      venue: 'Kumarakom Lake Resort',
+      address: 'Kottayam, Kerala',
+      mapUrl: 'https://maps.google.com/?q=Kumarakom+Lake+Resort+Kerala',
+    },
+  },
 ];
 
 export default function App() {
@@ -137,6 +155,7 @@ export default function App() {
     'pichwai-palace': { ...TEMPLATES[0].defaultData },
     'meenaya-pastel': { ...TEMPLATES[1].defaultData },
     'tirupati-vedic': { ...TEMPLATES[2].defaultData },
+    'kasavu-kerala': { ...TEMPLATES[3].defaultData },
   });
 
   const activeTemplate = TEMPLATES.find((t) => t.id === activeModalTemplateId) || TEMPLATES[0];

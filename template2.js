@@ -419,14 +419,14 @@ function initApp() {
   const gallerySection = document.getElementById('gallery');
   if (gallerySection) {
     const photos = [
-      { src: 'images/gallery/couple_1.webp', caption: 'Moments we love' },
-      { src: 'images/gallery/couple_2.webp', caption: 'Moments we love' },
-      { src: 'images/gallery/couple_3.webp', caption: 'Moments we love' },
-      { src: 'images/gallery/couple_4.webp', caption: 'Moments we love' }
+      { src: '/images/gallery/couple_1.webp', caption: 'Moments we love' },
+      { src: '/images/gallery/couple_2.webp', caption: 'Moments we love' },
+      { src: '/images/gallery/couple_3.webp', caption: 'Moments we love' },
+      { src: '/images/gallery/couple_4.webp', caption: 'Moments we love' }
     ];
 
     const featured = document.getElementById('galleryFeatured');
-    const featuredPhoto = document.getElementById('galleryFeaturedPhoto');
+    const featuredPhoto = document.getElementById('galleryMainPhoto') || document.getElementById('galleryFeaturedPhoto');
     const dotsContainer = document.getElementById('galleryDots');
     const thumbsContainer = document.getElementById('galleryThumbs');
     const prevBtn = document.getElementById('galleryPrev');

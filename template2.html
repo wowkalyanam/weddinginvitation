@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Pinyon+Script&family=Tangerine:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:wght@400;500;600&family=Luxurious+Script&family=Pinyon+Script&family=Tangerine:wght@400;700&display=swap">
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -950,6 +950,241 @@
     .venue-card-wrapper {
       position: relative;
       z-index: 2;
+    }
+
+    /* Venue Map Preview Card & Interactive Controls */
+    .venue-map-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      margin-top: clamp(14px, 2.6vh, 26px);
+      position: relative;
+      z-index: 2;
+    }
+
+    .venue-map-card {
+      display: block;
+      position: relative;
+      width: min(340px, 82vw);
+      aspect-ratio: 1 / 1;
+      border: 6px solid #fff8e9;
+      border-radius: clamp(22px, 5.5vw, 28px);
+      overflow: hidden;
+      box-shadow: 0 18px 40px rgba(22, 48, 92, 0.22), 0 4px 14px rgba(11, 21, 44, 0.14);
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s ease;
+      outline: none;
+      -webkit-tap-highlight-color: transparent;
+      margin: 0 auto;
+      background: #e8ded2;
+    }
+
+    .venue-map-card:hover,
+    .venue-map-card:focus-visible {
+      transform: translateY(-4px) scale(1.015);
+      box-shadow: 0 26px 52px rgba(22, 48, 92, 0.3), 0 8px 20px rgba(11, 21, 44, 0.18);
+    }
+
+    .venue-map-card:active {
+      transform: scale(0.985);
+    }
+
+    .venue-map-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      filter: contrast(1.04) saturate(1.08);
+      transition: transform 0.45s ease;
+    }
+
+    .venue-map-card:hover .venue-map-img {
+      transform: scale(1.05);
+    }
+
+    .map-card-vignette {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(rgba(0, 0, 0, 0) 42%, rgba(24, 8, 4, 0.78));
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .map-pin-badge {
+      z-index: 3;
+      position: absolute;
+      top: 46%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+    }
+
+    .map-pin-pulse {
+      position: absolute;
+      top: 14px;
+      left: 50%;
+      width: 56px;
+      height: 56px;
+      background: rgba(22, 48, 92, 0.45);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      animation: 2s ease-out infinite pin-pulse;
+      pointer-events: none;
+    }
+
+    .map-pin-icon {
+      width: 48px;
+      height: 48px;
+      background: #16305c;
+      color: #d8a957;
+      border: 2px solid #fff8e9;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      box-shadow: 0 10px 24px rgba(11, 21, 44, 0.4);
+      animation: 2s ease-in-out infinite pin-bounce;
+    }
+
+    .map-pin-label {
+      margin-top: 8px;
+      background: rgba(255, 248, 233, 0.96);
+      color: #16305c;
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.72rem, 2.6vw, 0.85rem);
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      padding: 7px 16px;
+      border-radius: 999px;
+      box-shadow: 0 4px 16px rgba(11, 21, 44, 0.22);
+      white-space: nowrap;
+      border: 1px solid rgba(22, 48, 92, 0.28);
+    }
+
+    .map-card-caption {
+      z-index: 2;
+      position: absolute;
+      bottom: 14px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      pointer-events: none;
+    }
+
+    .map-card-caption small {
+      letter-spacing: 0.2em;
+      font: 600 8px / 1 'Cinzel', serif;
+      color: rgba(255, 248, 233, 0.95);
+      text-transform: uppercase;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+    }
+
+    .map-card-caption strong {
+      color: #d8a957;
+      font: 400 clamp(22px, 5.5vw, 28px) / 0.85 'Pinyon Script', cursive;
+      font-weight: normal;
+      text-shadow: 0 1px 6px rgba(0, 0, 0, 0.65);
+    }
+
+    .venue-address-block {
+      margin-top: 14px;
+      text-align: center;
+      line-height: 1.35;
+    }
+
+    .venue-addr-street {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.92rem, 3.6vw, 1.12rem);
+      font-weight: 600;
+      color: #16305c;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .venue-addr-city {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-style: italic;
+      font-size: clamp(1rem, 3.8vw, 1.22rem);
+      color: #3a4a6b;
+      margin-top: 3px;
+    }
+
+    .venue-directions-btn {
+      margin-top: 14px;
+      color: #16305c;
+      background: rgba(255, 248, 233, 0.95);
+      border: 1.5px solid rgba(22, 48, 92, 0.35);
+      border-radius: 999px;
+      align-items: center;
+      gap: 10px;
+      padding: 11px 26px;
+      font-size: clamp(13px, 3.5vw, 15px);
+      text-decoration: none;
+      display: inline-flex;
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      box-shadow: 0 6px 18px rgba(22, 48, 92, 0.12);
+      transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+      cursor: pointer;
+    }
+
+    .venue-directions-btn:hover {
+      transform: translateY(-2px);
+      background: #16305c;
+      color: #fff8e9;
+      border-color: #16305c;
+      box-shadow: 0 10px 24px rgba(22, 48, 92, 0.25);
+    }
+
+    .venue-directions-btn b {
+      color: #d8a957;
+      font-size: 1.15em;
+      font-weight: 700;
+      transition: transform 0.2s ease;
+    }
+
+    .venue-directions-btn:hover b {
+      transform: translate(2px, -2px);
+      color: #f1cf88;
+    }
+
+    .venue-directions-btn b {
+      font-size: 1.15em;
+      font-weight: 700;
+      transition: transform 0.2s ease;
+    }
+
+    .venue-directions-btn:hover b {
+      transform: translate(2px, -2px);
+    }
+
+    @keyframes pin-bounce {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-7px);
+      }
+    }
+
+    @keyframes pin-pulse {
+      0% {
+        transform: translate(-50%, -50%) scale(0.6);
+        opacity: 0.95;
+      }
+      100% {
+        transform: translate(-50%, -50%) scale(1.6);
+        opacity: 0;
+      }
     }
 
     .events-decor {
@@ -2575,30 +2810,37 @@
         <img class="events-title-rule" src="images/events/border_4.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
       </div>
 
-      <!-- Centered Royal Fan Card — EXACT SAME FRAME AS MUHURTHAM (Event_Card_right.webp) -->
-      <div class="venue-card-wrapper" style="display: flex; justify-content: center; width: 100%; margin-top: clamp(14px, 2.5vh, 28px);">
-        <article class="event-card event-card--right" role="region" aria-label="Venue and Location" id="venueCard">
-          <div class="event-card-inner">
-            <div class="event-card-panel">
-              <img class="event-card-frame" src="images/events/Event_Card_right.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
-              <div class="event-card-body">
-                <img class="event-illustration" src="images/events/shaadi.webp" alt="Wedding Venue Mandap" decoding="async" draggable="false">
-                <h3 class="event-name" style="font-size: clamp(2.8rem, 11vw, 3.8rem);">Venue</h3>
-                <div class="event-rule" aria-hidden="true"></div>
-                <p class="event-venue-name" id="evtVenueName" style="font-family: 'Cinzel', serif; font-size: clamp(0.95rem, 3.8vw, 1.15rem); font-weight: 600; color: #16305c; letter-spacing: 0.08em; margin-top: 6px;">
-                  BWSSB RAJATHA BHAVAN
-                </p>
-                <p class="event-venue-address" id="evtVenueAddress" style="font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: clamp(0.95rem, 3.6vw, 1.12rem); color: #3a4a6b; margin-top: 6px; line-height: 1.4;">
-                  18th Cross, Malleshwaram<br>Bengaluru, Karnataka
-                </p>
-                <a class="event-map" id="evtVenueMap" href="https://www.google.com/maps/search/?api=1&amp;query=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore" target="_blank" rel="noopener noreferrer" style="margin-top: 14px;">
-                  <svg width="10" height="12" viewBox="0 0 11 14" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:-1px"><path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 4.12 5.5 8.5 5.5 8.5S11 9.62 11 5.5C11 2.46 8.54 0 5.5 0Z" fill="currentColor" opacity=".7"/><circle cx="5.5" cy="5.5" r="2" fill="#faf4e8"/></svg>
-                  OPEN IN MAPS
-                </a>
-              </div>
+      <!-- Centered Interactive Venue Map Card & Directions -->
+      <div class="venue-card-wrapper venue-map-wrapper reveal-item" id="venueCard">
+        <a class="venue-map-card" id="venueMapCard" href="https://www.google.com/maps/dir/?api=1&destination=BWSSB+Rajatha+Bhavan,+18th+Cross,+Malleshwaram,+Bengaluru" target="_blank" rel="noopener noreferrer" role="button" aria-label="Open Google Maps directions to BWSSB Rajatha Bhavan, Malleshwaram">
+          <img src="images/venue-map.jpg" alt="Map view of BWSSB Rajatha Bhavan, Malleshwaram, Bengaluru" class="venue-map-img" width="768" height="768" loading="lazy" decoding="async" draggable="false">
+          
+          <div class="map-pin-badge" aria-hidden="true">
+            <div class="map-pin-pulse"></div>
+            <div class="map-pin-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
             </div>
+            <span class="map-pin-label" id="evtVenueName">BWSSB RAJATHA BHAVAN</span>
           </div>
-        </article>
+
+          <div class="map-card-vignette" aria-hidden="true"></div>
+
+          <figcaption class="map-card-caption">
+            <small>18TH CROSS · MALLESHWARAM</small>
+            <strong class="map-card-script">Bengaluru, Karnataka</strong>
+          </figcaption>
+        </a>
+
+        <div class="venue-address-block">
+          <p class="venue-addr-street" id="evtVenueAddress">18th Cross, Malleshwaram</p>
+          <p class="venue-addr-city">Bengaluru, Karnataka</p>
+        </div>
+
+        <a class="venue-directions-btn" id="evtVenueMap" href="https://www.google.com/maps/dir/?api=1&destination=BWSSB+Rajatha+Bhavan,+18th+Cross,+Malleshwaram,+Bengaluru" target="_blank" rel="noopener noreferrer">
+          Get directions <b>↗</b>
+        </a>
       </div>
     </section>
 

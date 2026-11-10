@@ -74,9 +74,12 @@ function initApp() {
     const evtVAddr = document.getElementById('evtVenueAddress');
     if (evtVAddr && paramAddress) evtVAddr.textContent = paramAddress;
     const evtVMap = document.getElementById('evtVenueMap');
-    if (evtVMap) {
+    const vMapCard = document.getElementById('venueMapCard');
+    if (paramVenue || paramAddress) {
       const q = [paramVenue, paramAddress].filter(Boolean).join(' ');
-      if (q) evtVMap.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+      const mapUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(q)}`;
+      if (evtVMap) evtVMap.href = mapUrl;
+      if (vMapCard) vMapCard.href = mapUrl;
     }
   }
 

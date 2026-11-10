@@ -2505,12 +2505,12 @@
       <div class="events-list" id="eventsList" role="list" aria-label="Wedding events">
         
         <!-- 1. Reception (Left Fan) -->
-        <article class="event-card event-card--left" role="listitem" aria-label="1 of 2: Reception">
+        <article class="event-card event-card--left" role="listitem" aria-label="1 of 3: Reception">
           <div class="event-card-inner">
             <div class="event-card-panel">
               <img class="event-card-frame" src="images/events/Event_Card_left.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
               <div class="event-card-body">
-                <img class="event-illustration" src="images/events/reception_mandap.webp" alt="Reception" decoding="async" draggable="false">
+                <img class="event-illustration" src="images/events/reception.webp" alt="Reception" decoding="async" draggable="false">
                 <h3 class="event-name">Reception</h3>
                 <div class="event-rule" aria-hidden="true"></div>
                 <p class="event-datetime">
@@ -2518,17 +2518,13 @@
                   <span class="event-time">7:00 PM</span>
                 </p>
                 <p class="event-venue">BWSSB Rajatha Bhavan<br>Malleshwaram, Bangalore</p>
-                <a class="event-map" href="https://www.google.com/maps/search/?api=1&amp;query=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore" target="_blank" rel="noopener noreferrer">
-                  <svg width="10" height="12" viewBox="0 0 11 14" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:-1px"><path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 4.12 5.5 8.5 5.5 8.5S11 9.62 11 5.5C11 2.46 8.54 0 5.5 0Z" fill="currentColor" opacity=".7"/><circle cx="5.5" cy="5.5" r="2" fill="#faf4e8"/></svg>
-                  OPEN IN MAPS
-                </a>
               </div>
             </div>
           </div>
         </article>
 
         <!-- 2. Muhurtham (Right Fan) -->
-        <article class="event-card event-card--right" role="listitem" aria-label="2 of 2: Muhurtham">
+        <article class="event-card event-card--right" role="listitem" aria-label="2 of 3: Muhurtham">
           <div class="event-card-inner">
             <div class="event-card-panel">
               <img class="event-card-frame" src="images/events/Event_Card_right.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
@@ -2541,6 +2537,30 @@
                   <span class="event-time">between 9:15 AM and 10:15 AM</span>
                 </p>
                 <p class="event-note">(Dhanus Lagna)</p>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. Venue & Location (Left Fan) -->
+        <article class="event-card event-card--left" role="listitem" aria-label="3 of 3: Venue & Location" id="venueCard">
+          <div class="event-card-inner">
+            <div class="event-card-panel">
+              <img class="event-card-frame" src="images/events/Event_Card_left.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+              <div class="event-card-body">
+                <img class="event-illustration" src="images/events/reception_mandap.webp" alt="Venue & Location" decoding="async" draggable="false">
+                <h3 class="event-name" style="font-size: clamp(2.6rem, 10vw, 3.5rem);">Venue</h3>
+                <div class="event-rule" aria-hidden="true"></div>
+                <p class="event-venue-name" id="evtVenueName" style="font-family: 'Cinzel', serif; font-size: clamp(0.88rem, 3.4vw, 1.05rem); font-weight: 600; color: #16305c; letter-spacing: 0.08em; margin-top: 4px;">
+                  BWSSB Rajatha Bhavan
+                </p>
+                <p class="event-venue-address" id="evtVenueAddress" style="font-family: 'Cormorant Garamond', Georgia, serif; font-style: italic; font-size: clamp(0.92rem, 3.4vw, 1.08rem); color: #3a4a6b; margin-top: 4px; line-height: 1.35;">
+                  18th Cross, Malleshwaram<br>Bengaluru, Karnataka
+                </p>
+                <a class="event-map" id="evtVenueMap" href="https://www.google.com/maps/search/?api=1&amp;query=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore" target="_blank" rel="noopener noreferrer" style="margin-top: 12px;">
+                  <svg width="10" height="12" viewBox="0 0 11 14" fill="none" aria-hidden="true" style="display:inline-block;vertical-align:-1px"><path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 4.12 5.5 8.5 5.5 8.5S11 9.62 11 5.5C11 2.46 8.54 0 5.5 0Z" fill="currentColor" opacity=".7"/><circle cx="5.5" cy="5.5" r="2" fill="#faf4e8"/></svg>
+                  OPEN IN MAPS
+                </a>
               </div>
             </div>
           </div>
@@ -2800,6 +2820,6 @@
 
   </div>
 
-  <script type="module" src="template2.js?v=34"></script>
+  <script type="module" src="template2.js?v=35"></script>
 </body>
 </html>

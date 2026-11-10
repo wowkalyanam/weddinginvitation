@@ -69,6 +69,15 @@ function initApp() {
     if (invVenue) {
       invVenue.textContent = [paramVenue, paramAddress].filter(Boolean).join(', ');
     }
+    const evtVName = document.getElementById('evtVenueName');
+    if (evtVName && paramVenue) evtVName.textContent = paramVenue;
+    const evtVAddr = document.getElementById('evtVenueAddress');
+    if (evtVAddr && paramAddress) evtVAddr.textContent = paramAddress;
+    const evtVMap = document.getElementById('evtVenueMap');
+    if (evtVMap) {
+      const q = [paramVenue, paramAddress].filter(Boolean).join(' ');
+      if (q) evtVMap.href = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+    }
   }
 
   if (paramBride && paramGroom) {

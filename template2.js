@@ -29,12 +29,13 @@ function initApp() {
   window.scrollTo(0, 0);
 
   // Dynamic URL parameters support (Dharani & Manu remains default base data)
+  // Supports both compact (b, g, d, v, a) and verbose (bride, groom, date, venue, address) keys
   const urlParams = new URLSearchParams(window.location.search);
-  const paramBride = urlParams.get('bride');
-  const paramGroom = urlParams.get('groom');
-  const paramDate = urlParams.get('date');
-  const paramVenue = urlParams.get('venue');
-  const paramAddress = urlParams.get('address');
+  const paramBride = urlParams.get('b') || urlParams.get('bride');
+  const paramGroom = urlParams.get('g') || urlParams.get('groom');
+  const paramDate = urlParams.get('d') || urlParams.get('date');
+  const paramVenue = urlParams.get('v') || urlParams.get('venue');
+  const paramAddress = urlParams.get('a') || urlParams.get('address');
 
   if (paramBride) {
     const el = document.getElementById('heroBride');

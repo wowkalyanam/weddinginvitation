@@ -21,15 +21,15 @@ function clamp(val, min = 0, max = 1) {
   return Math.min(Math.max(val, min), max);
 }
 
-// Dynamic Customization from Shareable URL
+// Dynamic Customization from Shareable URL (supports compact & verbose keys)
 const urlParams = new URLSearchParams(window.location.search);
-const customBride = urlParams.get('bride');
-const customGroom = urlParams.get('groom');
-const customDate = urlParams.get('date');
-const customTime = urlParams.get('time');
-const customVenue = urlParams.get('venue');
-const customAddress = urlParams.get('address');
-const customMapUrl = urlParams.get('map');
+const customBride = urlParams.get('b') || urlParams.get('bride');
+const customGroom = urlParams.get('g') || urlParams.get('groom');
+const customDate = urlParams.get('d') || urlParams.get('date');
+const customTime = urlParams.get('t') || urlParams.get('time');
+const customVenue = urlParams.get('v') || urlParams.get('venue');
+const customAddress = urlParams.get('a') || urlParams.get('address');
+const customMapUrl = urlParams.get('m') || urlParams.get('map');
 
 // Event Data (Single Event: Wedding Ceremony)
 const eventData = [

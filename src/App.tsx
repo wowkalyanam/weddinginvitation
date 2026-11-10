@@ -154,17 +154,21 @@ export default function App() {
 
   const generateInviteLink = (template: TemplateItem) => {
     const data = templateForms[template.id] || template.defaultData;
-    const params = new URLSearchParams({
-      bride: data.bride,
-      groom: data.groom,
-      date: data.date,
-      time: data.time,
-      venue: data.venue,
-      address: data.address,
-      map: data.mapUrl,
-    });
+    const def = template.defaultData;
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
-    return `${baseUrl}${template.demoUrl}?${params.toString()}`;
+
+    // Compact URL Generator: Only include parameters that differ from the template default
+    const params = new URLSearchParams();
+    if (data.bride && data.bride.trim() !== def.bride.trim()) params.set('b', data.bride.trim());
+    if (data.groom && data.groom.trim() !== def.groom.trim()) params.set('g', data.groom.trim());
+    if (data.date && data.date.trim() !== def.date.trim()) params.set('d', data.date.trim());
+    if (data.time && data.time.trim() !== def.time.trim()) params.set('t', data.time.trim());
+    if (data.venue && data.venue.trim() !== def.venue.trim()) params.set('v', data.venue.trim());
+    if (data.address && data.address.trim() !== def.address.trim()) params.set('a', data.address.trim());
+    if (data.mapUrl && data.mapUrl.trim() !== def.mapUrl.trim()) params.set('m', data.mapUrl.trim());
+
+    const queryString = params.toString();
+    return queryString ? `${baseUrl}${template.demoUrl}?${queryString}` : `${baseUrl}${template.demoUrl}`;
   };
 
   const handleCopy = (link: string) => {

@@ -9,7 +9,11 @@ import {
   Calendar,
   SlidersHorizontal,
   Eye,
-  LayoutGrid
+  EyeOff,
+  LayoutGrid,
+  Lock,
+  ArrowRight,
+  ShieldCheck
 } from 'lucide-react';
 
 interface TemplateFormData {
@@ -92,9 +96,41 @@ const TEMPLATES: TemplateItem[] = [
 ];
 
 export default function App() {
+  // Password Protection for Home Page: 'WOW@89'
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return sessionStorage.getItem('wow_home_authenticated') === 'true';
+    }
+    return false;
+  });
+  const [passwordInput, setPasswordInput] = useState<string>('');
+  const [passwordError, setPasswordError] = useState<string>('');
+  const [isShaking, setIsShaking] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
   const [filterId, setFilterId] = useState<string>('all');
   const [activeModalTemplateId, setActiveModalTemplateId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+
+  const handlePasswordSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (passwordInput.trim() === 'WOW@89') {
+      sessionStorage.setItem('wow_home_authenticated', 'true');
+      setIsAuthenticated(true);
+      setPasswordError('');
+    } else {
+      setPasswordError('Incorrect password. Please enter the valid access code.');
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 500);
+    }
+  };
+
+  const handleLock = () => {
+    sessionStorage.removeItem('wow_home_authenticated');
+    setIsAuthenticated(false);
+    setPasswordInput('');
+    setPasswordError('');
+  };
 
   // Separate, independent form state per template — ensuring data never mixes
   const [templateForms, setTemplateForms] = useState<Record<string, TemplateFormData>>({
@@ -141,6 +177,103 @@ export default function App() {
     ? TEMPLATES 
     : TEMPLATES.filter((t) => t.id === filterId);
 
+  // ── PASSWORD GATE (Passcode: WOW@89) ──
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-[#faf9f6] text-neutral-900 font-sans flex flex-col justify-between selection:bg-neutral-900 selection:text-white relative overflow-hidden">
+        {/* Subtle decorative background glow */}
+        <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+          <div className="w-[500px] h-[500px] bg-amber-100/50 rounded-full blur-3xl -translate-y-12"></div>
+        </div>
+
+        {/* Minimal Header */}
+        <header className="w-full pt-8 pb-4 relative z-10">
+          <div className="max-w-6xl mx-auto px-6 sm:px-10 flex items-center justify-center">
+            <img 
+              src="/images/wow-kalyanam-logo.png" 
+              alt="Wow Kalyanam" 
+              className="h-14 sm:h-16 w-auto object-contain"
+            />
+          </div>
+        </header>
+
+        {/* Password Card */}
+        <main className="flex-1 flex items-center justify-center px-4 py-8 relative z-10">
+          <div className={`w-full max-w-md bg-white rounded-[28px] border border-neutral-200/90 shadow-[0_20px_50px_rgba(0,0,0,0.08)] p-8 sm:p-10 transition-transform ${isShaking ? 'animate-shake' : ''}`}>
+            
+            {/* Lock Badge */}
+            <div className="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-200/70 flex items-center justify-center mx-auto mb-6 text-amber-700 shadow-sm">
+              <Lock className="w-6 h-6" />
+            </div>
+
+            <div className="text-center mb-7">
+              <span className="text-[11px] font-bold uppercase tracking-widest text-amber-800 bg-amber-50 border border-amber-200/60 px-3 py-1 rounded-full inline-block mb-2.5">
+                Protected Access
+              </span>
+              <h2 className="text-2xl font-semibold tracking-tight text-neutral-900">
+                Enter Password
+              </h2>
+              <p className="text-xs sm:text-sm text-neutral-500 mt-1.5">
+                Please enter the security password to view the Wow Kalyanam wedding invitation collection.
+              </p>
+            </div>
+
+            <form onSubmit={handlePasswordSubmit} className="space-y-4">
+              <div className="relative">
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  value={passwordInput}
+                  onChange={(e) => {
+                    setPasswordInput(e.target.value);
+                    if (passwordError) setPasswordError('');
+                  }}
+                  placeholder="Enter password"
+                  autoFocus
+                  className="w-full px-4 py-3.5 pr-11 text-sm bg-neutral-50/80 border border-neutral-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500/40 focus:border-amber-600 transition-all font-medium text-neutral-900 placeholder:text-neutral-400"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-700 p-1 transition-colors"
+                  tabIndex={-1}
+                  aria-label={showPassword ? 'Hide password' : 'Show password'}
+                >
+                  {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                </button>
+              </div>
+
+              {passwordError && (
+                <div className="text-xs text-rose-600 bg-rose-50 border border-rose-200/70 px-3.5 py-2 rounded-lg flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-rose-500 flex-shrink-0"></span>
+                  <span>{passwordError}</span>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                className="w-full bg-neutral-900 hover:bg-neutral-800 text-white font-medium py-3.5 rounded-xl text-sm transition-all shadow-sm hover:shadow-md flex items-center justify-center gap-2 active:scale-[0.99] cursor-pointer"
+              >
+                <span>Unlock Catalog</span>
+                <ArrowRight className="w-4 h-4" />
+              </button>
+            </form>
+
+            <div className="mt-6 pt-5 border-t border-neutral-100 text-center">
+              <p className="text-[11px] text-neutral-400">
+                Wow Kalyanam · Luxury Digital Wedding Invitations
+              </p>
+            </div>
+          </div>
+        </main>
+
+        {/* Minimal Footer */}
+        <footer className="w-full pb-6 text-center text-xs text-neutral-400 relative z-10">
+          © {new Date().getFullYear()} Wow Kalyanam. All rights reserved.
+        </footer>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-[#faf9f6] text-neutral-900 font-sans flex flex-col justify-between selection:bg-neutral-900 selection:text-white">
       
@@ -157,10 +290,20 @@ export default function App() {
             />
           </div>
 
-          {/* Quick Header Badge */}
-          <div className="hidden sm:flex items-center gap-2 bg-neutral-100 border border-neutral-200/80 px-4 py-2 rounded-full text-xs font-medium text-neutral-700">
-            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-            <span>3 Exclusive Wedding Templates</span>
+          {/* Quick Header Badge & Lock Control */}
+          <div className="flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-2 bg-neutral-100 border border-neutral-200/80 px-4 py-2 rounded-full text-xs font-medium text-neutral-700">
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+              <span>3 Exclusive Wedding Templates</span>
+            </div>
+            <button
+              onClick={handleLock}
+              title="Lock page session"
+              className="flex items-center gap-1.5 text-xs text-neutral-600 hover:text-neutral-900 bg-neutral-100 hover:bg-neutral-200/80 border border-neutral-200/80 px-3 py-2 rounded-full transition-colors cursor-pointer"
+            >
+              <Lock className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Lock</span>
+            </button>
           </div>
         </div>
 

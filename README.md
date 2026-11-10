@@ -56,10 +56,10 @@ The main catalog (`/`) is password-protected:
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/wowkalyanam/wowkalyanam.git
+git clone https://github.com/wowkalyanam/weddinginvitation.git
 
 # Navigate to project folder
-cd wowkalyanam
+cd weddinginvitation
 
 # Install dependencies
 npm install

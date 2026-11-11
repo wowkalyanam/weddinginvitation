@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<base href="/templates/template13/"/>
+<link href="/favicon.ico" rel="icon" type="image/x-icon"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<link href="/favicon-32x32.png" rel="icon" sizes="32x32" type="image/png"/>
+<link href="/favicon-16x16.png" rel="icon" sizes="16x16" type="image/png"/>
+<link href="/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180"/>
+<meta content="Dharani &amp; Manu — Wedding Invitation | Wow Kalyanam" property="og:title"/>
+<meta content="You are cordially invited to celebrate the wedding of Dharani &amp; Manu on 19th &amp; 20th November 2026 at BWSSB Rajatha Bhavan, Malleshwaram, Bengaluru." property="og:description"/>
+<meta content="website" property="og:type"/>
+<meta content="https://wowkalyanam.com/template13.html" property="og:url"/>
+<meta content="/images/branding/wow-kalyanam-logo.png" property="og:image"/>
+<meta content="summary_large_image" name="twitter:card"/>
+<meta content="Dharani &amp; Manu — Wedding Invitation | Wow Kalyanam" name="twitter:title"/>
+<meta content="You are cordially invited to celebrate the wedding of Dharani &amp; Manu on 19th &amp; 20th November 2026 at BWSSB Rajatha Bhavan, Malleshwaram, Bengaluru." name="twitter:description"/>
+<meta content="/images/branding/wow-kalyanam-logo.png" name="twitter:image"/>
+<script id="wedding-config" type="application/json">{"isDemo": true, "couple": {"bride": "Dharani", "groom": "Manu", "date": "2026-11-19", "endDate": "2026-11-20", "venue": "BWSSB Rajatha Bhavan, 18th Cross, Malleshwaram, Bengaluru", "whatsapp": "919999999999", "hashtag": "#DharaniWedsManu", "showCountdown": true}, "invite": {"blessing": "With the divine blessings of our elders and families", "brideFather": "Sri. K. Ramesh & Smt. Radha", "groomFather": "Sri. M. Suresh & Smt. Shanthi", "showGrandparents": false}, "events": [{"id": "reception", "name": "Reception", "date": "2026-11-19", "time": "19:00", "venue": "BWSSB Rajatha Bhavan", "desc": "An enchanting evening of celebration, music, and congratulations as we begin our new journey together.", "mapsLink": "https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore", "icon": "assets/events/reception.webp"}, {"id": "shaadi", "name": "Muhurtham & Kalyanam", "date": "2026-11-20", "time": "09:15", "venue": "BWSSB Rajatha Bhavan", "desc": "The sacred Vedic Muhurtham (Dhanus Lagna) solemnizing our eternal union with auspicious rituals and blessings.", "mapsLink": "https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore", "icon": "assets/events/shaadi.webp"}], "story": {"show": true, "storyText": "Two souls, one sacred journey. From shared smiles to endless conversations, our bond grew deeper each day. Guided by tradition, love, and the blessings of our families, we found forever in each other.", "customHashtag": "#DharaniWedsManu"}, "gallery": {"show": true, "layout": "4", "photos": ["/images/gallery/couple_1.webp", "/images/gallery/couple_2.webp", "/images/gallery/couple_3.webp", "/images/gallery/couple_4.webp"]}, "thingsToKnow": [{"id": "dresscode", "label": "Dress Code", "value": "Festive Ethnic & Traditional Indian Attire \u2014 silk sarees, dhotis, and kurtas."}, {"id": "venue", "label": "Venue & Parking", "value": "BWSSB Rajatha Bhavan, 18th Cross, Malleshwaram, Bengaluru. Valet parking is available at the entrance."}, {"id": "hotel", "label": "Timings", "value": "Reception at 7:00 PM on 19th Nov. Muhurtham at 9:15 AM on 20th Nov. Please arrive 15 minutes early."}, {"id": "gifts", "label": "Blessings & Wishes", "value": "Your gracious presence, warm wishes, and heartfelt blessings are our most cherished gifts."}], "rsvp": {"mode": "whatsapp", "heading": "Will you join us?", "subtext": "We have saved a place for you \u2014 at our table, in our hearts, and in our celebrations.", "btnText": "RSVP on WhatsApp", "whatsapp": "919999999999"}, "calendarUrls": {"google": "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Dharani%20weds%20Manu&dates=20261119/20261121&location=BWSSB%20Rajatha%20Bhavan%2C%2018th%20Cross%2C%20Malleshwaram%2C%20Bengaluru", "apple": "https://calendar.google.com/calendar/render?action=TEMPLATE&text=Dharani%20weds%20Manu&dates=20261119/20261121&location=BWSSB%20Rajatha%20Bhavan%2C%2018th%20Cross%2C%20Malleshwaram%2C%20Bengaluru"}}</script>
+<script>window.__WEDDING_CONFIG__ = JSON.parse(document.getElementById('wedding-config').textContent);</script>
+<script>
+</script>
+<script>
+(function() {
+  var bride = 'Dharani';
+  var groom = 'Manu';
+  var date  = '19 November 2026';
+  function updatePreloader() {
+    // Names in preloader
+    var n1 = document.querySelector('.pl-n1');
+    var n2 = document.querySelector('.pl-n2');
+    if (n1) n1.textContent = bride;
+    if (n2) n2.textContent = groom;
+    // Names in hero copy
+    var hb = document.querySelector('.hc-bride');
+    var hg = document.querySelector('.hc-groom');
+    if (hb) hb.textContent = bride;
+    if (hg) hg.textContent = groom;
+    // Fallback: replace any leaf text still reading the placeholder names
+    document.querySelectorAll('*').forEach(function(el) {
+      if (el.children.length === 0 && el.textContent.trim() === 'Priya') el.textContent = bride;
+      if (el.children.length === 0 && el.textContent.trim() === 'Arjun') el.textContent = groom;
+    });
+    // Date injection
+    if (date) {
+      var found = false;
+      document.querySelectorAll('*').forEach(function(el) {
+        if (el.children.length === 0) {
+          var txt = el.textContent.trim();
+          if (
+            txt === '14 February 2025' || txt === '14 FEBRUARY 2025' ||
+            el.classList.contains('pre-date') ||
+            el.classList.contains('preloader-date') ||
+            el.classList.contains('pl-date')
+          ) {
+            el.textContent = date;
+            found = true;
+          }
+        }
+      });
+      // No existing date element found — insert one after .pl-names
+      if (!found) {
+        var container = document.querySelector('.pl-names') || document.querySelector('.pl-content');
+        if (container && !container.querySelector('.pl-date-injected')) {
+          var dateEl = document.createElement('span');
+          dateEl.className = 'pl-date-injected';
+          dateEl.textContent = date;
+          dateEl.style.cssText = 'display:block;font-family:"DM Sans",sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(196,152,90,0.75);margin-top:10px;';
+          container.appendChild(dateEl);
+        }
+      }
+    }
+  }
+  updatePreloader();
+  document.addEventListener('DOMContentLoaded', updatePreloader);
+})();
+</script><base href=""/>
+<meta content="only light" name="color-scheme"/>
+<style>:root,html,body{color-scheme:only light}</style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, viewport-fit=cover" name="viewport"/>
+<title>Dharani &amp; Manu — Wedding Invitation | Wow Kalyanam</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&amp;family=EB+Garamond:ital,wght@0,400;0,500;1,400&amp;family=Cinzel:wght@400;500;600;700&amp;family=Pinyon+Script&amp;family=Tangerine:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="style.css?v=f4f35fdf00601abd7df25e5312a5e1b345124c98" rel="stylesheet"/>
+</head>
+<body class="intro-active" data-template="template13">
+<!-- ═══════════════════════════════════
+     DEVICE FRAME
+     This invitation is composed for a 9:16 portrait phone and nothing else.
+     On a wide screen it is not stretched — it is shown at phone width in a
+     centred column with plain dark gutters either side. Everything the guest
+     ever sees lives inside this wrapper, including the fixed overlays, which
+     are re-pinned onto the column in the DESKTOP FRAME block at the end of
+     style.css.
+═══════════════════════════════════ -->
+<div id="device-frame">
+<!-- ═══════════════════════════════════
+     INTRO — tap to begin, the crimson baithak
+═══════════════════════════════════ -->
+<section aria-label="Tap to begin the celebration" class="intro" id="intro" role="button" tabindex="0">
+<video aria-hidden="true" class="intro-video" disableremoteplayback="" id="introVideo" muted="" playsinline="" poster="assets/intro/intro_poster.webp" preload="auto" webkit-playsinline="true" x5-playsinline="true">
+<source src="assets/intro/intro.mp4" type="video/mp4"/>
+</video>
+<!-- Tap hint — fades in via pure CSS, no JS dependency -->
+<div aria-hidden="true" class="intro-hint" id="introHint">
+<p class="intro-hint-label">Tap to begin the celebration</p>
+</div>
+<div aria-hidden="true" class="intro-vignette"></div>
+</section>
+<!-- Warm candle-flare transition overlay (dark baithak → bright courtyard) -->
+<div aria-hidden="true" class="screen-bloom" id="screenBloom"></div>
+<!-- ═══════════════════════════════════
+     PAGE
+═══════════════════════════════════ -->
+<main class="page" id="page">
+<!-- ─────────────  HERO  ───────────── -->
+<section aria-label="Tanya and Rohan" class="section hero-section" id="hero">
+<!-- Background video — marble courtyard, fountain, peacock -->
+<div aria-hidden="true" class="hero-bg">
+<!-- Poster is a still of THIS clip, so the frame never flashes empty -->
+<img alt="" class="hero-poster" decoding="async" draggable="false" src="assets/hero/hero_poster.webp"/>
+<video autoplay="" class="hero-video" disableremoteplayback="" id="heroVideo" loop="" muted="" playsinline="" poster="assets/hero/hero_poster.webp" preload="auto" webkit-playsinline="true">
+<source src="assets/hero/hero.mp4" type="video/mp4"/>
+</video>
+</div>
+<!-- There is deliberately no wash/scrim over the courtyard. The type is
+         lifted off the marble by halos carried on the marks themselves — see
+         .hero-names / .hero-date in style.css. -->
+<!-- Petal shower (assets/hero/petal_shower.webp) — populated by script.js on reveal -->
+<div aria-hidden="true" class="hero-petals" id="heroPetals"></div>
+<div class="hero-content" id="heroContent">
+<h1 class="hero-names">
+<span class="hero-name" id="heroBride">Dharani</span>
+<span aria-hidden="true" class="hero-amp">&amp;</span>
+<span class="hero-name" id="heroGroom">Manu</span>
+</h1>
+<div class="hero-meta">
+<p class="hero-date" id="heroDate">12<sup class="date-ord">th</sup> Dec 2026</p>
+<p class="hero-venue" id="heroVenue">BWSSB Rajatha Bhavan, Malleshwaram, Bengaluru</p>
+</div>
+</div>
+<a aria-label="Scroll to invitation" class="hero-scroll" href="#invite">
+<span class="hero-scroll-label">Scroll</span>
+<span class="hero-scroll-chevrons">
+<span class="hero-chevron"></span>
+<span class="hero-chevron"></span>
+<span class="hero-chevron"></span>
+</span>
+</a>
+</section>
+<!-- ─────────────  INVITATION  ─────────────
+       A crimson curtain on a palace wall. The film (assets/invite/invite_bg.mp4)
+       plays once when the guest reaches it: a squirrel pulls the cord, the
+       curtain rolls up into its rod and leaves a bordered parchment card, and
+       the invitation is written on that card — uncovered line by line in step
+       with the rising curtain. The film is never cropped, so the copy is fitted
+       to the card's window instead (--is, fitInvitation in script.js).
+       invite_poster.webp is the film's first frame; invite_open.webp its last,
+       shown outright when the film cannot or should not play. -->
+<section aria-labelledby="inviteNames" class="section invite-section" id="invite">
+<div class="invite-stage" id="inviteStage">
+<video aria-hidden="true" class="invite-film" disablepictureinpicture="" disableremoteplayback="" id="inviteFilm" muted="" playsinline="" poster="assets/invite/invite_poster.webp" preload="none" webkit-playsinline="true" x5-playsinline="true">
+<source src="assets/invite/invite_bg.mp4" type="video/mp4"/>
+</video>
+<!-- Ganesha crowns the card, pinned under its top gold rule between the
+           corner stars — outside the copy's window, so it never moves with the
+           fit or with the length of the invitation. -->
+<img alt="" aria-hidden="true" class="invite-ganesha" decoding="async" draggable="false" height="1254" loading="lazy" src="assets/invite/lord_Ganesha.webp" width="1254"/>
+<!-- The card's clear window, inside its gold rule and corner stars. -->
+<div class="invite-window" id="inviteWindow">
+<div class="invite-card-text" id="inviteText">
+<p class="eyebrow invite-overline">With the blessings of our families</p>
+<p class="invite-kicker">Together with our loved ones,<br/>we request the honour of your presence<br/>at the wedding celebration of</p>
+<span aria-hidden="true" class="ornament ornament--art ornament--b3"></span>
+<h2 class="invite-names" id="inviteNames">
+<span class="invite-person"><span class="invite-name">Dharani</span><span class="invite-parent">D/O Mr. Rajesh Sharma &amp; Mrs. Kavita Sharma</span></span>
+<span aria-hidden="true" class="invite-amp">&amp;</span>
+<span class="invite-person"><span class="invite-name">Manu</span><span class="invite-parent">S/O Mr. Sanjay Kapoor &amp; Mrs. Neeta Kapoor</span></span>
+</h2>
+<span aria-hidden="true" class="ornament ornament--art ornament--b3"></span>
+</div>
+</div>
+<!-- A small scroll cue ON the film, on the velvet just under the card,
+           onward to the ceremonies. It waits for the curtain: shown once the
+           card is open. -->
+<a aria-label="Scroll to events" class="invite-scroll" href="#events">
+<span class="invite-scroll-label">Scroll</span>
+<span aria-hidden="true" class="invite-scroll-chevrons"><span></span><span></span><span></span></span>
+</a>
+</div>
+</section>
+<!-- ─────────────  EVENTS  ─────────────
+       Each ceremony rides in on a gilded baraat carriage; the arched signboard
+       carries the details. The horse alternates side down the list, so the
+       carriages face each other. Panel insets are measured off the artwork —
+       see .event-panel in style.css. -->
+<section aria-labelledby="eventsTitle" class="section events-section" id="events">
+<!-- Two charms beside the heading. The rest are given out TWO PER CEREMONY
+         by the events renderer in script.js, so no carriage is ever crowded. Art is
+         trimmed to its ink and cut to 192px (assets/events/float/), animated
+         on transform alone, and paused whenever the section is off screen —
+         see .events-floaters in style.css. -->
+<div aria-hidden="true" class="events-floaters">
+<img alt="" class="ef ef--drift ef-1" decoding="async" draggable="false" height="186" loading="lazy" src="assets/events/float/butterfly.webp" width="192"/>
+<img alt="" class="ef ef--twinkle ef-2" decoding="async" draggable="false" height="192" loading="lazy" src="assets/events/float/sparkle.webp" width="170"/>
+</div>
+<header class="section-heading reveal-item">
+<p class="eyebrow">A little colour. A little music. A lifetime of love.</p>
+<h2 id="eventsTitle">The Celebrations</h2>
+<span aria-hidden="true" class="ornament ornament--art ornament--b2"></span>
+</header>
+<div aria-label="Wedding events" class="events-list" id="eventsList" role="list"></div>
+</section>
+<!-- ─────────────  MEET THE COUPLE  ─────────────
+       A cheval mirror standing in the arch. It is turned away when you arrive
+       and swivels on its pivot to face you — and what resolves in the glass is
+       the couple's OWN STORY, not a second block of copy underneath. The
+       section is the mirror; there is nothing below it.
+       Two renders of the same mirror at two angles; the glass ellipse is
+       measured off the facing one (centre 50.1%/41%, radii 32.3%/32.5%). -->
+<section aria-labelledby="coupleTitle" class="section couple-section" id="couple">
+<div class="couple-stage">
+<!-- A slow film of the rose wall — petals drifting past the painted bird.
+           The loop is baked seamless (the last second is dissolved onto the
+           first), so the plain loop attribute is enough. Silent; fetched and
+           played only while the section is near the screen, and held on its
+           poster (the film's own first frame) for reduced motion. -->
+<video aria-hidden="true" class="couple-backdrop" disablepictureinpicture="" disableremoteplayback="" height="1364" id="coupleFilm" loop="" muted="" playsinline="" poster="assets/meet_the_couple/meet_the_couple_bg_poster.webp" preload="none" webkit-playsinline="true" width="768" x5-playsinline="true">
+<source src="assets/meet_the_couple/meet_the_couple_bg.mp4" type="video/mp4"/>
+</video>
+<div class="couple-mirror" id="coupleMirror">
+<img alt="" aria-hidden="true" class="couple-frame couple-frame--turned" decoding="async" draggable="false" height="1672" loading="lazy" src="assets/meet_the_couple/meet_the_couple_closed_frame.webp" width="941"/>
+<img alt="" aria-hidden="true" class="couple-frame couple-frame--facing" decoding="async" draggable="false" height="1672" loading="lazy" src="assets/meet_the_couple/meet_the_couple_open_frame.webp" width="941"/>
+<!-- The glass. Its content is laid out to the OVAL, not to a rectangle
+             inscribed in it: the two floats below carry polygon shape-outsides
+             tracing the ellipse's left and right arcs, so the lines shorten
+             toward the top and bottom the way they would on a real oval plate.
+             That is worth ~57% more usable area than the inscribed rectangle,
+             which is the difference between the story fitting and not. -->
+<div class="couple-glass" id="coupleGlass">
+<div class="couple-reflection" id="coupleReflection">
+<span aria-hidden="true" class="cg-arc cg-arc--l"></span>
+<span aria-hidden="true" class="cg-arc cg-arc--r"></span>
+<!-- No eyebrow in here: the oval is at its narrowest exactly where
+                 one would sit, so a six-word line breaks into four and eats the
+                 room the story needs. -->
+<h2 id="coupleTitle">Meet the Couple</h2>
+<span aria-hidden="true" class="ornament">✧</span>
+<p class="couple-story-body" id="coupleStory">It began with a shared cup of chai and a conversation neither of us wanted to end. Somewhere between long walks, little adventures, and making each other laugh, we found our favourite place — beside each other. Now, with full hearts and our favourite people around us, we’re ready for forever.</p>
+<div class="couple-tags" hidden="" id="coupleTags"></div>
+<p class="couple-hashtag" id="coupleHashtag">#TanyaWedsRohan</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ─────────────  GALLERY  ─────────────
+       The photographs hang in a carved jali frame on the draped stage. The
+       frame art has a real transparent window, so the photo sits BEHIND it and
+       the lattice overlaps the print exactly as a mount would. -->
+<!-- ─────────────  GALLERY  ─────────────
+       The draped stage IS the section: heading, frame, caption, thumbnails and
+       hint all stand inside the backdrop, nothing on bare ivory beside it. The
+       frame hangs on the painted wall panel; the thumbnails sit on the marble
+       floor the artwork already paints below the plinth (y76–91% of the art). -->
+<section aria-labelledby="galleryTitle" class="section gallery-section" id="gallery">
+<div class="gallery-stage">
+<img alt="" aria-hidden="true" class="gallery-backdrop" decoding="async" draggable="false" height="1672" loading="lazy" src="assets/gallery/gallery_bg.webp" width="941"/>
+<div class="gallery-inner reveal-item">
+<h2 class="gallery-title" id="galleryTitle">Gallery</h2>
+<span aria-hidden="true" class="ornament ornament--art ornament--b1 gallery-orn"></span>
+<div class="gallery-frame">
+<button aria-label="View photo full screen" class="gallery-open" id="galleryFeatured" type="button">
+<img alt="Together in the courtyard" decoding="async" draggable="false" height="1023" id="galleryFeaturedPhoto" loading="lazy" src="assets/gallery/demo_1.webp" width="639"/>
+</button>
+<img alt="" aria-hidden="true" class="gallery-frame-art" decoding="async" draggable="false" height="1402" loading="lazy" src="assets/gallery/gallery_frame.webp" width="1122"/>
+<!-- Prev / next change the photo in the frame without opening the
+               viewer — laid out the way template 11's gallery is. -->
+<button aria-label="Previous photo" class="gallery-arrow gallery-arrow--prev" id="galleryPrev" type="button">
+<svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+<button aria-label="Next photo" class="gallery-arrow gallery-arrow--next" id="galleryNext" type="button">
+<svg aria-hidden="true" fill="none" viewbox="0 0 24 24"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path></svg>
+</button>
+</div>
+<div aria-label="Gallery navigation" class="gallery-dots" id="galleryDots"></div>
+<!-- Pictures only: no caption line on the floor. The counter stays for
+             screen readers, announcing each photo as the thumbnails change it. -->
+<span aria-live="polite" class="sr-only" id="galleryCounter">1 / 3</span>
+<div aria-label="Choose a photo" class="gallery-thumbs" id="galleryThumbs"></div>
+</div>
+</div>
+</section>
+<!-- ─────────────  THINGS TO KNOW  ─────────────
+       Each detail is told by a painted object rather than an icon — the
+       sherwani and lehenga for the dress code, the haveli for where to stay,
+       the map pin for the venue. They are cut-outs on no plate at all, laid
+       straight on the marble the gallery's floor runs down into, and the
+       lotus rule (border_1) separates one from the next. The generic ✧ that
+       divides every other section's heading is that same painted rule here,
+       because this section now owns artwork of its own. -->
+<section aria-labelledby="ttkTitle" class="section ttk-section" id="things">
+<header class="section-heading reveal-item">
+<p class="eyebrow">A warm welcome awaits</p>
+<h2 id="ttkTitle">Before You Arrive</h2>
+<span aria-hidden="true" class="ttk-rule"></span>
+<p>A few thoughtful details, so all you need to bring is yourself.</p>
+</header>
+<ul aria-label="Guest information" class="ttk-grid" id="ttkGrid"></ul>
+</section>
+<!-- RSVP — a moonlit terrace above the lake. The painting IS the section, the
+       same as the invitation, the couple and the gallery: laid in at its own
+       941x1672 and never cropped, with the plea standing in the open sky
+       between the two pillars. -->
+<section aria-labelledby="rsvpHeadline" class="section rsvp-section" id="rsvp">
+<!-- Dusk. The guest-details ground (#f0e5d7) has to arrive at the
+         painting's first row (#40161f); taken the short way that join is mud,
+         so it travels out through the courtyard's own gold and crimson. -->
+<div aria-hidden="true" class="rsvp-dusk"></div>
+<div class="rsvp-plate">
+<img alt="" aria-hidden="true" class="rsvp-art" decoding="async" draggable="false" height="1672" loading="lazy" src="assets/rsvp/rsvp_bg.webp" width="941"/>
+<!-- Fireworks over the lake, drawn by the FIREWORKS block in script.js into
+           the open sky only — never over the moon, and behind the copy. -->
+<canvas aria-hidden="true" class="rsvp-fireworks" id="rsvpFireworks"></canvas>
+<!-- The window is the clear sky between the pillars; .rsvp-inner is the
+           flowing block inside it, scaled to fit at runtime. -->
+<div class="rsvp-content reveal-item">
+<div class="rsvp-inner" id="rsvpInner">
+<p class="eyebrow">There is a place for you here</p>
+<h2 id="rsvpHeadline">Will you join us?</h2>
+<span aria-hidden="true" class="ornament ornament--art ornament--b3"></span>
+<p id="rsvpBody">Under the courtyard lights, surrounded by the people we love — that’s how we want our forever to begin. We’ve saved you a seat.</p>
+<a class="rsvp-btn" href="#rsvpDemo" id="rsvpBtn"><span id="rsvpBtnText">Yes, I’ll be there</span></a>
+<p class="rsvp-helper" id="rsvpHelper">We can’t wait to celebrate with you.</p>
+<p class="rsvp-demo" hidden="" id="rsvpDemo" role="status">This is a sample invitation. The couple’s RSVP link will appear here when their details are added.</p>
+<div class="rsvp-std">
+<p class="eyebrow">Keep the day for us</p>
+<div class="rsvp-std-btns">
+<a href="#rsvp" id="rsvpGcalBtn" rel="noopener noreferrer" target="_blank">Google Calendar</a>
+<a href="#rsvp" id="rsvpIcalBtn">Apple / iCal</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section aria-labelledby="countdownTitle" class="section countdown-section" id="countdown">
+<header class="section-heading reveal-item">
+<p class="eyebrow">Every moment brings us closer</p>
+<h2 id="countdownTitle">Until Forever</h2>
+</header>
+<!-- Hearts drifting up the wine ground — decoration only -->
+<div aria-hidden="true" class="cd-drift"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+<!-- Four heart lockets, each with its own squirrel. The art is the frame;
+         .cd-face is the heart's cream fill, measured off each asset. -->
+<div aria-label="Time remaining until the wedding" class="countdown-cells reveal-item" id="countdownCells" role="timer">
+<div class="cd-cell cd-cell-2"><div class="cd-swing"><div class="cd-frame">
+<img alt="" class="cd-art" decoding="async" height="1130" loading="lazy" src="assets/others/countdown_element_2.webp" width="1392"/>
+<div class="cd-face"><span class="cd-num" id="cdDays">00</span><span class="cd-label">Days</span></div>
+</div></div></div>
+<div class="cd-cell cd-cell-4"><div class="cd-swing"><div class="cd-frame">
+<img alt="" class="cd-art" decoding="async" height="1130" loading="lazy" src="assets/others/countdown_element_4.webp" width="1392"/>
+<div class="cd-face"><span class="cd-num" id="cdHours">00</span><span class="cd-label">Hours</span></div>
+</div></div></div>
+<div class="cd-cell cd-cell-3"><div class="cd-swing"><div class="cd-frame">
+<img alt="" class="cd-art" decoding="async" height="1130" loading="lazy" src="assets/others/countdown_element_3.webp" width="1392"/>
+<div class="cd-face"><span class="cd-num" id="cdMins">00</span><span class="cd-label">Minutes</span></div>
+</div></div></div>
+<div class="cd-cell cd-cell-1"><div class="cd-swing"><div class="cd-frame">
+<img alt="" class="cd-art" decoding="async" height="1130" loading="lazy" src="assets/others/countdown_element_1.webp" width="1392"/>
+<div class="cd-face"><span class="cd-num" id="cdSecs">00</span><span class="cd-label">Seconds</span></div>
+</div></div></div>
+</div>
+<p class="countdown-note" id="countdownNote">To a lifetime of together.</p>
+</section>
+<footer class="site-footer" id="siteFooter">
+<span aria-hidden="true" class="ornament ornament--art ornament--b1"></span>
+<p class="ft-names"><span id="ftBride">Dharani</span> <span class="ft-amp">&amp;</span> <span id="ftGroom">Manu</span></p>
+<p id="ftDate">19 November 2026</p>
+<p class="ft-tagline">With love, today and always.</p>
+<p class="ft-credit" style="font-size: 1.15em;">Crafted with love on <a href="https://wowkalyanam.com" rel="noopener noreferrer" style="font-weight: 600;" target="_blank"><img alt="" aria-hidden="true" class="ft-credit-logo" src="/images/branding/wow-kalyanam-emblem-gold.png" style="height: 20px; vertical-align: middle; margin-right: 6px;"/>Wow Kalyanam</a></p>
+</footer>
+</main>
+<div aria-label="Photo viewer" aria-modal="true" class="gallery-lightbox" hidden="" id="galleryLightbox" role="dialog">
+<button aria-label="Close photo viewer" class="gallery-lb-close" id="galleryLbClose" type="button">×</button>
+<button aria-label="Previous photo" class="gallery-lb-prev" id="galleryLbPrev" type="button">‹</button>
+<figure class="gallery-lb-inner"><img alt="" id="galleryLbImg"/><figcaption aria-live="polite" id="galleryLbCaption"></figcaption></figure>
+<button aria-label="Next photo" class="gallery-lb-next" id="galleryLbNext" type="button">›</button>
+</div>
+<!-- ═══════════════════════════════════
+     FLOATING CONTROLS — music toggle and section navigation
+     Hidden during the intro; fades in once the hero is revealed.
+═══════════════════════════════════ -->
+<div aria-label="Site controls" class="fab-cluster" id="fabCluster">
+<!-- The menu is a column of medallions rising above the compass: each one a
+       gilded ivory disc with the section's mark, its name set beside it on the
+       dimmed page. Links keep their #hash — script.js hides the ones
+       whose section is hidden. -->
+<nav aria-label="Page sections" class="nav-panel" hidden="" id="navPanel">
+<a class="nav-item" href="#hero"><span class="nav-label">Home</span><span class="nav-medal"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3.5 11.2 12 4l8.5 7.2"></path><path d="M6 9.6V20h4.4v-5.2h3.2V20H18V9.6"></path></svg></span></a>
+<a class="nav-item" href="#invite"><span class="nav-label">Invitation</span><span class="nav-medal"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><rect height="12.5" width="17" x="3.5" y="6"></rect><path d="m3.8 6.4 8.2 6.6 8.2-6.6"></path></svg></span></a>
+<a class="nav-item" href="#events"><span class="nav-label">Events</span><span class="nav-medal"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><rect height="14.5" width="16" x="4" y="5.5"></rect><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"></path><path class="fill" d="M7.5 12.8h2.4v2.2H7.5zM10.8 12.8h2.4v2.2h-2.4zM14.1 12.8h2.4v2.2h-2.4zM7.5 16.2h2.4v2.2H7.5zM10.8 16.2h2.4v2.2h-2.4z"></path></svg></span></a>
+<a class="nav-item" href="#couple"><span class="nav-label">Our Story</span><span class="nav-medal"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M12 19.6s-7.2-4.4-7.2-9.5A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7.2 2.1c0 5.1-7.2 9.5-7.2 9.5z"></path></svg></span></a>
+<a class="nav-item" href="#gallery"><span class="nav-label">Gallery</span><span class="nav-medal"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M3.5 8.2h4l1.6-2.4h5.8l1.6 2.4h4v11H3.5z"></path><circle cx="12" cy="13.4" r="3.4"></circle></svg></span></a>
+<a class="nav-item" href="#things"><span class="nav-label">Details</span><span class="nav-medal"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><circle cx="12" cy="12" r="8.2"></circle><path d="M12 11v5.4"></path><path class="fill" d="M10.9 7.3h2.2v2.2h-2.2z"></path></svg></span></a>
+<a class="nav-item" href="#rsvp"><span class="nav-label">RSVP</span><span class="nav-medal"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="m5.5 12.6 4.3 4.3 8.7-9.4"></path></svg></span></a>
+<a class="nav-item" href="#countdown"><span class="nav-label">Countdown</span><span class="nav-medal"><svg aria-hidden="true" focusable="false" viewbox="0 0 24 24"><path d="M6.5 3.8h11M6.5 20.2h11"></path><path d="M7.8 3.8c0 4.6 4.2 5.6 4.2 8.2s-4.2 3.6-4.2 8.2M16.2 3.8c0 4.6-4.2 5.6-4.2 8.2s4.2 3.6 4.2 8.2"></path></svg></span></a>
+</nav>
+<!-- Dims the page behind the open menu; a tap on it closes the menu -->
+<div aria-hidden="true" class="nav-scrim" id="navScrim"></div>
+<!-- The sitar IS the button — the bow strokes it while the track plays and
+       lifts away when it is paused. No plate behind it. Sits above the compass. -->
+<button aria-label="Play music" aria-pressed="false" class="fab-music is-paused" hidden="" id="musicToggle" type="button">
+<img alt="" aria-hidden="true" class="mb-sitar" decoding="async" draggable="false" src="assets/music/music_sitar.webp"/>
+<img alt="" aria-hidden="true" class="mb-bow" decoding="async" draggable="false" src="assets/music/music_sitar_bow.webp"/>
+</button>
+<!-- The compass IS the button. Bottom-right corner. -->
+<button aria-controls="navPanel" aria-expanded="false" aria-label="Open navigation" class="fab-nav" id="navToggle" type="button">
+<img alt="" aria-hidden="true" decoding="async" draggable="false" src="assets/others/navigation_button.webp"/>
+</button>
+</div>
+<!-- Background music — one continuous track from the first tap: it carries the
+     baithak intro and keeps playing straight through into the courtyard.
+     Overridden by config when the couple adds their own song. -->
+<audio id="bgMusic" loop="" playsinline="" preload="auto" src="assets/music/music.mp3"></audio>
+</div><!-- /#device-frame -->
+<noscript><style>body.intro-active{overflow:auto;height:auto}.intro,.screen-bloom,.fab-cluster{display:none}.page,.hero-content,.hero-content *,.reveal-item{opacity:1!important;transform:none!important;animation:none!important}.hero-scroll{opacity:1}</style><p class="noscript-message">Please enable JavaScript for event details, the photo gallery, and RSVP.</p></noscript>
+<script src="/templates/template13/script.js" defer></script></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Scarlet Symphony renders its calendar controls inside the RSVP artwork.
+  if (document.body.dataset.template === 'template13') return;
+  var cfg = window.__WEDDING_CONFIG__;
+  if (!cfg || !cfg.calendarUrls) return;
+  // RSVP switched off in the builder removes the whole section, calendar included
+  if (cfg.rsvp && cfg.rsvp.show === false) return;
+
+  // Read template's primary color from CSS variables
+  var style = getComputedStyle(document.documentElement);
+  var primaryBg = (style.getPropertyValue('--primary') ||
+                   style.getPropertyValue('--gold') ||
+                   style.getPropertyValue('--deep') ||
+                   '#3D1E2E').trim();
+  var primaryText = (style.getPropertyValue('--ivory') || '#FAF3E8').trim();
+
+  var section = document.createElement('div');
+  section.style.cssText = 'text-align:center;padding:40px 20px;';
+
+  section.innerHTML =
+    '<div style="font-size:0.55rem;letter-spacing:0.22em;' +
+    'text-transform:uppercase;color:rgba(0,0,0,0.35);' +
+    'margin-bottom:20px;font-family:inherit;">Save the date</div>' +
+    '<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">' +
+    '<a href="' + cfg.calendarUrls.google + '" target="_blank" rel="noopener" ' +
+    'style="display:inline-block;padding:12px 24px;' +
+    'background:transparent;' +
+    'border:1px solid ' + primaryBg + ';' +
+    'color:' + primaryBg + ';' +
+    'font-size:0.58rem;letter-spacing:0.16em;' +
+    'text-transform:uppercase;text-decoration:none;' +
+    'font-family:inherit;">Google Calendar</a>' +
+    '<a href="' + cfg.calendarUrls.apple + '" target="_blank" rel="noopener" ' +
+    'style="display:inline-block;padding:12px 24px;' +
+    'background:' + primaryBg + ';' +
+    'color:' + primaryText + ';' +
+    'font-size:0.58rem;letter-spacing:0.16em;' +
+    'text-transform:uppercase;text-decoration:none;' +
+    'font-family:inherit;">Apple / iCal</a>' +
+    '</div>';
+
+  var rsvp = document.getElementById('rsvp') ||
+             document.querySelector('[id*="rsvp"]') ||
+             document.querySelector('[class*="rsvp"]');
+  if (rsvp && rsvp.parentNode) {
+    rsvp.parentNode.insertBefore(section, rsvp.nextSibling);
+  } else {
+    document.body.appendChild(section);
+  }
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var cfg = window.__WEDDING_CONFIG__;
+  if (!cfg || !cfg.invite || cfg.invite.parentsOrder !== 'groom_first') return;
+  var bEl = document.getElementById('iBrideParents');
+  var gEl = document.getElementById('iGroomParents');
+  if (bEl) { var em = bEl.closest('.fam-parents') && bEl.closest('.fam-parents').querySelector('em'); if (em) em.textContent = 'Son of'; }
+  if (gEl) { var em2 = gEl.closest('.fam-parents') && gEl.closest('.fam-parents').querySelector('em'); if (em2) em2.textContent = 'Daughter of'; }
+  /* Template 10 — swap the hardcoded "Daughter of" / "Son of" role labels.
+     buildConfigData already swapped the parent DATA, so #invBrideParents now
+     holds the groom's parents (and must read "Son of") and #invGroomParents
+     holds the bride's parents (and must read "Daughter of"). Without this the
+     labels stay fixed and the swap renders mismatched. */
+  var t10Roles = document.querySelectorAll('.inv-parents .inv-parent-role');
+  if (t10Roles.length >= 2) { t10Roles[0].textContent = 'Son of'; t10Roles[1].textContent = 'Daughter of'; }
+});
+</script>
+<style>
+.sp-blessings{position:relative;z-index:1;max-width:34em;margin:0 auto 34px;text-align:center}
+.sp-bl-group+.sp-bl-group{margin-top:26px}
+.sp-bl-h{margin:0 0 12px;font-family:var(--spb-caps-font);font-size:.68rem;font-weight:400;font-style:normal;letter-spacing:.22em;text-transform:uppercase;line-height:1.5;color:var(--spb-caps-color)}
+.sp-bl-h::after{content:"";display:block;width:28px;height:1px;margin:10px auto 0;background:currentColor;opacity:.45}
+.sp-bl-list{list-style:none;margin:0;padding:0}
+.sp-bl-list li{margin:0;font-family:var(--spb-name-font);font-style:var(--spb-name-style);font-weight:var(--spb-name-weight);font-size:clamp(1rem,4.2vw,1.2rem);letter-spacing:.01em;line-height:1.55;color:var(--spb-name-color);overflow-wrap:anywhere}
+#closing .sp-blessings{margin-bottom:26px}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var cfg = window.__WEDDING_CONFIG__;
+  var b = cfg && cfg.blessings;
+  if (!b || b.show === false || !Array.isArray(b.groups) || document.querySelector('.sp-blessings')) return;
+  var groups = b.groups.map(function(g) {
+    return {
+      h: String((g && g.heading) || '').trim(),
+      n: String((g && g.names) || '').split(/\r?\n/).map(function(s) { return s.trim(); }).filter(Boolean)
+    };
+  }).filter(function(g) { return g.n.length; });
+  if (!groups.length) return;
+
+  /* [insert before, names to borrow the font from, caps line to borrow the colour from] */
+  var SPOTS = [
+    ['#closing .closing-eyebrow', '#closing .closing-names', '#closing .closing-date'],
+    ['#siteFooter .ft-names', '#siteFooter .ft-names', '#siteFooter #ftDate, #siteFooter .ft-date'],
+    ['footer.footer .ft-names', 'footer.footer .ft-names', 'footer.footer .ft-date']
+  ];
+  var spot = null;
+  for (var i = 0; i < SPOTS.length && !spot; i++) {
+    var a = document.querySelector(SPOTS[i][0]);
+    if (a) spot = { anchor: a, names: document.querySelector(SPOTS[i][1]) || a, caps: document.querySelector(SPOTS[i][2]) };
+  }
+  if (!spot) return;
+
+  function visible(c) { return c && c !== 'transparent' && !/rgba\([^)]*,\s*0\)$/.test(c); }
+  /* Footer date lines are often set at 35-45% opacity; a heading borrowing that
+     colour disappears on the darker footers, so floor its alpha at 0.8. */
+  function atLeast(c, min) {
+    var m = /^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/.exec(c);
+    return m && parseFloat(m[4]) < min ? 'rgba(' + m[1] + ',' + m[2] + ',' + m[3] + ',' + min + ')' : c;
+  }
+  var ns = getComputedStyle(spot.names);
+  var cs = spot.caps ? getComputedStyle(spot.caps) : ns;
+  var nameColor = visible(ns.color) ? ns.color : cs.color;
+  /* A script face (template09's closing names are Parisienne) is unreadable as
+     a list — fall back to the caps line's serif, set italic. */
+  var script = /parisienne|vibes|script|allura|tangerine|pinyon|sacramento|brush|italianno|dancing|satisfy|monsieur|petit formal|carattere|rouge|cookie/i.test(ns.fontFamily);
+
+  var wrap = document.createElement('div');
+  wrap.className = 'sp-blessings';
+  wrap.style.setProperty('--spb-name-font', script ? cs.fontFamily : ns.fontFamily);
+  wrap.style.setProperty('--spb-name-style', script ? 'italic' : ns.fontStyle);
+  wrap.style.setProperty('--spb-name-weight', script ? '400' : ns.fontWeight);
+  wrap.style.setProperty('--spb-name-color', nameColor);
+  wrap.style.setProperty('--spb-caps-font', cs.fontFamily);
+  wrap.style.setProperty('--spb-caps-color', atLeast(visible(cs.color) ? cs.color : nameColor, 0.8));
+  groups.forEach(function(g) {
+    var sec = document.createElement('div');
+    sec.className = 'sp-bl-group';
+    if (g.h) {
+      var h = document.createElement('p');
+      h.className = 'sp-bl-h';
+      h.textContent = g.h;
+      sec.appendChild(h);
+    }
+    var ul = document.createElement('ul');
+    ul.className = 'sp-bl-list';
+    g.n.forEach(function(n) { var li = document.createElement('li'); li.textContent = n; ul.appendChild(li); });
+    sec.appendChild(ul);
+    wrap.appendChild(sec);
+  });
+  spot.anchor.parentNode.insertBefore(wrap, spot.anchor);
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() { setTimeout(function() {
+  var cfg = window.__WEDDING_CONFIG__, c = cfg && cfg.couple;
+  if (!c || !c.date || !c.endDate) return;
+  var re = /^(\d{4})-(\d{2})-(\d{2})$/, a = re.exec(c.date), z = re.exec(c.endDate);
+  if (!a || !z) return;
+  var t1 = Date.UTC(+a[1], a[2] - 1, +a[3]), t2 = Date.UTC(+z[1], z[2] - 1, +z[3]);
+  var span = (t2 - t1) / 86400000;
+  if (span < 1 || span > 14) return;
+  var LONG = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var A = { d: +a[3], m: +a[2] - 1, y: +a[1] }, Z = { d: +z[3], m: +z[2] - 1, y: +z[1] };
+  function suf(n) { var v = n % 100, l = n % 10; return (v > 10 && v < 14) ? 'th' : l === 1 ? 'st' : l === 2 ? 'nd' : l === 3 ? 'rd' : 'th'; }
+  /* o: { month:'long'|'short', ord:false|'plain'|'sup', dots:bool } → HTML */
+  function day(x, o) { return o.ord === 'sup' ? x.d + '<sup class="date-ord">' + suf(x.d) + '</sup>' : o.ord ? x.d + suf(x.d) : String(x.d); }
+  /* Each date unit is unbreakable and the dash stays on the first line, so a
+     narrow hero wraps as "30th Nov – / 2nd Dec 2026", never "2nd / Dec".
+     The space between units must sit OUTSIDE the nowrap spans — two nowrap
+     spans with nothing between them are one unbreakable line. */
+  function nw(s) { return '<span style="white-space:nowrap">' + s + '</span>'; }
+  function range(o) {
+    var M = o.month === 'short' ? SHORT : LONG, sep = o.dots ? ' &middot; ' : ' ', dash = '&nbsp;&ndash;';
+    if (A.y !== Z.y) return nw(day(A, o) + ' ' + M[A.m] + ' ' + A.y + dash) + ' ' + nw(day(Z, o) + ' ' + M[Z.m] + ' ' + Z.y);
+    if (A.m !== Z.m) return nw(day(A, o) + ' ' + M[A.m] + dash) + ' ' + nw(day(Z, o) + ' ' + M[Z.m] + sep + Z.y);
+    return nw(day(A, o) + dash + ' ' + day(Z, o)) + sep + nw(M[Z.m] + sep + Z.y);
+  }
+  var venue = String(c.venue || '').replace(/[&<>"]/g, function(ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; });
+  var LONG_PLAIN = { month: 'long' }, LONG_SUP = { month: 'long', ord: 'sup' }, SHORT_SUP = { month: 'short', ord: 'sup' };
+  /* [selector, format, append venue]. First match wins per element. */
+  var SPOTS = [
+    ['#heroDate', SHORT_SUP],                                   /* t11, t13 */
+    ['#inviteDate', LONG_SUP],                                  /* t11 */
+    ['#ftDate', LONG_SUP],                                      /* t11, t13 */
+    ['#htDate', { month: 'short', ord: 'plain' }],              /* t10 hero */
+    ['#siteFooter .ft-date', { month: 'short', ord: 'plain' }], /* t10 footer */
+    ['#introDate', LONG_PLAIN],                                 /* t09 intro */
+    ['.inv-date', LONG_PLAIN],                                  /* t09 invitation */
+    ['.closing-date', { month: 'long', dots: true }],           /* t09 closing card */
+    ['footer.footer .ft-date', LONG_PLAIN, true],               /* t01-t08 footer */
+    ['.pl-date-injected, .pl-date, .pre-date, .preloader-date', LONG_PLAIN] /* intro screens */
+  ];
+  var done = [];
+  SPOTS.forEach(function(s) {
+    document.querySelectorAll(s[0]).forEach(function(el) {
+      if (done.indexOf(el) !== -1) return;
+      done.push(el);
+      el.innerHTML = range(s[1]) + (s[2] && venue ? ' &middot; ' + venue : '');
+    });
+  });
+}, 0); });
+</script>
+</body>
+</html>

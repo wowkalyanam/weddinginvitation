@@ -23,6 +23,7 @@ export default defineConfig({
         kasavu: path.resolve(__dirname, 'kasavu.html'),
         template10: path.resolve(__dirname, 'template10.html'),
         meenaya2: path.resolve(__dirname, 'meenaya2.html'),
+        template13: path.resolve(__dirname, 'template13.html'),
       },
     },
   },

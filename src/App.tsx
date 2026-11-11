@@ -129,6 +129,24 @@ const TEMPLATES: TemplateItem[] = [
       mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
     },
   },
+  {
+    id: 'meenaya-temple-baroque',
+    title: 'Meenaya Traditional Temple & Baroque Heritage',
+    subtitle: 'Meenakshi Gopuram · Classical Tanjore Ceremony Frames · Vintage Route Ship',
+    badge: 'Royal Heritage',
+    image: '/templates/meenaya2/assets/temple_gopuram_garden.png',
+    demoUrl: '/meenaya2.html',
+    defaultData: {
+      bride: 'Dharani',
+      groom: 'Manu',
+      date: '19 November 2026',
+      time: '07:00 PM',
+      functionName: 'Reception & Muhurtham',
+      venue: 'BWSSB Rajatha Bhavan',
+      address: '18th Cross, Malleshwaram, Bengaluru',
+      mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+    },
+  },
 ];
 
 export default function App() {

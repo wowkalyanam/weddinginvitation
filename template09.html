@@ -16,9 +16,36 @@
 </script>
 <script>
 (function() {
-  var bride = 'Dharani';
-  var groom = 'Manu';
-  var date  = '19 November 2026';
+  function getQueryParam(k) {
+    try {
+      var p = new URLSearchParams(window.location.search);
+      return p.get(k) || '';
+    } catch (_) { return ''; }
+  }
+  
+  var cfg = null;
+  try {
+    var rawCfg = getQueryParam('cfg');
+    if (rawCfg) {
+      try {
+        cfg = JSON.parse(decodeURIComponent(rawCfg));
+      } catch (_) {
+        cfg = JSON.parse(atob(rawCfg));
+      }
+    }
+  } catch (_) {}
+  if (!cfg && typeof window !== 'undefined') {
+    try {
+      var saved = sessionStorage.getItem('wow_active_custom_wedding') || localStorage.getItem('wow_custom_wedding_pichwai-lotus-courtyard');
+      if (saved) cfg = JSON.parse(saved);
+    } catch (_) {}
+  }
+
+  var bride = (cfg && (cfg.b || cfg.bride)) || getQueryParam('b') || getQueryParam('bride') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.bride) || 'Deepthi';
+  var groom = (cfg && (cfg.g || cfg.groom)) || getQueryParam('g') || getQueryParam('groom') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.groom) || 'Murali';
+  var date  = (cfg && (cfg.d || cfg.date)) || getQueryParam('d') || getQueryParam('date') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.date) || '19 November 2026';
+  var venue = (cfg && (cfg.v || cfg.venue)) || getQueryParam('v') || getQueryParam('venue') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.venue) || 'BWSSB Rajatha Bhavan, 18th Cross, Malleshwaram, Bengaluru';
+
   function updatePreloader() {
     // Names in preloader
     var n1 = document.querySelector('.pl-n1');
@@ -33,52 +60,37 @@
     // template09: patch #introNames .word spans
     var introNames = document.getElementById('introNames');
     if (introNames && bride && groom) {
-      var words = Array.from(introNames.querySelectorAll('.word')).filter(function(w) {
-        return !w.classList.contains('amp-wrap');
-      });
-      if (words.length >= 2) { words[0].textContent = bride; words[words.length - 1].textContent = groom; }
+      introNames.innerHTML = '<span class="word">' + bride + '</span> <span class="word amp-wrap"><span class="amp">&amp;</span></span><br><span class="word">' + groom + '</span>';
     }
     // template09: patch intro date and venue
     var introDate = document.getElementById('introDate');
     if (introDate && date) introDate.textContent = date;
+    var introVenue = document.getElementById('introVenue');
+    if (introVenue && venue) introVenue.textContent = venue;
+
+    var invTitle = document.getElementById('inviteTitle');
+    if (invTitle && bride && groom) invTitle.innerHTML = bride + ' <span class="inv-amp">&amp;</span> ' + groom;
+    var closeTitle = document.getElementById('closingTitle');
+    if (closeTitle && bride && groom) closeTitle.textContent = bride + ' & ' + groom;
 
     // Fallback: replace any leaf text still reading the placeholder names
     document.querySelectorAll('*').forEach(function(el) {
-      if (el.children.length === 0 && el.textContent.trim() === 'Priya') el.textContent = bride;
-      if (el.children.length === 0 && el.textContent.trim() === 'Arjun') el.textContent = groom;
+      if (el.children.length === 0) {
+        var t = el.textContent.trim();
+        if (t === 'Dharani' || t === 'Priya') el.textContent = bride;
+        if (t === 'Manu' || t === 'Arjun') el.textContent = groom;
+      }
     });
     // Date injection
     if (date) {
-      var found = false;
-      document.querySelectorAll('*').forEach(function(el) {
-        if (el.children.length === 0) {
-          var txt = el.textContent.trim();
-          if (
-            txt === '14 February 2025' || txt === '14 FEBRUARY 2025' ||
-            el.classList.contains('pre-date') ||
-            el.classList.contains('preloader-date') ||
-            el.classList.contains('pl-date')
-          ) {
-            el.textContent = date;
-            found = true;
-          }
-        }
+      document.querySelectorAll('.inv-date, .hero-date, .pl-date').forEach(function(el) {
+        el.textContent = date;
       });
-      // No existing date element found — insert one after .pl-names
-      if (!found) {
-        var container = document.querySelector('.pl-names') || document.querySelector('.pl-content');
-        if (container && !container.querySelector('.pl-date-injected')) {
-          var dateEl = document.createElement('span');
-          dateEl.className = 'pl-date-injected';
-          dateEl.textContent = date;
-          dateEl.style.cssText = 'display:block;font-family:"DM Sans",sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(196,152,90,0.75);margin-top:10px;';
-          container.appendChild(dateEl);
-        }
-      }
     }
   }
   updatePreloader();
   document.addEventListener('DOMContentLoaded', updatePreloader);
+  window.addEventListener('load', updatePreloader);
 })();
 </script><base href="/templates/template09/">
 <meta name="color-scheme" content="only light">
@@ -154,13 +166,13 @@
   <!-- Text reveal -->
   <div class="intro-reveal" id="introReveal" aria-live="polite">
     <h1 class="names intro-reveal-item" id="introNames">
-      <span class="word">Dharani</span> <span class="word amp-wrap"><span class="amp">&amp;</span></span><br><span class="word">Manu</span>
+      <span class="word">Deepthi</span> <span class="word amp-wrap"><span class="amp">&amp;</span></span><br><span class="word">Murali</span>
     </h1>
     <div class="ornament intro-reveal-item" id="introOrnament">
       <span></span><i></i><span></span>
     </div>
-    <p class="date  intro-reveal-item" id="introDate">12 · December · 2026</p>
-    <p class="venue intro-reveal-item" id="introVenue">The Oberoi Udaivilas, Udaipur</p>
+    <p class="date  intro-reveal-item" id="introDate">19 November 2026</p>
+    <p class="venue intro-reveal-item" id="introVenue">BWSSB Rajatha Bhavan, 18th Cross, Malleshwaram, Bengaluru</p>
   </div>
 
   <!-- Lotus CTA -->

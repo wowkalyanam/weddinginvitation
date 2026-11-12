@@ -310,6 +310,43 @@
       el.textContent = groom;
     });
 
+    // Template 09 Hero Intro Names (Opening Front Page)
+    var introNames = document.getElementById('introNames') || document.querySelector('.intro-reveal .names');
+    if (introNames && bride && groom) {
+      introNames.innerHTML = '<span class="word">' + bride + '</span> <span class="word amp-wrap"><span class="amp">&amp;</span></span><br><span class="word">' + groom + '</span>';
+    }
+    var introDate = document.getElementById('introDate');
+    if (introDate && weddingDate) {
+      introDate.textContent = weddingDate;
+    }
+    var introVenue = document.getElementById('introVenue');
+    if (introVenue && (venueName || venueAddress)) {
+      introVenue.textContent = [venueName, venueAddress].filter(Boolean).join(', ');
+    }
+
+    // Template 09 & Universal Invite & Closing Names
+    var inviteTitle = document.getElementById('inviteTitle') || document.querySelector('.inv-names');
+    if (inviteTitle && bride && groom) {
+      inviteTitle.innerHTML = bride + ' <span class="inv-amp">&amp;</span> ' + groom;
+    }
+    var closingTitle = document.getElementById('closingTitle') || document.querySelector('.closing-names');
+    if (closingTitle && bride && groom) {
+      closingTitle.textContent = bride + ' & ' + groom;
+    }
+
+    // Story body names update
+    var storyBody = document.querySelector('.cpl-story-body');
+    if (storyBody && bride && groom) {
+      storyBody.innerHTML = 'Two souls, one sacred journey. From shared smiles to endless conversations, our bond grew deeper each day. Guided by tradition, love, and the blessings of our families, ' + bride + ' &amp; ' + groom + ' are ready to begin their most beautiful chapter yet.';
+    }
+
+    // RSVP WhatsApp link
+    var rsvpPrimary = document.querySelector('.rsvp-btn-primary');
+    if (rsvpPrimary && bride && groom) {
+      var rsvpMsg = encodeURIComponent("Yes, I'll be there — " + bride + " & " + groom + "'s celebration!");
+      rsvpPrimary.href = 'https://wa.me/919999999999?text=' + rsvpMsg;
+    }
+
     // 3. Parents' Names
     var bParentsEls = document.querySelectorAll('#invBrideParents, #iBrideParents, .inv-bride-parents');
     bParentsEls.forEach(function (el) {

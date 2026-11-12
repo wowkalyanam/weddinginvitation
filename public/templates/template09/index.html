@@ -34,26 +34,60 @@
       }
     }
   } catch (_) {}
-  if (!cfg && typeof window !== 'undefined') {
+  if (typeof window !== 'undefined') {
     try {
-      var saved = sessionStorage.getItem('wow_active_custom_wedding') || localStorage.getItem('wow_custom_wedding_pichwai-lotus-courtyard');
-      if (saved) {
-        if (saved.indexOf('Dharani') !== -1 || saved.indexOf('BWSSB') !== -1 || saved.indexOf('19 November') !== -1 || saved.indexOf('Malleshwaram') !== -1) {
-          try {
-            sessionStorage.removeItem('wow_active_custom_wedding');
-            localStorage.removeItem('wow_custom_wedding_pichwai-lotus-courtyard');
-          } catch (_) {}
-          saved = null;
+      for (var k in localStorage) {
+        if (k && k.indexOf('wow_') === 0) {
+          var val = localStorage.getItem(k);
+          if (val && (val.indexOf('Dharani') !== -1 || val.indexOf('BWSSB') !== -1 || val.indexOf('19 November') !== -1 || val.indexOf('Malleshwaram') !== -1)) {
+            localStorage.removeItem(k);
+          }
         }
-        if (saved) cfg = JSON.parse(saved);
+      }
+      for (var sk in sessionStorage) {
+        if (sk && sk.indexOf('wow_') === 0) {
+          var sval = sessionStorage.getItem(sk);
+          if (sval && (sval.indexOf('Dharani') !== -1 || sval.indexOf('BWSSB') !== -1 || sval.indexOf('19 November') !== -1 || sval.indexOf('Malleshwaram') !== -1)) {
+            sessionStorage.removeItem(sk);
+          }
+        }
       }
     } catch (_) {}
   }
 
-  var firstEvt = (cfg && Array.isArray(cfg.ev) && cfg.ev.length > 0) ? cfg.ev[0] : null;
+  if (!cfg && typeof window !== 'undefined') {
+    try {
+      var saved = sessionStorage.getItem('wow_active_custom_wedding') || localStorage.getItem('wow_custom_wedding_pichwai-lotus-courtyard');
+      if (saved) cfg = JSON.parse(saved);
+    } catch (_) {}
+  }
+
+  var customD = (cfg && (cfg.d || cfg.date)) || getQueryParam('d') || getQueryParam('date');
+  var rawEvents = (cfg && Array.isArray(cfg.ev) && cfg.ev.length > 0) ? cfg.ev : null;
+  var recEvt = (rawEvents && rawEvents.length > 0) ? (rawEvents.find(function(e) {
+    var en = (e.n || e.name || '').toLowerCase();
+    return en.indexOf('reception') !== -1;
+  }) || rawEvents[0]) : null;
+
+  function formatWeddingDate(d) {
+    if (!d) return '';
+    var s = String(d).trim();
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(s);
+    if (m) {
+      var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+      var day = parseInt(m[3], 10);
+      var month = months[parseInt(m[2], 10) - 1] || '';
+      var year = m[1];
+      return day + ' ' + month + ' ' + year;
+    }
+    return s;
+  }
+
+  var firstEvt = (rawEvents && rawEvents.length > 0) ? rawEvents[0] : null;
   var bride = (cfg && (cfg.b || cfg.bride)) || getQueryParam('b') || getQueryParam('bride') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.bride) || 'Deepthi';
   var groom = (cfg && (cfg.g || cfg.groom)) || getQueryParam('g') || getQueryParam('groom') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.groom) || 'Murali';
-  var date  = (cfg && (cfg.d || cfg.date)) || getQueryParam('d') || getQueryParam('date') || (firstEvt && (firstEvt.d || firstEvt.date)) || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.date) || '13 December 2026';
+  var date  = customD || (firstEvt && (firstEvt.d || firstEvt.date)) || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.date) || '13 December 2026';
+  var receptionDate = formatWeddingDate((recEvt && (recEvt.d || recEvt.date)) || date);
   var venue = (cfg && (cfg.v || cfg.venue)) || getQueryParam('v') || getQueryParam('venue') || (firstEvt && (firstEvt.v || firstEvt.venue)) || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.venue) || 'The Grand Ballroom & Palace Grounds, Bengaluru';
 
   function updatePreloader() {
@@ -91,9 +125,19 @@
         if (t === 'Murali' || t === 'Arjun') el.textContent = groom;
       }
     });
-    // Date injection
+
+    // Invitation card: show only updated reception date, and remove venue name
+    document.querySelectorAll('.inv-date').forEach(function(el) {
+      el.textContent = receptionDate;
+    });
+    document.querySelectorAll('.inv-venue').forEach(function(el) {
+      el.textContent = '';
+      el.style.display = 'none';
+    });
+
+    // Date injection for hero/preloader
     if (date) {
-      document.querySelectorAll('.inv-date, .hero-date, .pl-date').forEach(function(el) {
+      document.querySelectorAll('.hero-date, .pl-date').forEach(function(el) {
         el.textContent = date;
       });
     }
@@ -106,7 +150,7 @@
 <meta name="color-scheme" content="only light">
 <style>
 :root,html,body{color-scheme:only light}
-#introDate, #introVenue, .intro-reveal .date, .intro-reveal .venue { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+#introDate, #introVenue, .intro-reveal .date, .intro-reveal .venue, .inv-venue { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }
 </style>
 
   <meta charset="utf-8">
@@ -262,7 +306,6 @@
 
       <div class="inv-meta">
         <p class="inv-date">13 December 2026</p>
-        <p class="inv-venue">The Oberoi Udaivilas, Udaipur</p>
       </div>
 
     </div>
@@ -803,7 +846,6 @@ document.addEventListener('DOMContentLoaded', function() { setTimeout(function()
     ['#htDate', { month: 'short', ord: 'plain' }],              /* t10 hero */
     ['#siteFooter .ft-date', { month: 'short', ord: 'plain' }], /* t10 footer */
     ['#introDate', LONG_PLAIN],                                 /* t09 intro */
-    ['.inv-date', LONG_PLAIN],                                  /* t09 invitation */
     ['.closing-date', { month: 'long', dots: true }],           /* t09 closing card */
     ['footer.footer .ft-date', LONG_PLAIN, true],               /* t01-t08 footer */
     ['.pl-date-injected, .pl-date, .pre-date, .preloader-date', LONG_PLAIN] /* intro screens */

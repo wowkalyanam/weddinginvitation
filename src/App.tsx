@@ -407,6 +407,15 @@ export default function App() {
     const initial: Record<string, TemplateFormData> = {};
     if (typeof window !== 'undefined') {
       try {
+        for (let i = localStorage.length - 1; i >= 0; i--) {
+          const k = localStorage.key(i);
+          if (k && k.startsWith('wow_')) {
+            const val = localStorage.getItem(k);
+            if (val && (val.includes('Dharani') || val.includes('BWSSB') || val.includes('19 November') || val.includes('Malleshwaram'))) {
+              localStorage.removeItem(k);
+            }
+          }
+        }
         const activeS = sessionStorage.getItem('wow_active_custom_wedding');
         if (activeS && (activeS.includes('Dharani') || activeS.includes('BWSSB') || activeS.includes('19 November') || activeS.includes('Malleshwaram'))) {
           sessionStorage.removeItem('wow_active_custom_wedding');

@@ -79,17 +79,25 @@
     // 2. Check localStorage / sessionStorage for this template
     var localCustom = null;
     try {
-      var localStr = localStorage.getItem('wow_custom_wedding_' + currentTemplateId) || 
-                     sessionStorage.getItem('wow_active_custom_wedding');
-      if (localStr) {
-        if (localStr.indexOf('Dharani') !== -1 || localStr.indexOf('BWSSB') !== -1 || localStr.indexOf('19 November') !== -1 || localStr.indexOf('Malleshwaram') !== -1) {
-          try {
-            localStorage.removeItem('wow_custom_wedding_' + currentTemplateId);
-            sessionStorage.removeItem('wow_active_custom_wedding');
-          } catch (_) {}
-          localStr = null;
+      for (var k in localStorage) {
+        if (k && k.indexOf('wow_') === 0) {
+          var val = localStorage.getItem(k);
+          if (val && (val.indexOf('Dharani') !== -1 || val.indexOf('BWSSB') !== -1 || val.indexOf('19 November') !== -1 || val.indexOf('Malleshwaram') !== -1)) {
+            localStorage.removeItem(k);
+          }
         }
       }
+      for (var sk in sessionStorage) {
+        if (sk && sk.indexOf('wow_') === 0) {
+          var sval = sessionStorage.getItem(sk);
+          if (sval && (sval.indexOf('Dharani') !== -1 || sval.indexOf('BWSSB') !== -1 || sval.indexOf('19 November') !== -1 || sval.indexOf('Malleshwaram') !== -1)) {
+            sessionStorage.removeItem(sk);
+          }
+        }
+      }
+
+      var localStr = localStorage.getItem('wow_custom_wedding_' + currentTemplateId) || 
+                     sessionStorage.getItem('wow_active_custom_wedding');
       if (localStr) {
         var parsed = JSON.parse(localStr);
         localCustom = {
@@ -390,10 +398,26 @@
     }
 
     // 4. Primary Date & Venue
-    document.querySelectorAll('.hero-date, .pl-date, .i-date, .inv-date, #inviteDate').forEach(function (el) {
+    var recEvt = null;
+    if (events && events.length > 0) {
+      recEvt = events.find(function (e) {
+        return (e.name || e.n || '').toLowerCase().indexOf('reception') !== -1;
+      }) || events[0];
+    }
+    var receptionDate = (recEvt && (recEvt.date || recEvt.d)) || weddingDate || '13 December 2026';
+
+    document.querySelectorAll('.hero-date, .pl-date, .i-date, #inviteDate').forEach(function (el) {
       el.textContent = weddingDate;
     });
-    document.querySelectorAll('.inv-venue, #inviteVenue').forEach(function (el) {
+    // Template 09 invitation card: ONLY updated reception date, NO venue name
+    document.querySelectorAll('.inv-date').forEach(function (el) {
+      el.textContent = receptionDate;
+    });
+    document.querySelectorAll('.inv-venue').forEach(function (el) {
+      el.textContent = '';
+      el.style.display = 'none';
+    });
+    document.querySelectorAll('#inviteVenue').forEach(function (el) {
       el.innerHTML = venueName + (venueAddress ? '<br>' + venueAddress : '');
     });
 
@@ -755,6 +779,19 @@
 
   // ── TEMPLATE 09 (Royal Pichwai Lotus Courtyard) ──
   function applyTemplate09EventsAndGallery() {
+    // Ensure invitation card shows only updated reception date, and NO venue
+    var recEvt = (events && events.length > 0) ? (events.find(function(e) {
+      return (e.name || e.n || '').toLowerCase().indexOf('reception') !== -1;
+    }) || events[0]) : null;
+    var recDate = (recEvt && (recEvt.date || recEvt.d)) || weddingDate || '13 December 2026';
+    document.querySelectorAll('.inv-date').forEach(function(el) {
+      el.textContent = recDate;
+    });
+    document.querySelectorAll('.inv-venue').forEach(function(el) {
+      el.textContent = '';
+      el.style.display = 'none';
+    });
+
     // 1. Try native template09 event update hook
     if (typeof window.__updateTemplate09Events === 'function' && events && events.length > 0) {
       window.__updateTemplate09Events(events);

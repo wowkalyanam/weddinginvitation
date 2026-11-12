@@ -824,6 +824,8 @@ export default function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 max-w-6xl w-full px-4 justify-items-center">
           {filteredTemplates.map((template) => {
             const data = templateForms[template.id] || template.defaultData;
+            const isCustomPhoto = data.photos && data.photos.length > 0 && !DEFAULT_PHOTOS.includes(data.photos[0]);
+            const cardCoverImage = isCustomPhoto ? data.photos[0] : template.image;
 
             return (
               <div 
@@ -837,7 +839,7 @@ export default function App() {
                 >
                   {/* Card Image */}
                   <img
-                    src={template.image}
+                    src={cardCoverImage}
                     alt={template.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
@@ -852,6 +854,16 @@ export default function App() {
                       <span>{template.badge}</span>
                     </span>
                   </div>
+
+                  {/* Custom Photo Indicator */}
+                  {isCustomPhoto && (
+                    <div className="absolute top-3.5 right-3.5 z-10">
+                      <span className="bg-emerald-600/90 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm flex items-center gap-1">
+                        <Check className="w-3 h-3 text-white" />
+                        <span>Photo Set</span>
+                      </span>
+                    </div>
+                  )}
 
                   {/* Hover overlay hint */}
                   <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
@@ -891,11 +903,12 @@ export default function App() {
                   </button>
 
                   <a
-                    href={template.demoUrl}
+                    href={generateInviteLink(template)}
                     target="_blank"
                     rel="noreferrer"
-                    className="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-200 font-medium text-xs py-2.5 px-3.5 rounded-full transition-all flex items-center justify-center gap-1.5 shrink-0"
-                    title="Preview Invitation in New Tab"
+                    onClick={() => savePhotosToStorage(template.id, data.photos)}
+                    className="bg-neutral-100 hover:bg-neutral-200 text-neutral-800 border border-neutral-200 font-medium text-xs py-2.5 px-3.5 rounded-full transition-all flex items-center justify-center gap-1.5 shrink-0 cursor-pointer"
+                    title="Preview Customized Invitation in New Tab"
                   >
                     <Eye className="w-3.5 h-3.5 text-neutral-600" />
                     <span>Preview</span>

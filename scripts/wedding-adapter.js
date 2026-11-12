@@ -708,89 +708,93 @@
 
   // ── TEMPLATE 09 (Royal Pichwai Lotus Courtyard) ──
   function applyTemplate09EventsAndGallery() {
-    var evtStops = document.getElementById('evtStops');
-    if (evtStops && events && events.length > 0) {
-      evtStops.innerHTML = '';
+    // 1. Try native template09 event update hook
+    if (typeof window.__updateTemplate09Events === 'function' && events && events.length > 0) {
+      window.__updateTemplate09Events(events);
+    } else {
+      var evtStops = document.getElementById('evtStops');
+      if (evtStops && events && events.length > 0) {
+        evtStops.innerHTML = '';
 
-      var icons = [
-        'pn-evt-ico-reception-x-v01.webp',
-        'pn-evt-ico-shaadi-x-v01.webp',
-        'pn-evt-ico-sangeet-x-v01.webp',
-        'pn-evt-ico-haldi-x-v01.webp',
-        'pn-evt-ico-mehendi-x-v01.webp',
-        'pn-evt-ico-vidaai-x-v01.webp'
-      ];
+        var icons = [
+          'pn-evt-ico-reception-x-v01.webp',
+          'pn-evt-ico-shaadi-x-v01.webp',
+          'pn-evt-ico-sangeet-x-v01.webp',
+          'pn-evt-ico-haldi-x-v01.webp',
+          'pn-evt-ico-mehendi-x-v01.webp',
+          'pn-evt-ico-vidaai-x-v01.webp'
+        ];
 
-      function getT09Icon(name, idx) {
-        var lower = (name || '').toLowerCase();
-        if (lower.indexOf('haldi') !== -1) return '/templates/template09/assets/event/pn-evt-ico-haldi-x-v01.webp';
-        if (lower.indexOf('mehendi') !== -1) return '/templates/template09/assets/event/pn-evt-ico-mehendi-x-v01.webp';
-        if (lower.indexOf('sangeet') !== -1) return '/templates/template09/assets/event/pn-evt-ico-sangeet-x-v01.webp';
-        if (lower.indexOf('reception') !== -1) return '/templates/template09/assets/event/pn-evt-ico-reception-x-v01.webp';
-        if (lower.indexOf('muhurtham') !== -1 || lower.indexOf('shaadi') !== -1 || lower.indexOf('kalyanam') !== -1) return '/templates/template09/assets/event/pn-evt-ico-shaadi-x-v01.webp';
-        if (lower.indexOf('vidaai') !== -1 || lower.indexOf('farewell') !== -1) return '/templates/template09/assets/event/pn-evt-ico-vidaai-x-v01.webp';
-        return '/templates/template09/assets/event/' + (icons[idx % icons.length] || 'pn-evt-ico-reception-x-v01.webp');
-      }
+        function getT09Icon(name, idx) {
+          var lower = (name || '').toLowerCase();
+          if (lower.indexOf('haldi') !== -1) return '/templates/template09/assets/event/pn-evt-ico-haldi-x-v01.webp';
+          if (lower.indexOf('mehendi') !== -1) return '/templates/template09/assets/event/pn-evt-ico-mehendi-x-v01.webp';
+          if (lower.indexOf('sangeet') !== -1) return '/templates/template09/assets/event/pn-evt-ico-sangeet-x-v01.webp';
+          if (lower.indexOf('reception') !== -1) return '/templates/template09/assets/event/pn-evt-ico-reception-x-v01.webp';
+          if (lower.indexOf('muhurtham') !== -1 || lower.indexOf('shaadi') !== -1 || lower.indexOf('kalyanam') !== -1) return '/templates/template09/assets/event/pn-evt-ico-shaadi-x-v01.webp';
+          if (lower.indexOf('vidaai') !== -1 || lower.indexOf('farewell') !== -1) return '/templates/template09/assets/event/pn-evt-ico-vidaai-x-v01.webp';
+          return '/templates/template09/assets/event/' + (icons[idx % icons.length] || 'pn-evt-ico-reception-x-v01.webp');
+        }
 
-      var mapPinSvg = `<svg width="11" height="14" viewBox="0 0 11 14" fill="none"
-         xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:4px">
-      <path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 4.12 5.5 8.5 5.5 8.5S11 9.62 11 5.5C11 2.46 8.54 0 5.5 0Z"
-            fill="currentColor" opacity=".72"/>
-      <circle cx="5.5" cy="5.5" r="2" fill="#fff" opacity=".88"/>
-    </svg>`;
+        var mapPinSvg = `<svg width="11" height="14" viewBox="0 0 11 14" fill="none"
+           xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:4px">
+        <path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 4.12 5.5 8.5 5.5 8.5S11 9.62 11 5.5C11 2.46 8.54 0 5.5 0Z"
+              fill="currentColor" opacity=".72"/>
+        <circle cx="5.5" cy="5.5" r="2" fill="#fff" opacity=".88"/>
+      </svg>`;
 
-      events.forEach(function (ev, idx) {
-        var isLeft = idx % 2 === 0;
-        var p = isLeft ? 'farman-left' : 'farman-right';
-        var u = document.createElement('article');
-        u.className = 'farman-stop ' + p + ' is-open';
-        u.setAttribute('role', 'listitem');
-        u.setAttribute('data-event', ev.id);
-        u.setAttribute('data-farman-index', String(idx));
+        events.forEach(function (ev, idx) {
+          var isLeft = idx % 2 === 0;
+          var p = isLeft ? 'farman-left' : 'farman-right';
+          var u = document.createElement('article');
+          u.className = 'farman-stop ' + p + ' is-open is-unrolling';
+          u.setAttribute('role', 'listitem');
+          u.setAttribute('data-event', ev.id);
+          u.setAttribute('data-farman-index', String(idx));
 
-        var mapHtml = ev.mapUrl ? `
-          <a class="farman-map" href="${ev.mapUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open ${ev.venue} on Google Maps">
-             ${mapPinSvg}Open in Maps
-          </a>` : '';
+          var mapHtml = ev.mapUrl ? `
+            <a class="farman-map" href="${ev.mapUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open ${ev.venue} on Google Maps" style="opacity:1!important;pointer-events:auto!important;">
+               ${mapPinSvg}Open in Maps
+            </a>` : '';
 
-        u.innerHTML = `
-          <div class="farman-rolled-wrap" aria-hidden="true">
-            <img class="farman-rolled-img" src="/templates/template09/assets/event/pn-evt-farman-rolled-x-v01.webp" alt="" draggable="false" decoding="async">
-          </div>
-          <div class="farman-open-wrap">
-            <img class="farman-parchment-img" src="/templates/template09/assets/event/pn-evt-farman-open-x-v01.webp" alt="" draggable="false" decoding="async">
-            <div class="farman-content">
-              <div class="farman-icon-wrap" aria-hidden="true">
-                <img class="farman-icon" src="${getT09Icon(ev.name, idx)}" alt="" draggable="false" decoding="async">
-              </div>
-              <h3 class="farman-name">${ev.name}</h3>
-              <div class="farman-divider" aria-hidden="true">
-                <img src="/templates/template09/assets/event/pn-evt-div-lotus-vine-x-v01.webp" alt="" style="width:70px;opacity:0.6;">
-              </div>
-              <p class="farman-datetime">
-                <span class="farman-date">${ev.date}</span>
-                <span class="farman-dot">·</span>
-                <span class="farman-time">${ev.time}</span>
-              </p>
-              <p class="farman-venue">${ev.venue}${ev.address ? ', ' + ev.address : ''}</p>
-              ${ev.desc ? `<p class="farman-note">${ev.desc}</p>` : ''}
-              ${mapHtml}
+          u.innerHTML = `
+            <div class="farman-rolled-wrap" aria-hidden="true" style="opacity:0;display:none;">
+              <img class="farman-rolled-img" src="/templates/template09/assets/event/pn-evt-farman-rolled-x-v01.webp" alt="" draggable="false" decoding="async">
             </div>
-          </div>
-        `;
-        evtStops.appendChild(u);
-      });
+            <div class="farman-open-wrap" style="clip-path:inset(0 0 0% 0 round 2px)!important;">
+              <img class="farman-parchment-img" src="/templates/template09/assets/event/pn-evt-farman-open-x-v01.webp" alt="" aria-hidden="true" draggable="false" decoding="async">
+              <div class="farman-dust-layer" aria-hidden="true"></div>
+              <div class="farman-content" aria-label="${ev.name} ceremony details" style="visibility:visible!important;opacity:1!important;pointer-events:auto!important;">
+                <div class="ev-fit" style="width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+                  <img class="farman-motif" src="${getT09Icon(ev.name, idx)}" alt="${ev.name} motif" decoding="async" style="opacity:1!important;">
+                  <h3 class="farman-name" style="opacity:1!important;">${ev.name}</h3>
+                  <div class="farman-rule" aria-hidden="true" style="opacity:1!important;"></div>
+                  <p class="farman-datetime" style="opacity:1!important;">
+                    <span class="farman-date">${ev.date}</span>
+                    <span class="farman-dot">·</span>
+                    <span class="farman-time">${ev.time}</span>
+                  </p>
+                  <p class="farman-venue" style="opacity:1!important;">${ev.venue}${ev.address ? ', ' + ev.address : ''}</p>
+                  ${ev.desc ? `<p class="farman-note" style="opacity:1!important;">${ev.desc}</p>` : ''}
+                  ${mapHtml}
+                </div>
+              </div>
+            </div>
+          `;
+          evtStops.appendChild(u);
+        });
+      }
     }
 
-    // Call dynamic template09 gallery hook if ready
-    if (typeof window.__updateTemplate09Gallery === 'function') {
+    // 2. Try native template09 gallery hook or fallback
+    if (typeof window.__updateTemplate09Gallery === 'function' && photos && photos.length > 0) {
       window.__updateTemplate09Gallery(photos);
     } else {
       var galWall = document.getElementById('galWall');
-      if (galWall) {
+      if (galWall && photos && photos.length > 0) {
         galWall.innerHTML = '';
         var orients = ['hero', 'portrait', 'landscape', 'portrait', 'landscape', 'portrait'];
-        photos.forEach(function (src, idx) {
+        photos.slice(0, 6).forEach(function (src, idx) {
           var orient = orients[idx % orients.length];
           var slot = document.createElement('div');
           slot.className = 'gal-frame-slot gal-slot-' + orient;

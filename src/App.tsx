@@ -75,21 +75,21 @@ const DEFAULT_EVENTS_PICHWAI: WeddingEventItem[] = [
   {
     id: 'evt-1',
     name: 'Wedding Ceremony & Reception',
-    date: '19 November 2026',
+    date: '13 December 2026',
     time: '07:00 PM',
-    venue: 'BWSSB Rajatha Bhavan',
-    address: 'Malleshwaram, Bangalore',
-    mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+    venue: 'The Grand Ballroom & Palace Grounds',
+    address: 'Bengaluru, Karnataka',
+    mapUrl: 'https://maps.google.com/?q=Bangalore',
     desc: 'An evening of celebration, musical feast, and dinner.'
   },
   {
     id: 'evt-2',
     name: 'Muhurtham & Kalyanam',
-    date: '20 November 2026',
+    date: '14 December 2026',
     time: '09:15 AM - 10:15 AM',
-    venue: 'BWSSB Rajatha Bhavan',
-    address: '18th Cross, Malleshwaram, Bengaluru',
-    mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+    venue: 'The Grand Ballroom & Palace Grounds',
+    address: 'Bengaluru, Karnataka',
+    mapUrl: 'https://maps.google.com/?q=Bangalore',
     desc: 'Between 9:15 AM & 10:15 AM (Dhanus Lagna) — Seven sacred steps into forever.'
   }
 ];
@@ -98,21 +98,21 @@ const DEFAULT_EVENTS_KASAVU: WeddingEventItem[] = [
   {
     id: 'evt-1',
     name: 'Reception',
-    date: '19 November 2026',
+    date: '13 December 2026',
     time: '07:00 PM',
-    venue: 'BWSSB Rajatha Bhavan',
-    address: 'Malleshwaram, Bangalore',
-    mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+    venue: 'The Grand Ballroom & Palace Grounds',
+    address: 'Bengaluru, Karnataka',
+    mapUrl: 'https://maps.google.com/?q=Bangalore',
     desc: 'An evening of celebration, musical feast, and dinner.'
   },
   {
     id: 'evt-2',
     name: 'Muhurtham & Kalyanam',
-    date: '20 November 2026',
+    date: '14 December 2026',
     time: '09:15 AM',
-    venue: 'BWSSB Rajatha Bhavan',
-    address: '18th Cross, Malleshwaram, Bengaluru',
-    mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+    venue: 'The Grand Ballroom & Palace Grounds',
+    address: 'Bengaluru, Karnataka',
+    mapUrl: 'https://maps.google.com/?q=Bangalore',
     desc: 'Sacred thali tying and blessings from elders.'
   }
 ];
@@ -127,16 +127,16 @@ const TEMPLATES: TemplateItem[] = [
     image: '/images/cards/pichwai-cover.webp',
     demoUrl: '/template2.html',
     defaultData: {
-      bride: 'Dharani',
-      groom: 'Manu',
-      brideParents: 'Sri. K. Ramesh & Smt. Radha',
-      groomParents: 'Sri. M. Suresh & Smt. Shanthi',
-      date: '19 November 2026',
+      bride: 'Deepthi',
+      groom: 'Murali',
+      brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
+      groomParents: 'Shri. K. Muralidharan & Smt. M. Geetha',
+      date: '13 December 2026',
       time: '07:00 PM',
       functionName: 'Wedding Ceremony & Reception',
-      venue: 'BWSSB Rajatha Bhavan',
-      address: 'Malleshwaram, Bangalore',
-      mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      venue: 'The Grand Ballroom & Palace Grounds',
+      address: 'Bengaluru, Karnataka',
+      mapUrl: 'https://maps.google.com/?q=Bangalore',
       events: DEFAULT_EVENTS_PICHWAI,
       photos: DEFAULT_PHOTOS
     },
@@ -149,16 +149,16 @@ const TEMPLATES: TemplateItem[] = [
     image: '/images/cards/kasavu-cover.webp',
     demoUrl: '/kasavu.html',
     defaultData: {
-      bride: 'Dharani',
-      groom: 'Manu',
-      brideParents: 'Sri. K. Ramesh & Smt. Radha',
-      groomParents: 'Sri. M. Suresh & Smt. Shanthi',
-      date: '20 November 2026',
+      bride: 'Deepthi',
+      groom: 'Murali',
+      brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
+      groomParents: 'Shri. K. Muralidharan & Smt. M. Geetha',
+      date: '14 December 2026',
       time: '09:15 AM',
       functionName: 'Muhurtham & Kalyanam',
-      venue: 'BWSSB Rajatha Bhavan',
-      address: '18th Cross, Malleshwaram, Bengaluru',
-      mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      venue: 'The Grand Ballroom & Palace Grounds',
+      address: 'Bengaluru, Karnataka',
+      mapUrl: 'https://maps.google.com/?q=Bangalore',
       events: DEFAULT_EVENTS_KASAVU,
       photos: DEFAULT_PHOTOS
     },
@@ -171,16 +171,16 @@ const TEMPLATES: TemplateItem[] = [
     image: '/templates/template10/assets/Hero/hero_poster.webp',
     demoUrl: '/template10.html',
     defaultData: {
-      bride: 'Dharani',
-      groom: 'Manu',
-      brideParents: 'Sri. K. Ramesh & Smt. Radha',
-      groomParents: 'Sri. M. Suresh & Smt. Shanthi',
-      date: '19 November 2026',
+      bride: 'Deepthi',
+      groom: 'Murali',
+      brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
+      groomParents: 'Shri. K. Muralidharan & Smt. M. Geetha',
+      date: '13 December 2026',
       time: '07:00 PM',
       functionName: 'Reception & Muhurtham',
-      venue: 'BWSSB Rajatha Bhavan',
-      address: '18th Cross, Malleshwaram, Bengaluru',
-      mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      venue: 'The Grand Ballroom & Palace Grounds',
+      address: 'Bengaluru, Karnataka',
+      mapUrl: 'https://maps.google.com/?q=Bangalore',
       events: DEFAULT_EVENTS_PICHWAI,
       photos: DEFAULT_PHOTOS
     },
@@ -193,16 +193,16 @@ const TEMPLATES: TemplateItem[] = [
     image: '/templates/meenaya2/assets/temple_gopuram_garden.png',
     demoUrl: '/meenaya2.html',
     defaultData: {
-      bride: 'Dharani',
-      groom: 'Manu',
-      brideParents: 'Sri. K. Ramesh & Smt. Radha',
-      groomParents: 'Sri. M. Suresh & Smt. Shanthi',
-      date: '19 November 2026',
+      bride: 'Deepthi',
+      groom: 'Murali',
+      brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
+      groomParents: 'Shri. K. Muralidharan & Smt. M. Geetha',
+      date: '13 December 2026',
       time: '07:00 PM',
       functionName: 'Reception & Muhurtham',
-      venue: 'BWSSB Rajatha Bhavan',
-      address: '18th Cross, Malleshwaram, Bengaluru',
-      mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      venue: 'The Grand Ballroom & Palace Grounds',
+      address: 'Bengaluru, Karnataka',
+      mapUrl: 'https://maps.google.com/?q=Bangalore',
       events: DEFAULT_EVENTS_PICHWAI,
       photos: DEFAULT_PHOTOS
     },
@@ -215,16 +215,16 @@ const TEMPLATES: TemplateItem[] = [
     image: '/templates/template09/assets/hero/pn-hro-bg-courtyard-lit-m-v03.webp',
     demoUrl: '/template09.html',
     defaultData: {
-      bride: 'Dharani',
-      groom: 'Manu',
-      brideParents: 'Sri. K. Ramesh & Smt. Radha',
-      groomParents: 'Sri. M. Suresh & Smt. Shanthi',
-      date: '19 November 2026',
+      bride: 'Deepthi',
+      groom: 'Murali',
+      brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
+      groomParents: 'Shri. K. Muralidharan & Smt. M. Geetha',
+      date: '13 December 2026',
       time: '07:00 PM',
       functionName: 'Reception & Muhurtham',
-      venue: 'BWSSB Rajatha Bhavan',
-      address: '18th Cross, Malleshwaram, Bengaluru',
-      mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      venue: 'The Grand Ballroom & Palace Grounds',
+      address: 'Bengaluru, Karnataka',
+      mapUrl: 'https://maps.google.com/?q=Bangalore',
       events: DEFAULT_EVENTS_PICHWAI,
       photos: DEFAULT_PHOTOS
     },
@@ -483,7 +483,15 @@ export default function App() {
   const updateEvent = (templateId: string, eventId: string, updates: Partial<WeddingEventItem>) => {
     const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
     const nextEvents = (cur.events || []).map((e) => (e.id === eventId ? { ...e, ...updates } : e));
-    updateFormData(templateId, { events: nextEvents });
+    const extraUpdates: Partial<TemplateFormData> = { events: nextEvents };
+    if (nextEvents[0] && nextEvents[0].id === eventId) {
+      if (updates.date) extraUpdates.date = updates.date;
+      if (updates.venue) extraUpdates.venue = updates.venue;
+      if (updates.address !== undefined) extraUpdates.address = updates.address;
+      if (updates.time) extraUpdates.time = updates.time;
+      if (updates.mapUrl) extraUpdates.mapUrl = updates.mapUrl;
+    }
+    updateFormData(templateId, extraUpdates);
   };
 
   const removeEvent = (templateId: string, eventId: string) => {
@@ -1028,6 +1036,109 @@ export default function App() {
                       className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
                     />
                     <p className="text-[11px] text-neutral-500 mt-1">Appears on the ceremonial invitation card</p>
+                  </div>
+                </div>
+
+                {/* Primary Wedding Date & Main Venue (Shown on Cover / Intro Screen) */}
+                <div className="pt-2 border-t border-neutral-200/70 space-y-3">
+                  <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-800 uppercase tracking-wider">
+                    <Calendar className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Main Wedding Date &amp; Primary Venue (Front Cover / Opening Screen)</span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
+                        Primary Wedding Date
+                      </label>
+                      <input
+                        type="text"
+                        value={activeFormData.date}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const nextEvts = [...(activeFormData.events || [])];
+                          if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], date: val };
+                          updateFormData(activeTemplate.id, { date: val, events: nextEvts });
+                        }}
+                        placeholder="e.g. 13 December 2026"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
+                        Ceremony Time
+                      </label>
+                      <input
+                        type="text"
+                        value={activeFormData.time}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const nextEvts = [...(activeFormData.events || [])];
+                          if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], time: val };
+                          updateFormData(activeTemplate.id, { time: val, events: nextEvts });
+                        }}
+                        placeholder="e.g. 07:00 PM"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
+                        Main Venue Name
+                      </label>
+                      <input
+                        type="text"
+                        value={activeFormData.venue}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const nextEvts = [...(activeFormData.events || [])];
+                          if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], venue: val };
+                          updateFormData(activeTemplate.id, { venue: val, events: nextEvts });
+                        }}
+                        placeholder="e.g. The Grand Palace"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
+                        Venue City / Address
+                      </label>
+                      <input
+                        type="text"
+                        value={activeFormData.address}
+                        onChange={(e) => {
+                          const val = e.target.value;
+                          const nextEvts = [...(activeFormData.events || [])];
+                          if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], address: val };
+                          updateFormData(activeTemplate.id, { address: val, events: nextEvts });
+                        }}
+                        placeholder="e.g. Palace Grounds, Bengaluru"
+                        className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1 flex items-center gap-1">
+                      <MapPin className="w-3 h-3 text-amber-600" />
+                      <span>Main Venue Google Maps Link</span>
+                    </label>
+                    <input
+                      type="text"
+                      value={activeFormData.mapUrl}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        const nextEvts = [...(activeFormData.events || [])];
+                        if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], mapUrl: val };
+                        updateFormData(activeTemplate.id, { mapUrl: val, events: nextEvts });
+                      }}
+                      placeholder="e.g. https://maps.google.com/?q=..."
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-xs font-mono bg-white"
+                    />
                   </div>
                 </div>
               </div>

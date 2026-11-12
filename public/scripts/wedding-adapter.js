@@ -148,19 +148,20 @@
 
   var customData = loadCustomConfig() || {};
 
-  // Normalize data structure
-  var bride = safeStr(customData.b, 'Dharani');
-  var groom = safeStr(customData.g, 'Manu');
-  var brideParents = safeStr(customData.bp, 'Sri. K. Ramesh & Smt. Radha');
-  var groomParents = safeStr(customData.gp, 'Sri. M. Suresh & Smt. Shanthi');
-  var weddingDate = safeStr(customData.d, '19 November 2026');
-  var weddingTime = safeStr(customData.t, '07:00 PM');
-  var venueName = safeStr(customData.v, 'BWSSB Rajatha Bhavan');
-  var venueAddress = safeStr(customData.a, '18th Cross, Malleshwaram, Bengaluru');
-  var fullVenue = [venueName, venueAddress].filter(Boolean).join(', ');
-  var defaultMapUrl = safeStr(customData.m, 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore');
-
   var rawEvents = Array.isArray(customData.ev) ? customData.ev : null;
+  var firstEvt = (rawEvents && rawEvents.length > 0) ? rawEvents[0] : null;
+
+  // Normalize data structure
+  var bride = safeStr(customData.b, 'Deepthi');
+  var groom = safeStr(customData.g, 'Murali');
+  var brideParents = safeStr(customData.bp, 'Shri. S. Ravi & Smt. R. Jyothilakshmi');
+  var groomParents = safeStr(customData.gp, 'Shri. K. Muralidharan & Smt. M. Geetha');
+  var weddingDate = safeStr(customData.d, (firstEvt && (firstEvt.d || firstEvt.date)) || '13 December 2026');
+  var weddingTime = safeStr(customData.t, (firstEvt && (firstEvt.t || firstEvt.time)) || '07:00 PM');
+  var venueName = safeStr(customData.v, (firstEvt && (firstEvt.v || firstEvt.venue)) || 'The Grand Ballroom & Palace Grounds');
+  var venueAddress = safeStr(customData.a, (firstEvt && (firstEvt.a || firstEvt.address)) || 'Bengaluru, Karnataka');
+  var fullVenue = [venueName, venueAddress].filter(Boolean).join(', ');
+  var defaultMapUrl = safeStr(customData.m, (firstEvt && (firstEvt.m || firstEvt.mapUrl)) || 'https://maps.google.com/?q=Bangalore');
   var events = [];
   if (rawEvents && rawEvents.length > 0) {
     events = rawEvents.map(function (e, idx) {

@@ -24,6 +24,7 @@ export default defineConfig({
         template10: path.resolve(__dirname, 'template10.html'),
         meenaya2: path.resolve(__dirname, 'meenaya2.html'),
         template13: path.resolve(__dirname, 'template13.html'),
+        template09: path.resolve(__dirname, 'template09.html'),
       },
     },
   },

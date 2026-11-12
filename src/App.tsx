@@ -165,6 +165,24 @@ const TEMPLATES: TemplateItem[] = [
       mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
     },
   },
+  {
+    id: 'pichwai-lotus-courtyard',
+    title: 'Royal Pichwai Lotus Courtyard',
+    subtitle: 'Interactive Diya Rope Pull · Unrolling Farman Scrolls · Secret Garden & Fireworks',
+    badge: 'New Template',
+    image: '/templates/template09/assets/hero/pn-hro-bg-courtyard-lit-m-v03.webp',
+    demoUrl: '/template09.html',
+    defaultData: {
+      bride: 'Dharani',
+      groom: 'Manu',
+      date: '19 November 2026',
+      time: '07:00 PM',
+      functionName: 'Reception & Muhurtham',
+      venue: 'BWSSB Rajatha Bhavan',
+      address: '18th Cross, Malleshwaram, Bengaluru',
+      mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+    },
+  },
 ];
 
 export default function App() {

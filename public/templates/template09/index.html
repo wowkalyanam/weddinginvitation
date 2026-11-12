@@ -1,0 +1,814 @@
+﻿<!doctype html>
+<html lang="en">
+<head>
+<meta property="og:title" content="Dharani &amp; Manu — Wedding Invitation | Wow Kalyanam" />
+<meta property="og:description" content="Wedding celebration of Dharani &amp; Manu. Join us on 19th &amp; 20th November 2026 at BWSSB Rajatha Bhavan, Bengaluru." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://wowkalyanam.com" />
+<meta property="og:image" content="/images/cards/pichwai-cover.webp" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Dharani &amp; Manu — Wedding Invitation | Wow Kalyanam" />
+<meta name="twitter:description" content="Wedding celebration of Dharani &amp; Manu. Join us on 19th &amp; 20th November 2026." />
+<meta name="twitter:image" content="/images/cards/pichwai-cover.webp" />
+<script type="application/json" id="wedding-config">{"couple":{"bride":"Dharani","groom":"Manu","date":"2026-11-19","endDate":"2026-11-20","venue":"BWSSB Rajatha Bhavan, 18th Cross, Malleshwaram, Bengaluru","whatsapp":"919999999999","hashtag":"#DharaniWedsManu"},"invite":{"blessing":"With the divine blessings of our elders and families","brideFather":"Sri. K. Ramesh & Smt. Radha","groomFather":"Sri. M. Suresh & Smt. Shanthi","showGrandparents":false},"events":[{"id":"reception","name":"Reception","date":"2026-11-19","time":"19:00","venue":"BWSSB Rajatha Bhavan","desc":"An evening of celebration, musical feast, and blessings as we begin our new journey together.","mapsLink":"https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore","icon":"/templates/template09/assets/event/pn-evt-ico-reception-x-v01.webp"},{"id":"shaadi","name":"Muhurtham & Kalyanam","date":"2026-11-20","time":"09:15","venue":"BWSSB Rajatha Bhavan","desc":"Between 9:15 AM & 10:15 AM (Dhanus Lagna) — Seven sacred steps into forever.","mapsLink":"https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore","icon":"/templates/template09/assets/event/pn-evt-ico-shaadi-x-v01.webp"}],"story":{"show":true,"storyText":"Two souls, one sacred journey. From shared smiles to endless conversations, our bond grew deeper each day. Guided by tradition, love, and the blessings of our families, we found forever in each other.","customHashtag":"#DharaniWedsManu","tags":["Bengaluru Evenings","Two Families United","Sacred Vows","Forever & Always"]},"gallery":{"show":true,"layout":"4","photos":["/images/gallery/couple_1.webp","/images/gallery/couple_2.webp","/images/gallery/couple_3.webp","/images/gallery/couple_4.webp"]},"thingsToKnow":[{"id":"dresscode","label":"Dress Code","value":"Festive Ethnic & Traditional Indian Attire — silk sarees, dhotis, and kurtas."},{"id":"venue","label":"Venue & Parking","value":"BWSSB Rajatha Bhavan, 18th Cross, Malleshwaram, Bengaluru. Valet parking is available at the entrance."},{"id":"hotel","label":"Timings","value":"Reception at 7:00 PM on 19th Nov. Muhurtham at 9:15 AM on 20th Nov. Please arrive 15 minutes early."},{"id":"gifts","label":"Blessings & Wishes","value":"Your gracious presence, warm wishes, and heartfelt blessings are our most cherished gifts."}],"rsvp":{"mode":"whatsapp","heading":"Will you join us?","subtext":"We have saved a place for you — at our table, in our hearts, and in our celebrations. Come celebrate with us as we begin this new chapter together.","btnText":"Yes, I'll be there","whatsapp":"919999999999"},"music":{"enabled":true,"src":"/templates/template09/assets/song/Template_09.mp3","name":"Royal Shehnai & Sitar Harmony"},"calendarUrls":{"google":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Dharani%20weds%20Manu&dates=20261119/20261121&location=BWSSB%20Rajatha%20Bhavan%2C%2018th%20Cross%2C%20Malleshwaram%2C%20Bengaluru","apple":"https://calendar.google.com/calendar/render?action=TEMPLATE&text=Dharani%20weds%20Manu&dates=20261119/20261121&location=BWSSB%20Rajatha%20Bhavan%2C%2018th%20Cross%2C%20Malleshwaram%2C%20Bengaluru"}}</script>
+<script>window.__WEDDING_CONFIG__ = JSON.parse(document.getElementById('wedding-config').textContent);</script>
+<script>
+</script>
+<script>
+(function() {
+  var bride = 'Dharani';
+  var groom = 'Manu';
+  var date  = '19 November 2026';
+  function updatePreloader() {
+    // Names in preloader
+    var n1 = document.querySelector('.pl-n1');
+    var n2 = document.querySelector('.pl-n2');
+    if (n1) n1.textContent = bride;
+    if (n2) n2.textContent = groom;
+    // Names in hero copy
+    var hb = document.querySelector('.hc-bride');
+    var hg = document.querySelector('.hc-groom');
+    if (hb) hb.textContent = bride;
+    if (hg) hg.textContent = groom;
+    // template09: patch #introNames .word spans
+    var introNames = document.getElementById('introNames');
+    if (introNames && bride && groom) {
+      var words = Array.from(introNames.querySelectorAll('.word')).filter(function(w) {
+        return !w.classList.contains('amp-wrap');
+      });
+      if (words.length >= 2) { words[0].textContent = bride; words[words.length - 1].textContent = groom; }
+    }
+    // template09: patch intro date and venue
+    var introDate = document.getElementById('introDate');
+    if (introDate && date) introDate.textContent = date;
+
+    // Fallback: replace any leaf text still reading the placeholder names
+    document.querySelectorAll('*').forEach(function(el) {
+      if (el.children.length === 0 && el.textContent.trim() === 'Priya') el.textContent = bride;
+      if (el.children.length === 0 && el.textContent.trim() === 'Arjun') el.textContent = groom;
+    });
+    // Date injection
+    if (date) {
+      var found = false;
+      document.querySelectorAll('*').forEach(function(el) {
+        if (el.children.length === 0) {
+          var txt = el.textContent.trim();
+          if (
+            txt === '14 February 2025' || txt === '14 FEBRUARY 2025' ||
+            el.classList.contains('pre-date') ||
+            el.classList.contains('preloader-date') ||
+            el.classList.contains('pl-date')
+          ) {
+            el.textContent = date;
+            found = true;
+          }
+        }
+      });
+      // No existing date element found — insert one after .pl-names
+      if (!found) {
+        var container = document.querySelector('.pl-names') || document.querySelector('.pl-content');
+        if (container && !container.querySelector('.pl-date-injected')) {
+          var dateEl = document.createElement('span');
+          dateEl.className = 'pl-date-injected';
+          dateEl.textContent = date;
+          dateEl.style.cssText = 'display:block;font-family:"DM Sans",sans-serif;font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(196,152,90,0.75);margin-top:10px;';
+          container.appendChild(dateEl);
+        }
+      }
+    }
+  }
+  updatePreloader();
+  document.addEventListener('DOMContentLoaded', updatePreloader);
+})();
+</script><base href="">
+<meta name="color-scheme" content="only light">
+<style>:root,html,body{color-scheme:only light}</style>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dharani &amp; Manu — Wedding Invitation | Wow Kalyanam</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Parisienne&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="intro-active">
+
+<!-- ═══════════════════════════════════
+     INTRO
+═══════════════════════════════════ -->
+<section class="intro" id="intro" aria-label="Opening scene">
+
+  <!-- Background layers -->
+  <img class="intro-bg intro-bg-dark" id="introBgDark" alt="" aria-hidden="true" decoding="async" fetchpriority="high">
+  <img class="intro-bg intro-bg-lit"  id="introBgLit"  alt="" aria-hidden="true" decoding="async">
+
+  <!-- Glow system -->
+  <div class="intro-vignette"      aria-hidden="true"></div>
+  <div class="intro-dark-vignette" aria-hidden="true"></div>
+  <div class="intro-warm-glow"     aria-hidden="true"></div>
+  <div class="intro-jhoomer-glow"  aria-hidden="true"></div>
+  <div class="intro-rose-scatter"  aria-hidden="true"></div>
+
+  <!-- Particles (lit only) -->
+  <div class="intro-dust"   id="introDust"   aria-hidden="true"></div>
+  <div class="intro-petals" id="introPetals" aria-hidden="true"></div>
+
+  <!-- Floral clusters — bottom corners, lit only -->
+  <img class="intro-floral-left"  id="introFloralLeft"
+       alt="" aria-hidden="true" decoding="async">
+  <img class="intro-floral-right" id="introFloralRight"
+       alt="" aria-hidden="true" decoding="async">
+
+  <!-- Diyas — arch gate floor, lit only -->
+  <div class="diya-wrap diya-left" id="diyaWrapLeft">
+    <img class="diya-img" id="introDiyaLeft"  alt="" aria-hidden="true" decoding="async">
+    <div class="diya-floor-glow"></div>
+  </div>
+  <div class="diya-wrap diya-right" id="diyaWrapRight">
+    <img class="diya-img" id="introDiyaRight" alt="" aria-hidden="true" decoding="async">
+    <div class="diya-floor-glow"></div>
+  </div>
+
+  <!-- Jhoomer — lit only -->
+  <img class="intro-jhoomer" id="introJhoomer"
+       alt="" aria-hidden="true" decoding="async">
+
+  <!-- Rope anchor glow -->
+  <div class="rope-anchor-glow" aria-hidden="true"></div>
+
+  <!-- ROPE — the hero interaction -->
+  <button class="rope-button" id="ropeButton" type="button"
+          aria-label="Pull the rope to light our celebration">
+    <img class="rope-img" id="ropeImg" alt="" aria-hidden="true" draggable="false">
+    <span class="rope-halo" aria-hidden="true"></span>
+  </button>
+
+  <!-- Instruction (dark state) -->
+  <div class="intro-instruction" id="introInstruction" aria-hidden="true">
+    <div class="pull-ritual-cue"></div>
+    <span class="pull-label">Pull to light us up</span>
+  </div>
+  <div class="pull-feedback" id="pullFeedback" aria-hidden="true">A little deeper to wake the lights</div>
+
+  <!-- Text reveal -->
+  <div class="intro-reveal" id="introReveal" aria-live="polite">
+    <h1 class="names intro-reveal-item" id="introNames">
+      <span class="word">Dharani</span> <span class="word amp-wrap"><span class="amp">&amp;</span></span><br><span class="word">Manu</span>
+    </h1>
+    <div class="ornament intro-reveal-item" id="introOrnament">
+      <span></span><i></i><span></span>
+    </div>
+    <p class="date  intro-reveal-item" id="introDate">12 · December · 2026</p>
+    <p class="venue intro-reveal-item" id="introVenue">The Oberoi Udaivilas, Udaipur</p>
+  </div>
+
+  <!-- Lotus CTA -->
+  <div class="lotus-cta-group" id="lotusCTAGroup">
+    <button class="lotus-button" id="lotusButton" type="button"
+            aria-label="Tap the lotus to join us">
+      <img class="lotus-glow-burst" id="lotusGlowBurst" alt="" aria-hidden="true" decoding="async">
+      <img class="lotus-icon-img"   id="lotusIconImg"   alt="" aria-hidden="true" draggable="false">
+      <img class="lotus-open-img"   id="lotusOpenImg"   alt="" aria-hidden="true" draggable="false">
+    </button>
+    <p class="lotus-cta-label" id="lotusButtonText" aria-hidden="true">Tap the lotus to join us</p>
+  </div>
+
+  <button class="skip-intro" id="skipIntro" type="button">skip intro</button>
+</section>
+
+<!-- ═══════════════════════════════════
+     PAGE SHELL
+═══════════════════════════════════ -->
+<main class="page-shell">
+  <section class="section invite-section" id="invite" aria-labelledby="inviteTitle">
+
+    <!-- Layer 1 — Pichwai background, ken-burns -->
+    <div class="invite-bg" aria-hidden="true"></div>
+
+    <!-- Layer 2 — Dark vignette -->
+    <div class="invite-vignette" aria-hidden="true"></div>
+
+    <!-- Rose petal shower, spawned from bird positions -->
+    <canvas class="invite-petals" id="invitePetals" aria-hidden="true"></canvas>
+
+    <!-- Birds — spritesheet, two birds chasing left→right -->
+    <div class="invite-birds" id="inviteBirds" aria-hidden="true">
+      <div class="inv-bird inv-bird--a" id="invBirdA"></div>
+      <div class="inv-bird inv-bird--b" id="invBirdB"></div>
+    </div>
+
+    <!-- Layer 3 — Arch PNG as floating frame (card-wrap contains ONLY the arch) -->
+    <div class="invite-card-wrap">
+      <img class="invite-arch-frame" src="assets/invite/pn-inv-fr-card-m-v01.webp"
+           alt="" aria-hidden="true" decoding="async" draggable="false">
+    </div>
+
+    <!-- Layer 4 — Text, absolutely positioned within the section -->
+    <div class="invite-text-content">
+
+      <!-- Grandparents blessing — shown when HAS_GRANDPARENTS = true in script.js -->
+      <div class="inv-blessing">
+        <p class="inv-overline">With the blessings of</p>
+        <p>Late Smt. Kamla Kapoor &amp; Shri Harish Kapoor</p>
+        <p>Smt. Leela Sharma &amp; Shri Mohan Sharma</p>
+      </div>
+
+      <!-- Alternative top block — shown when HAS_GRANDPARENTS = false in script.js -->
+      <div class="inv-blessing-alt">
+        <p class="inv-blessing-alt-line1">With the blessings of the divine</p>
+        <p class="inv-blessing-alt-line2">and the love of our families</p>
+      </div>
+
+      <p class="inv-kicker">Together with their families</p>
+
+      <img class="inv-lotus-div" src="assets/invite/pn-inv-div-lotus-divider-x-v01.webp"
+           alt="" aria-hidden="true" decoding="async">
+
+      <h2 class="inv-names" id="inviteTitle">Dharani <span class="inv-amp">&amp;</span> Manu</h2>
+
+      <img class="inv-lotus-div" src="assets/invite/pn-inv-div-lotus-divider-x-v01.webp"
+           alt="" aria-hidden="true" decoding="async">
+
+      <div class="inv-parents">
+        <p>D/O Mr. Rajesh Sharma &amp; Mrs. Kavita Sharma</p>
+        <p>S/O Mr. Sanjay Kapoor &amp; Mrs. Neeta Kapoor</p>
+      </div>
+
+      <p class="inv-occasion">invite you to celebrate their wedding</p>
+
+      <div class="inv-meta">
+        <p class="inv-date">19 November 2026</p>
+        <p class="inv-venue">The Oberoi Udaivilas, Udaipur</p>
+      </div>
+
+    </div>
+
+    <!-- CTA outside the arch — floats on the Pichwai background -->
+    <div class="inv-cta">
+      <a class="inv-btn" href="#events">View Events</a>
+    </div>
+
+  </section>
+
+  <section class="section events-section" id="events" aria-labelledby="evtTitle">
+
+    <!-- Background gradient -->
+    <div class="evt-bg" aria-hidden="true"></div>
+    <!-- Rose watercolor texture at very low opacity -->
+    <div class="evt-tex-overlay" aria-hidden="true"></div>
+    <!-- Starfield canvas — open night sky feel -->
+    <canvas class="evt-stars" id="evtStars" aria-hidden="true"></canvas>
+    <div class="evt-bg-vignette" aria-hidden="true"></div>
+    <div class="evt-birds" id="evtBirds" aria-hidden="true"></div>
+
+    <!-- Jhoomer — top center, pendulum sway -->
+    <div class="evt-jhoomer-wrap" aria-hidden="true">
+      <div class="evt-jhoomer-inner">
+        <img class="evt-jhoomer-img"
+             src="assets/shared/pn-shr-mot-jhoomer-hanging-x-v01.webp"
+             alt="" decoding="async" loading="lazy" draggable="false">
+      </div>
+    </div>
+
+    <!-- Floral corners — proper individual assets, no mirror hack -->
+    <img class="evt-corner evt-corner--tl"
+         src="assets/shared/pn-shr-div-floral-corner-top-left-x-v01.webp"
+         alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+    <img class="evt-corner evt-corner--tr"
+         src="assets/shared/pn-shr-div-floral-corner-top-right-x-v01.webp"
+         alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Floral border — bottom edge -->
+    <div class="evt-floral-border evt-floral-border--bot" aria-hidden="true">
+      <img src="assets/shared/pn-shr-div-floral-border-horizontal-x-v01.webp"
+           alt="" decoding="async" loading="lazy" draggable="false">
+    </div>
+
+    <!-- Warm ambient glow -->
+    <div class="evt-glow-mid" aria-hidden="true"></div>
+
+    <!-- ── LEFT COLUMN (top → bottom) ── -->
+    <!-- Banana leaf — upper left -->
+    <img class="evt-bananaleaf"
+         src="assets/shared/Banaleaf.webp"
+         alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Peacock — mid left, faces inward naturally -->
+    <img class="evt-peacock" id="evtPeacock"
+         src="assets/shared/pn-shr-mot-peacock-main-x-v01.webp"
+         alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Diya — lower left -->
+    <img class="evt-diya evt-diya--l"
+         src="assets/shared/Diya.webp"
+         alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- ── RIGHT COLUMN (top → bottom) ── -->
+    <!-- Chhatri — upper right -->
+    <img class="evt-chhatri"
+         src="assets/shared/pn-shr-mot-chhatri-ornate-x-v01.webp"
+         alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Elephant — mid right, mirrored to face inward -->
+    <img class="evt-elephant" id="evtElephant"
+         src="assets/shared/pn-shr-mot-elephant-main-x-v01.webp"
+         alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Diya — lower right -->
+    <img class="evt-diya evt-diya--r"
+         src="assets/shared/Diya.webp"
+         alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- ── BOTTOM CENTRE ── -->
+    <!-- Cow — peeking from below, centred -->
+    <img class="evt-cow"
+         src="assets/shared/pn-shr-mot-cow-main-x-v01.webp"
+         alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Floating lotus accents — subtle, two positions only -->
+    <img class="evt-lotus evt-lotus--1"
+         src="assets/shared/pn-shr-mot-lotus-flower-x-v01.webp"
+         alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+    <img class="evt-lotus evt-lotus--2"
+         src="assets/shared/pn-shr-mot-lotus-flower-x-v01.webp"
+         alt="" aria-hidden="true" decoding="async" loading="lazy" draggable="false">
+
+    <!-- Section header — children animate in when parent enters view -->
+    <div class="evt-header reveal-item" id="evtHeader">
+      <p class="evt-eyebrow">Celebration Journey</p>
+      <h2 class="evt-title" id="evtTitle">Our Events</h2>
+      <img class="evt-divider"
+           src="assets/event/pn-evt-div-lotus-vine-x-v01.webp"
+           alt="" aria-hidden="true" decoding="async">
+    </div>
+
+    <!-- Ceremonial journey — vine path + event cards -->
+    <div class="evt-journey">
+      <div class="evt-path-wrap" id="evtPathWrap" aria-hidden="true">
+        <img class="evt-path-vine"
+             src="assets/event/pn-evt-pth-ceremonial-vine-m-v01.webp"
+             alt="" aria-hidden="true" decoding="async">
+      </div>
+      <div class="evt-stops" id="evtStops" role="list"></div>
+    </div>
+
+  </section>
+
+  <!-- ═══════════════════════════════════
+       MEET THE COUPLE — Secret Garden Reveal
+  ═══════════════════════════════════ -->
+  <section class="section cpl-section" id="couple" aria-labelledby="cplTitle">
+
+    <!-- Background: Secret Garden painting -->
+    <div class="cpl-bg" aria-hidden="true"></div>
+    <!-- Soft vignette to blend top/bottom with adjacent sections -->
+    <div class="cpl-vignette" aria-hidden="true"></div>
+
+    <!-- Tree overlays — these part on scroll -->
+    <div class="cpl-tree cpl-tree--left" id="cplTreeLeft" aria-hidden="true">
+      <img src="assets/meet_the_couple/pn-cpl-ovl-tree-left-m-v01.webp" alt="" decoding="async" draggable="false">
+    </div>
+    <div class="cpl-tree cpl-tree--right" id="cplTreeRight" aria-hidden="true">
+      <img src="assets/meet_the_couple/pn-cpl-ovl-tree-right-m-v01.webp" alt="" decoding="async" draggable="false">
+    </div>
+
+    <!-- Content — revealed as trees part -->
+    <div class="cpl-content" id="cplContent">
+
+      <!-- Section header -->
+      <div class="cpl-header reveal-item">
+        <p class="cpl-eyebrow">A love story</p>
+        <h2 class="cpl-title" id="cplTitle">Meet the Couple</h2>
+        <div class="cpl-ornament" aria-hidden="true">
+        <span></span>
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <ellipse cx="11" cy="8"  rx="2.8" ry="5.8" fill="rgba(216,169,87,.78)" transform="rotate(0   11 11)"/>
+          <ellipse cx="11" cy="8"  rx="2.8" ry="5.8" fill="rgba(216,169,87,.58)" transform="rotate(60  11 11)"/>
+          <ellipse cx="11" cy="8"  rx="2.8" ry="5.8" fill="rgba(216,169,87,.58)" transform="rotate(-60 11 11)"/>
+          <ellipse cx="11" cy="8"  rx="2.2" ry="4.8" fill="rgba(216,169,87,.38)" transform="rotate(120 11 11)"/>
+          <ellipse cx="11" cy="8"  rx="2.2" ry="4.8" fill="rgba(216,169,87,.38)" transform="rotate(-120 11 11)"/>
+          <ellipse cx="11" cy="8"  rx="1.8" ry="4.2" fill="rgba(216,169,87,.26)" transform="rotate(180 11 11)"/>
+          <circle  cx="11" cy="11" r="2.0" fill="rgba(216,169,87,.88)"/>
+        </svg>
+        <span></span>
+      </div>
+      </div>
+
+      <!-- Story — one short paragraph -->
+      <div class="cpl-story reveal-item">
+        <p class="cpl-story-body">
+          Two souls, one sacred journey. From shared smiles to endless conversations, our bond grew deeper each day. Guided by tradition, love, and the blessings of our families, Dharani &amp; Manu are ready to begin their most beautiful chapter yet.
+        </p>
+        <!-- Personality tags — rendered by applyConfigPhase2 if story.tags exist -->
+        <div class="cpl-tags" id="cplTags" aria-hidden="true"></div>
+        <!-- Wedding hashtag — populated by applyConfigPhase2 when set -->
+        <p class="cpl-story-htag" id="cplHashtag" hidden></p>
+      </div>
+
+    </div><!-- /cpl-content -->
+
+  </section>
+
+  <section class="section gallery-section" id="gallery" aria-labelledby="galTitle">
+
+    <!-- Courtyard background -->
+    <div class="gal-bg" aria-hidden="true"></div>
+    <div class="gal-bg-vignette" aria-hidden="true"></div>
+
+    <!-- Section header -->
+    <div class="gal-header reveal-item">
+      <p class="eyebrow gal-eyebrow">Memories</p>
+      <h2 class="section-title gal-title" id="galTitle">Gallery Wall</h2>
+    </div>
+
+    <!-- Hanging frames wall — rendered by JS -->
+    <div class="gal-wall" id="galWall" role="list" aria-label="Photo gallery"></div>
+
+    <!-- Lightbox overlay -->
+    <div class="gal-lightbox" id="galLightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+      <button class="gal-lb-close" id="galLbClose" aria-label="Close photo viewer">&#x2715;</button>
+      <button class="gal-lb-prev"  id="galLbPrev"  aria-label="Previous photo">&#8249;</button>
+      <button class="gal-lb-next"  id="galLbNext"  aria-label="Next photo">&#8250;</button>
+      <div class="gal-lb-inner">
+        <img class="gal-lb-img" id="galLbImg" alt="" decoding="async">
+        <p  class="gal-lb-caption" id="galLbCaption"></p>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="section ttk-section" id="things" aria-labelledby="ttkTitle">
+    <div class="ttk-border-top" aria-hidden="true"></div>
+    <div class="ttk-border-bot" aria-hidden="true"></div>
+
+    <!-- Pichwai animal motif backdrop — purely decorative -->
+    <div class="ttk-motif-layer" aria-hidden="true">
+      <img class="ttk-motif ttk-motif--peacock"
+           src="assets/shared/pn-shr-mot-peacock-main-x-v01.webp" alt="" draggable="false">
+      <img class="ttk-motif ttk-motif--elephant ttk-motif--elephant-l"
+           src="assets/shared/pn-shr-mot-elephant-main-x-v01.webp" alt="" draggable="false">
+      <img class="ttk-motif ttk-motif--elephant ttk-motif--elephant-r"
+           src="assets/shared/pn-shr-mot-elephant-main-x-v01.webp" alt="" draggable="false">
+      <img class="ttk-motif ttk-motif--cow"
+           src="assets/hero/pn-shr-mot-cow-main-x-v01.webp" alt="" draggable="false">
+    </div>
+
+    <div class="ttk-inner">
+      <div class="ttk-header reveal-item">
+        <span class="ttk-eyebrow">Guest Essentials</span>
+        <h2 class="ttk-heading" id="ttkTitle">Things to Know</h2>
+        <div class="ttk-ornament" aria-hidden="true">
+          <span></span>
+          <i></i>
+          <img class="ttk-lotus-divider"
+               src="assets/invite/pn-inv-div-lotus-divider-x-v01.webp"
+               alt="" draggable="false" width="36" height="36">
+          <i></i>
+          <span></span>
+        </div>
+        <p class="ttk-subline">A few thoughtful details to help you celebrate in ease.</p>
+      </div>
+      <div class="ttk-grid" id="ttkGrid" role="list" aria-label="Guest information cards"></div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════
+       RSVP — Royal Night Finale
+  ═══════════════════════════════════ -->
+  <section class="section rsvp-section" id="rsvp" aria-labelledby="rsvpHeadline">
+
+    <!-- Background: palace courtyard at night -->
+    <div class="rsvp-bg" aria-hidden="true"></div>
+
+    <!-- Subtle readability veil — central gradient, lets bg breathe -->
+    <div class="rsvp-veil" aria-hidden="true"></div>
+
+    <!-- ── Live animation canvas: fireworks ── -->
+    <canvas class="rsvp-fireworks-canvas" id="rsvpFireworksCanvas" aria-hidden="true"></canvas>
+
+
+    <!-- ── Ambient lamp glows (lower courtyard) ── -->
+    <div class="rsvp-lamp-glows" aria-hidden="true">
+      <span class="rsvp-lamp rsvp-lamp--l"></span>
+      <span class="rsvp-lamp rsvp-lamp--r"></span>
+      <span class="rsvp-lamp rsvp-lamp--cl"></span>
+      <span class="rsvp-lamp rsvp-lamp--cr"></span>
+    </div>
+
+    <!-- ── Lotus divider (from provided asset, top of section) ── -->
+    <div class="rsvp-lotus-top" aria-hidden="true">
+      <img src="assets/rsvp/pn-rsvp-div-finale-lotus-x-v01.webp" alt="" decoding="async" loading="lazy">
+    </div>
+
+    <!-- ── Content block ── -->
+    <div class="rsvp-content">
+
+      <p  class="rsvp-eyebrow  rsvp-reveal" aria-hidden="true">JOIN THE CELEBRATION</p>
+
+      <h2 class="rsvp-headline rsvp-reveal" id="rsvpHeadline">
+        <span class="rsvp-hl-will">Will you</span>
+        <span class="rsvp-hl-join">JOIN US?</span>
+      </h2>
+
+      <p class="rsvp-body rsvp-reveal">
+        We've saved a seat for you — at our table, in our hearts,
+        and under the royal sky. Come celebrate with us as we begin
+        this new chapter together.
+      </p>
+
+      <!-- Primary CTA -->
+      <div class="rsvp-cta-wrap rsvp-reveal">
+        <a class="rsvp-btn-primary"
+           href="https://wa.me/919999999999?text=Yes%2C%20I%27ll%20be%20there%20%E2%80%94%20Dharani%20%26%20Manu%27s%20celebration!"
+           target="_blank" rel="noreferrer"
+           aria-label="RSVP — Yes, I'll be there. Opens WhatsApp.">
+          <span class="rsvp-btn-inner">YES, I'LL BE THERE</span>
+        </a>
+        <p class="rsvp-helper">You'll be redirected to WhatsApp to confirm your attendance.</p>
+      </div>
+
+      <!-- Save the Date -->
+      <div class="rsvp-std rsvp-reveal">
+        <p class="rsvp-std-heading">SAVE THE DATE</p>
+        <div class="rsvp-std-btns">
+          <a class="rsvp-cal-btn" id="rsvpGcalBtn" href="#" target="_blank" rel="noreferrer"
+             aria-label="Add to Google Calendar">
+            <svg class="rsvp-cal-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <rect x="2" y="3" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M7 1v4M13 1v4M2 8h16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            Add to Google Calendar
+          </a>
+          <a class="rsvp-cal-btn" id="rsvpIcalBtn" href="#" download="dharani-manu-wedding.ics"
+             aria-label="Add to Apple Calendar">
+            <svg class="rsvp-cal-icon" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <rect x="2" y="3" width="16" height="15" rx="2" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M7 1v4M13 1v4M2 8h16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+              <path d="M10 11v3M8.5 14h3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+            </svg>
+            Add to Apple Calendar
+          </a>
+        </div>
+      </div>
+
+    </div><!-- /rsvp-content -->
+
+  </section>
+
+  <!-- ═══════════════════════════════════
+       CLOSING — Love note farewell
+  ═══════════════════════════════════ -->
+  <section class="section closing-section" id="closing" aria-labelledby="closingTitle">
+    <div class="closing-bg"  aria-hidden="true"></div>
+    <div class="closing-veil" aria-hidden="true"></div>
+
+    <div class="closing-content reveal-item">
+      <div class="rsvp-closing-frame">
+        <span class="rsvp-corner rsvp-corner--tr" aria-hidden="true"></span>
+        <span class="rsvp-corner rsvp-corner--bl" aria-hidden="true"></span>
+
+        <img class="closing-lotus"
+             src="assets/invite/pn-inv-div-lotus-divider-x-v01.webp"
+             alt="" aria-hidden="true" decoding="async" loading="lazy">
+
+        <p class="closing-eyebrow">With all our love</p>
+
+        <h2 class="closing-names" id="closingTitle">Dharani &amp; Manu</h2>
+
+        <div class="closing-ornament" aria-hidden="true">
+          <span></span>
+          <svg width="20" height="20" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <ellipse cx="11" cy="8"  rx="2.8" ry="5.8" fill="rgba(216,169,87,.72)" transform="rotate(0   11 11)"/>
+            <ellipse cx="11" cy="8"  rx="2.8" ry="5.8" fill="rgba(216,169,87,.52)" transform="rotate(60  11 11)"/>
+            <ellipse cx="11" cy="8"  rx="2.8" ry="5.8" fill="rgba(216,169,87,.52)" transform="rotate(-60 11 11)"/>
+            <ellipse cx="11" cy="8"  rx="2.2" ry="4.8" fill="rgba(216,169,87,.34)" transform="rotate(120 11 11)"/>
+            <ellipse cx="11" cy="8"  rx="2.2" ry="4.8" fill="rgba(216,169,87,.34)" transform="rotate(-120 11 11)"/>
+            <ellipse cx="11" cy="8"  rx="1.8" ry="4.2" fill="rgba(216,169,87,.22)" transform="rotate(180 11 11)"/>
+            <circle  cx="11" cy="11" r="2.0"  fill="rgba(216,169,87,.85)"/>
+          </svg>
+          <span></span>
+        </div>
+
+        <p class="closing-line">You make this moment complete.</p>
+        <p class="closing-date">12 · December · 2026</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="footer" style="text-align:center;padding:28px 16px 36px;background:#0a0908;color:rgba(216,169,87,.72);font-family:inherit;letter-spacing:.08em;font-size:.85rem;">
+  <p class="ft-credit" style="margin:0;">Crafted with love on <a href="https://wowkalyanam.com" target="_blank" rel="noopener" style="color:#d8a957;text-decoration:none;border-bottom:1px solid rgba(216,169,87,.4);font-weight:600;"><img class="ft-credit-logo" src="/images/branding/wow-kalyanam-emblem-gold.png" alt="" aria-hidden="true" style="height: 18px; width: auto; vertical-align: middle; margin-right: 6px; display: inline-block;">Wow Kalyanam</a></p>
+</footer>
+
+<nav class="floating-menu" id="floatingMenu" aria-label="Navigation">
+
+  <!-- Circular Pichwai menu panel -->
+  <div class="menu-panel" id="menuPanel" role="dialog" aria-label="Site navigation">
+    <div class="menu-bg-circle">
+      <img class="menu-bg-img" src="assets/shared/Menu_background.webp" alt="" aria-hidden="true" draggable="false">
+    </div>
+    <div class="menu-nav-header" aria-hidden="true">Navigation</div>
+    <div class="menu-lotus-top" aria-hidden="true">
+      <svg viewBox="0 0 32 16" fill="none" xmlns="http://www.w3.org/2000/svg" width="28">
+        <ellipse cx="16" cy="14" rx="6" ry="5" fill="#d8a957" opacity=".7"/>
+        <ellipse cx="8"  cy="12" rx="5" ry="4" fill="#d8a957" opacity=".5"/>
+        <ellipse cx="24" cy="12" rx="5" ry="4" fill="#d8a957" opacity=".5"/>
+      </svg>
+    </div>
+    <nav class="menu-links" aria-label="Page sections">
+      <a class="menu-link" href="#" id="menuHome">Home</a>
+      <div class="menu-divider" aria-hidden="true"></div>
+      <a class="menu-link" href="#invite">Invite</a>
+      <div class="menu-divider" aria-hidden="true"></div>
+      <a class="menu-link" href="#events">Events</a>
+      <div class="menu-divider" aria-hidden="true"></div>
+      <a class="menu-link" href="#couple">Meet the Couple</a>
+      <div class="menu-divider" aria-hidden="true"></div>
+      <a class="menu-link" href="#gallery">Gallery</a>
+      <div class="menu-divider" aria-hidden="true"></div>
+      <a class="menu-link" href="#things">Things to Know</a>
+      <div class="menu-divider" aria-hidden="true"></div>
+      <a class="menu-link" href="#rsvp">RSVP</a>
+    </nav>
+  </div>
+
+  <!-- Music toggle button (above compass) -->
+  <button class="music-toggle" id="musicToggle" type="button"
+          aria-label="Play music" aria-pressed="false">
+    <img class="music-icon-img" src="assets/shared/music_icon.webp"
+         alt="" aria-hidden="true" draggable="false">
+  </button>
+
+  <!-- Compass toggle button -->
+  <button class="menu-toggle" id="menuToggle" type="button"
+          aria-label="Open navigation" aria-expanded="false">
+    <img class="compass-img" src="assets/shared/compass.webp"
+         alt="Navigation compass" draggable="false">
+  </button>
+</nav>
+
+<!-- Background music — starts on rope pull -->
+<audio id="bgMusic" src="assets/song/Template_09.mp3" loop preload="none"></audio>
+
+<script src="script.js" defer></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var cfg = window.__WEDDING_CONFIG__;
+  if (!cfg || !cfg.invite || cfg.invite.parentsOrder !== 'groom_first') return;
+  var bEl = document.getElementById('iBrideParents');
+  var gEl = document.getElementById('iGroomParents');
+  if (bEl) { var em = bEl.closest('.fam-parents') && bEl.closest('.fam-parents').querySelector('em'); if (em) em.textContent = 'Son of'; }
+  if (gEl) { var em2 = gEl.closest('.fam-parents') && gEl.closest('.fam-parents').querySelector('em'); if (em2) em2.textContent = 'Daughter of'; }
+  /* Template 10 — swap the hardcoded "Daughter of" / "Son of" role labels.
+     buildConfigData already swapped the parent DATA, so #invBrideParents now
+     holds the groom's parents (and must read "Son of") and #invGroomParents
+     holds the bride's parents (and must read "Daughter of"). Without this the
+     labels stay fixed and the swap renders mismatched. */
+  var t10Roles = document.querySelectorAll('.inv-parents .inv-parent-role');
+  if (t10Roles.length >= 2) { t10Roles[0].textContent = 'Son of'; t10Roles[1].textContent = 'Daughter of'; }
+});
+</script>
+<style>
+.sp-blessings{position:relative;z-index:1;max-width:34em;margin:0 auto 34px;text-align:center}
+.sp-bl-group+.sp-bl-group{margin-top:26px}
+.sp-bl-h{margin:0 0 12px;font-family:var(--spb-caps-font);font-size:.68rem;font-weight:400;font-style:normal;letter-spacing:.22em;text-transform:uppercase;line-height:1.5;color:var(--spb-caps-color)}
+.sp-bl-h::after{content:"";display:block;width:28px;height:1px;margin:10px auto 0;background:currentColor;opacity:.45}
+.sp-bl-list{list-style:none;margin:0;padding:0}
+.sp-bl-list li{margin:0;font-family:var(--spb-name-font);font-style:var(--spb-name-style);font-weight:var(--spb-name-weight);font-size:clamp(1rem,4.2vw,1.2rem);letter-spacing:.01em;line-height:1.55;color:var(--spb-name-color);overflow-wrap:anywhere}
+#closing .sp-blessings{margin-bottom:26px}
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var cfg = window.__WEDDING_CONFIG__;
+  var b = cfg && cfg.blessings;
+  if (!b || b.show === false || !Array.isArray(b.groups) || document.querySelector('.sp-blessings')) return;
+  var groups = b.groups.map(function(g) {
+    return {
+      h: String((g && g.heading) || '').trim(),
+      n: String((g && g.names) || '').split(/\r?\n/).map(function(s) { return s.trim(); }).filter(Boolean)
+    };
+  }).filter(function(g) { return g.n.length; });
+  if (!groups.length) return;
+
+  /* [insert before, names to borrow the font from, caps line to borrow the colour from] */
+  var SPOTS = [
+    ['#closing .closing-eyebrow', '#closing .closing-names', '#closing .closing-date'],
+    ['#siteFooter .ft-names', '#siteFooter .ft-names', '#siteFooter #ftDate, #siteFooter .ft-date'],
+    ['footer.footer .ft-names', 'footer.footer .ft-names', 'footer.footer .ft-date']
+  ];
+  var spot = null;
+  for (var i = 0; i < SPOTS.length && !spot; i++) {
+    var a = document.querySelector(SPOTS[i][0]);
+    if (a) spot = { anchor: a, names: document.querySelector(SPOTS[i][1]) || a, caps: document.querySelector(SPOTS[i][2]) };
+  }
+  if (!spot) return;
+
+  function visible(c) { return c && c !== 'transparent' && !/rgba\([^)]*,\s*0\)$/.test(c); }
+  /* Footer date lines are often set at 35-45% opacity; a heading borrowing that
+     colour disappears on the darker footers, so floor its alpha at 0.8. */
+  function atLeast(c, min) {
+    var m = /^rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)$/.exec(c);
+    return m && parseFloat(m[4]) < min ? 'rgba(' + m[1] + ',' + m[2] + ',' + m[3] + ',' + min + ')' : c;
+  }
+  var ns = getComputedStyle(spot.names);
+  var cs = spot.caps ? getComputedStyle(spot.caps) : ns;
+  var nameColor = visible(ns.color) ? ns.color : cs.color;
+  /* A script face (template09's closing names are Parisienne) is unreadable as
+     a list — fall back to the caps line's serif, set italic. */
+  var script = /parisienne|vibes|script|allura|tangerine|pinyon|sacramento|brush|italianno|dancing|satisfy|monsieur|petit formal|carattere|rouge|cookie/i.test(ns.fontFamily);
+
+  var wrap = document.createElement('div');
+  wrap.className = 'sp-blessings';
+  wrap.style.setProperty('--spb-name-font', script ? cs.fontFamily : ns.fontFamily);
+  wrap.style.setProperty('--spb-name-style', script ? 'italic' : ns.fontStyle);
+  wrap.style.setProperty('--spb-name-weight', script ? '400' : ns.fontWeight);
+  wrap.style.setProperty('--spb-name-color', nameColor);
+  wrap.style.setProperty('--spb-caps-font', cs.fontFamily);
+  wrap.style.setProperty('--spb-caps-color', atLeast(visible(cs.color) ? cs.color : nameColor, 0.8));
+  groups.forEach(function(g) {
+    var sec = document.createElement('div');
+    sec.className = 'sp-bl-group';
+    if (g.h) {
+      var h = document.createElement('p');
+      h.className = 'sp-bl-h';
+      h.textContent = g.h;
+      sec.appendChild(h);
+    }
+    var ul = document.createElement('ul');
+    ul.className = 'sp-bl-list';
+    g.n.forEach(function(n) { var li = document.createElement('li'); li.textContent = n; ul.appendChild(li); });
+    sec.appendChild(ul);
+    wrap.appendChild(sec);
+  });
+  spot.anchor.parentNode.insertBefore(wrap, spot.anchor);
+});
+</script>
+<script>
+document.addEventListener('DOMContentLoaded', function() { setTimeout(function() {
+  var cfg = window.__WEDDING_CONFIG__, c = cfg && cfg.couple;
+  if (!c || !c.date || !c.endDate) return;
+  var re = /^(\d{4})-(\d{2})-(\d{2})$/, a = re.exec(c.date), z = re.exec(c.endDate);
+  if (!a || !z) return;
+  var t1 = Date.UTC(+a[1], a[2] - 1, +a[3]), t2 = Date.UTC(+z[1], z[2] - 1, +z[3]);
+  var span = (t2 - t1) / 86400000;
+  if (span < 1 || span > 14) return;
+  var LONG = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var A = { d: +a[3], m: +a[2] - 1, y: +a[1] }, Z = { d: +z[3], m: +z[2] - 1, y: +z[1] };
+  function suf(n) { var v = n % 100, l = n % 10; return (v > 10 && v < 14) ? 'th' : l === 1 ? 'st' : l === 2 ? 'nd' : l === 3 ? 'rd' : 'th'; }
+  /* o: { month:'long'|'short', ord:false|'plain'|'sup', dots:bool } → HTML */
+  function day(x, o) { return o.ord === 'sup' ? x.d + '<sup class="date-ord">' + suf(x.d) + '</sup>' : o.ord ? x.d + suf(x.d) : String(x.d); }
+  /* Each date unit is unbreakable and the dash stays on the first line, so a
+     narrow hero wraps as "30th Nov – / 2nd Dec 2026", never "2nd / Dec".
+     The space between units must sit OUTSIDE the nowrap spans — two nowrap
+     spans with nothing between them are one unbreakable line. */
+  function nw(s) { return '<span style="white-space:nowrap">' + s + '</span>'; }
+  function range(o) {
+    var M = o.month === 'short' ? SHORT : LONG, sep = o.dots ? ' &middot; ' : ' ', dash = '&nbsp;&ndash;';
+    if (A.y !== Z.y) return nw(day(A, o) + ' ' + M[A.m] + ' ' + A.y + dash) + ' ' + nw(day(Z, o) + ' ' + M[Z.m] + ' ' + Z.y);
+    if (A.m !== Z.m) return nw(day(A, o) + ' ' + M[A.m] + dash) + ' ' + nw(day(Z, o) + ' ' + M[Z.m] + sep + Z.y);
+    return nw(day(A, o) + dash + ' ' + day(Z, o)) + sep + nw(M[Z.m] + sep + Z.y);
+  }
+  var venue = String(c.venue || '').replace(/[&<>"]/g, function(ch) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[ch]; });
+  var LONG_PLAIN = { month: 'long' }, LONG_SUP = { month: 'long', ord: 'sup' }, SHORT_SUP = { month: 'short', ord: 'sup' };
+  /* [selector, format, append venue]. First match wins per element. */
+  var SPOTS = [
+    ['#heroDate', SHORT_SUP],                                   /* t11, t13 */
+    ['#inviteDate', LONG_SUP],                                  /* t11 */
+    ['#ftDate', LONG_SUP],                                      /* t11, t13 */
+    ['#htDate', { month: 'short', ord: 'plain' }],              /* t10 hero */
+    ['#siteFooter .ft-date', { month: 'short', ord: 'plain' }], /* t10 footer */
+    ['#introDate', LONG_PLAIN],                                 /* t09 intro */
+    ['.inv-date', LONG_PLAIN],                                  /* t09 invitation */
+    ['.closing-date', { month: 'long', dots: true }],           /* t09 closing card */
+    ['footer.footer .ft-date', LONG_PLAIN, true],               /* t01-t08 footer */
+    ['.pl-date-injected, .pl-date, .pre-date, .preloader-date', LONG_PLAIN] /* intro screens */
+  ];
+  var done = [];
+  SPOTS.forEach(function(s) {
+    document.querySelectorAll(s[0]).forEach(function(el) {
+      if (done.indexOf(el) !== -1) return;
+      done.push(el);
+      el.innerHTML = range(s[1]) + (s[2] && venue ? ' &middot; ' + venue : '');
+    });
+  });
+}, 0); });
+</script>
+<script>
+document.addEventListener('click', function(e) {
+  if (e.defaultPrevented) return;
+  var link = e.target && e.target.closest ? e.target.closest('a[href^="#"]') : null;
+  if (!link) return;
+  var href = link.getAttribute('href') || '';
+  if (!href || href === '#') return;
+  var id = href.slice(1);
+  try { id = decodeURIComponent(id); } catch (_) {}
+  var target = document.getElementById(id);
+  if (!target) return;
+  e.preventDefault();
+  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+</script>
+</body>
+</html>

@@ -7,7 +7,7 @@ An interactive, responsive digital wedding invitation platform featuring curated
 ## 🌟 Exclusive Templates
 
 ### 1. Royal Pichwai Palace (`/template2.html`)
-- **Default Couple:** Dharani & Manu
+- **Default Couple:** Deepthi & Murali
 - **Highlights:**
   - Interactive Elephant Bell intro with bloom animation (`videos/intro.mp4`)
   - Courtyard fountain hero section with smooth scroll navigation

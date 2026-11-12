@@ -138,9 +138,9 @@ const card4 = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 580" wid
   <text x="200" y="290" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="34" font-weight="700" letter-spacing="3">WE</text>
   <text x="200" y="335" text-anchor="middle" fill="#fef08a" font-family="'Cinzel', serif" font-size="32" font-weight="700" letter-spacing="4">INVITE</text>
   <line x1="130" y1="365" x2="270" y2="365" stroke="#fef08a" stroke-width="1.5"/>
-  <text x="200" y="415" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="20" font-weight="600" letter-spacing="2">DHARANI</text>
+  <text x="200" y="415" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="20" font-weight="600" letter-spacing="2">DEEPTHI</text>
   <text x="200" y="445" text-anchor="middle" fill="#fef08a" font-family="'Luxurious Script', cursive" font-size="26">&amp;</text>
-  <text x="200" y="480" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="20" font-weight="600" letter-spacing="2">MANU</text>
+  <text x="200" y="480" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="20" font-weight="600" letter-spacing="2">MURALI</text>
   <text x="200" y="525" text-anchor="middle" fill="#ccfbf1" font-family="'Inter', sans-serif" font-size="11" letter-spacing="2">19 · 11 · 2026</text>
 </svg>`;
 
@@ -169,7 +169,7 @@ const card5 = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 580" wid
   <!-- Title text -->
   <text x="200" y="395" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="34" font-weight="700" letter-spacing="2">Shaadi</text>
   <text x="200" y="435" text-anchor="middle" fill="#fde047" font-family="'Luxurious Script', cursive" font-size="28">Sacred Vedic Rituals</text>
-  <text x="200" y="475" text-anchor="middle" fill="#e2e8f0" font-family="'Inter', sans-serif" font-size="11" letter-spacing="1.5">BWSSB RAJATHA BHAVAN</text>
+  <text x="200" y="475" text-anchor="middle" fill="#e2e8f0" font-family="'Inter', sans-serif" font-size="11" letter-spacing="1.5">THE GRAND BALLROOM & PALACE GROUNDS</text>
   <text x="200" y="500" text-anchor="middle" fill="#94a3b8" font-family="'Inter', sans-serif" font-size="11">Malleswaram, Bangalore</text>
   <text x="200" y="535" text-anchor="middle" fill="#f59e0b" font-family="'Cinzel', serif" font-size="13" font-weight="600" letter-spacing="3">19 · 11 · 2026</text>
 </svg>`;
@@ -201,9 +201,9 @@ const card6 = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 580" wid
   <circle cx="207" cy="402" r="6" fill="#fde047"/>
   <path d="M203 409 L211 440 L203 440 Z" fill="#fde047"/>
   <!-- Title text -->
-  <text x="200" y="110" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="22" font-weight="700" letter-spacing="3">DHARANI</text>
+  <text x="200" y="110" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="22" font-weight="700" letter-spacing="3">DEEPTHI</text>
   <text x="200" y="135" text-anchor="middle" fill="#2dd4bf" font-family="'Luxurious Script', cursive" font-size="26">weds</text>
-  <text x="200" y="170" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="22" font-weight="700" letter-spacing="3">MANU</text>
+  <text x="200" y="170" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="22" font-weight="700" letter-spacing="3">MURALI</text>
   <text x="200" y="495" text-anchor="middle" fill="#e2e8f0" font-family="'Cinzel', serif" font-size="15" letter-spacing="2">NOVEMBER 2026</text>
   <text x="200" y="525" text-anchor="middle" fill="#2dd4bf" font-family="'Inter', sans-serif" font-size="11" letter-spacing="2">HIMALAYAN SOUL UNION</text>
 </svg>`;

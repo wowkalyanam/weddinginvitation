@@ -405,6 +405,14 @@ export default function App() {
   // Separate, independent form state per template — ensuring data never mixes
   const [templateForms, setTemplateForms] = useState<Record<string, TemplateFormData>>(() => {
     const initial: Record<string, TemplateFormData> = {};
+    if (typeof window !== 'undefined') {
+      try {
+        const activeS = sessionStorage.getItem('wow_active_custom_wedding');
+        if (activeS && (activeS.includes('Dharani') || activeS.includes('BWSSB') || activeS.includes('19 November') || activeS.includes('Malleshwaram'))) {
+          sessionStorage.removeItem('wow_active_custom_wedding');
+        }
+      } catch (_) {}
+    }
     TEMPLATES.forEach((t) => {
       initial[t.id] = { ...t.defaultData };
       if (typeof window !== 'undefined') {
@@ -412,13 +420,38 @@ export default function App() {
           const savedStr = localStorage.getItem('wow_custom_wedding_' + t.id);
           if (savedStr) {
             const parsed = JSON.parse(savedStr);
-            initial[t.id] = { ...t.defaultData, ...parsed };
+            // Check if this was the previous client's demo data (Dharani, Manu, BWSSB, 19 November)
+            const isStale = (
+              parsed.bride === 'Dharani' || 
+              parsed.groom === 'Manu' || 
+              (parsed.venue && parsed.venue.includes('BWSSB')) ||
+              (parsed.date && parsed.date.includes('19 November')) ||
+              (parsed.address && parsed.address.includes('Malleshwaram'))
+            );
+            if (!isStale) {
+              initial[t.id] = { ...t.defaultData, ...parsed };
+            } else {
+              localStorage.removeItem('wow_custom_wedding_' + t.id);
+            }
           }
         } catch (_) {}
       }
     });
     return initial;
   });
+
+  const handleResetToDefaults = (templateId: string) => {
+    const template = TEMPLATES.find((t) => t.id === templateId);
+    if (!template) return;
+    try {
+      localStorage.removeItem('wow_custom_wedding_' + templateId);
+      sessionStorage.removeItem('wow_active_custom_wedding');
+    } catch (_) {}
+    setTemplateForms((prev) => ({
+      ...prev,
+      [templateId]: { ...template.defaultData }
+    }));
+  };
 
   // Restore saved photos from IndexedDB / Storage on mount
   useEffect(() => {
@@ -468,11 +501,11 @@ export default function App() {
     const newEvt: WeddingEventItem = {
       id: 'evt-' + Date.now(),
       name: count === 3 ? 'Sangeet & Cocktail' : (count === 4 ? 'Haldi Ceremony' : (count === 5 ? 'Mehendi Celebration' : 'Wedding Function ' + count)),
-      date: cur.date || '19 November 2026',
+      date: cur.date || '13 December 2026',
       time: '06:30 PM onwards',
-      venue: cur.venue || 'BWSSB Rajatha Bhavan',
-      address: cur.address || 'Malleshwaram, Bangalore',
-      mapUrl: cur.mapUrl || 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      venue: cur.venue || 'The Grand Ballroom & Palace Grounds',
+      address: cur.address || 'Bengaluru, Karnataka',
+      mapUrl: cur.mapUrl || 'https://maps.google.com/?q=The Grand Ballroom+Rajatha+Bhavan+Malleshwaram+Bangalore',
       desc: 'Music, joy, and heartfelt celebrations in presence of family.'
     };
     updateFormData(templateId, {
@@ -963,12 +996,24 @@ export default function App() {
                   </h3>
                 </div>
               </div>
-              <button
-                onClick={() => setActiveModalTemplateId(null)}
-                className="w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-500 hover:text-black transition-colors cursor-pointer"
-              >
-                <X className="w-4 h-4" />
-              </button>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleResetToDefaults(activeTemplate.id)}
+                  className="text-xs font-semibold text-neutral-600 hover:text-red-600 px-3 py-1.5 rounded-xl border border-neutral-200 hover:border-red-200 hover:bg-red-50 transition-colors flex items-center gap-1.5 cursor-pointer shadow-2xs"
+                  title="Reset this template's fields back to clean defaults"
+                >
+                  <RotateCcw className="w-3.5 h-3.5 text-neutral-500 hover:text-red-600" />
+                  <span className="hidden sm:inline">Reset Defaults</span>
+                </button>
+                <button
+                  onClick={() => setActiveModalTemplateId(null)}
+                  className="w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-500 hover:text-black transition-colors cursor-pointer"
+                  aria-label="Close modal"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              </div>
             </div>
 
             {/* Modal Body */}
@@ -990,7 +1035,7 @@ export default function App() {
                       type="text"
                       value={activeFormData.bride}
                       onChange={(e) => updateFormData(activeTemplate.id, { bride: e.target.value })}
-                      placeholder="e.g. Dharani"
+                      placeholder="e.g. Deepthi"
                       className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
                     />
                   </div>
@@ -1003,7 +1048,7 @@ export default function App() {
                       type="text"
                       value={activeFormData.groom}
                       onChange={(e) => updateFormData(activeTemplate.id, { groom: e.target.value })}
-                      placeholder="e.g. Manu"
+                      placeholder="e.g. Murali"
                       className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
                     />
                   </div>
@@ -1018,7 +1063,7 @@ export default function App() {
                       type="text"
                       value={activeFormData.brideParents}
                       onChange={(e) => updateFormData(activeTemplate.id, { brideParents: e.target.value })}
-                      placeholder="e.g. Sri. K. Ramesh & Smt. Radha"
+                      placeholder="e.g. Shri. S. Ravi & Smt. R. Jyothilakshmi"
                       className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
                     />
                     <p className="text-[11px] text-neutral-500 mt-1">Appears on the ceremonial invitation card</p>
@@ -1032,7 +1077,7 @@ export default function App() {
                       type="text"
                       value={activeFormData.groomParents}
                       onChange={(e) => updateFormData(activeTemplate.id, { groomParents: e.target.value })}
-                      placeholder="e.g. Sri. M. Suresh & Smt. Shanthi"
+                      placeholder="e.g. Shri. K. Muralidharan & Smt. M. Geetha"
                       className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
                     />
                     <p className="text-[11px] text-neutral-500 mt-1">Appears on the ceremonial invitation card</p>
@@ -1216,7 +1261,7 @@ export default function App() {
                             type="text"
                             value={evt.date}
                             onChange={(e) => updateEvent(activeTemplate.id, evt.id, { date: e.target.value })}
-                            placeholder="e.g. 19 November 2026"
+                            placeholder="e.g. 13 December 2026"
                             className="w-full px-3 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
                           />
                         </div>
@@ -1246,7 +1291,7 @@ export default function App() {
                             type="text"
                             value={evt.venue}
                             onChange={(e) => updateEvent(activeTemplate.id, evt.id, { venue: e.target.value })}
-                            placeholder="e.g. BWSSB Rajatha Bhavan"
+                            placeholder="e.g. The Grand Ballroom & Palace Grounds"
                             className="w-full px-3 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
                           />
                         </div>
@@ -1259,7 +1304,7 @@ export default function App() {
                             type="text"
                             value={evt.address || ''}
                             onChange={(e) => updateEvent(activeTemplate.id, evt.id, { address: e.target.value })}
-                            placeholder="e.g. Malleshwaram, Bangalore"
+                            placeholder="e.g. Bengaluru, Karnataka"
                             className="w-full px-3 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
                           />
                         </div>

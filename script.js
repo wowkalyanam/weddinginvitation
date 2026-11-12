@@ -36,9 +36,9 @@ const eventData = [
   {
     eyebrow: 'THE SACRED UNION',
     title: 'Wedding Ceremony',
-    date: customDate || '19 November 2026',
+    date: customDate || '13 December 2026',
     time: customTime || '07:00 PM',
-    venue: customVenue ? `${customVenue}${customAddress ? ', ' + customAddress : ''}` : 'BWSSB Rajatha Bhavan, Malleshwaram, Bangalore',
+    venue: customVenue ? `${customVenue}${customAddress ? ', ' + customAddress : ''}` : 'The Grand Ballroom & Palace Grounds, Bengaluru, Bangalore',
     description: 'A sacred union under traditional Vedic rituals, holy fire, and the eternal seven steps of love and togetherness.'
   }
 ];
@@ -373,7 +373,7 @@ if (tableauSec) {
 // Venue Map Card click interaction: opens Google Maps directions
 const preweddingThumb = document.querySelector('.prewedding-thumb');
 if (preweddingThumb) {
-  const directionsUrl = 'https://www.google.com/maps/dir/13.0338842,77.6891819/BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@12.8905254,77.6621388,10.1z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu';
+  const directionsUrl = 'https://www.google.com/maps/dir/13.0338842,77.6891819/The Grand Ballroom+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@12.8905254,77.6621388,10.1z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu';
   const openDirections = () => {
     window.open(directionsUrl, '_blank', 'noopener,noreferrer');
   };
@@ -389,8 +389,8 @@ if (preweddingThumb) {
 // ==========================================================================
 // CLOSING SECTION: LIVE COUNTDOWN, MAGIC FLOWER SHOWER, TRAIL & RETURN-TO-TOP
 // ==========================================================================
-// 1. Live Wedding Countdown Timer (Target: 19 November 2026, 07:00 PM)
-const weddingDate = new Date('2026-11-19T19:00:00+05:30').getTime();
+// 1. Live Wedding Countdown Timer (Target: 13 December 2026, 07:00 PM)
+const weddingDate = new Date('2026-12-13T19:00:00+05:30').getTime();
 const countDays = document.getElementById('countDays');
 const countHours = document.getElementById('countHours');
 const countMinutes = document.getElementById('countMinutes');

@@ -24,9 +24,9 @@
   <circle cx="207" cy="402" r="6" fill="#fde047"/>
   <path d="M203 409 L211 440 L203 440 Z" fill="#fde047"/>
   <!-- Title text -->
-  <text x="200" y="110" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="22" font-weight="700" letter-spacing="3">DHARANI</text>
+  <text x="200" y="110" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="22" font-weight="700" letter-spacing="3">DEEPTHI</text>
   <text x="200" y="135" text-anchor="middle" fill="#2dd4bf" font-family="'Luxurious Script', cursive" font-size="26">weds</text>
-  <text x="200" y="170" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="22" font-weight="700" letter-spacing="3">MANU</text>
+  <text x="200" y="170" text-anchor="middle" fill="#ffffff" font-family="'Cinzel', serif" font-size="22" font-weight="700" letter-spacing="3">MURALI</text>
   <text x="200" y="495" text-anchor="middle" fill="#e2e8f0" font-family="'Cinzel', serif" font-size="15" letter-spacing="2">NOVEMBER 2026</text>
   <text x="200" y="525" text-anchor="middle" fill="#2dd4bf" font-family="'Inter', sans-serif" font-size="11" letter-spacing="2">HIMALAYAN SOUL UNION</text>
 </svg>

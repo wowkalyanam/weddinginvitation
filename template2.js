@@ -28,7 +28,7 @@ function initApp() {
   }
   window.scrollTo(0, 0);
 
-  // Dynamic URL parameters support (Dharani & Manu remains default base data)
+  // Dynamic URL parameters support (Deepthi & Murali remains default base data)
   // Supports both compact (b, g, d, v, a) and verbose (bride, groom, date, venue, address) keys
   const urlParams = new URLSearchParams(window.location.search);
   const paramBride = urlParams.get('b') || urlParams.get('bride');
@@ -186,7 +186,7 @@ function initApp() {
       }
     }, 600);
 
-    // 3. Reveal royal wedding typography ("Dharani & Manu", 19th Nov 2026)
+    // 3. Reveal royal wedding typography ("Deepthi & Murali", 13th Dec 2026)
     setTimeout(() => {
       if (heroContent) {
         heroContent.classList.add('is-visible');
@@ -691,13 +691,13 @@ function initApp() {
     }
 
     // Google Calendar & Apple Calendar Links
-    const weddingTitle = "Dharani & Manu's Wedding";
-    const weddingLoc = "BWSSB Rajatha Bhavan, Malleshwaram, Bangalore";
-    const weddingDesc = "Join us to celebrate the wedding of Dharani & Manu.";
+    const weddingTitle = "Deepthi & Murali's Wedding";
+    const weddingLoc = "The Grand Ballroom & Palace Grounds, Bengaluru, Bangalore";
+    const weddingDesc = "Join us to celebrate the wedding of Deepthi & Murali.";
     const gcalBtn = document.getElementById('rsvpGcalBtn');
     const icalBtn = document.getElementById('rsvpIcalBtn');
     if (gcalBtn) {
-      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(weddingTitle)}&dates=20261119T133000Z/20261120T063000Z&location=${encodeURIComponent(weddingLoc)}&details=${encodeURIComponent(weddingDesc)}`;
+      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(weddingTitle)}&dates=20261213T133000Z/20261214T063000Z&location=${encodeURIComponent(weddingLoc)}&details=${encodeURIComponent(weddingDesc)}`;
       gcalBtn.href = gcalUrl;
     }
     if (icalBtn) {
@@ -707,8 +707,8 @@ function initApp() {
         'PRODID:-//Wow Kalyanam//Wedding Invitation//EN',
         'CALSCALE:GREGORIAN',
         'BEGIN:VEVENT',
-        'DTSTART:20261119T133000Z',
-        'DTEND:20261120T063000Z',
+        'DTSTART:20261213T133000Z',
+        'DTEND:20261214T063000Z',
         `SUMMARY:${weddingTitle}`,
         `DESCRIPTION:${weddingDesc}`,
         `LOCATION:${weddingLoc}`,
@@ -716,7 +716,7 @@ function initApp() {
         'END:VCALENDAR'
       ].join('\r\n');
       icalBtn.href = 'data:text/calendar;charset=utf8,' + encodeURIComponent(icsData);
-      icalBtn.setAttribute('download', 'dharani-manu-wedding.ics');
+      icalBtn.setAttribute('download', 'deepthi-murali-wedding.ics');
     }
 
     // Canvas Fireworks Animation
@@ -850,7 +850,7 @@ function initApp() {
   // Initialize Countdown Section Timer
   const countdownSection = document.getElementById('countdown');
   if (countdownSection) {
-    const targetDate = new Date('2026-11-19T19:00:00+05:30').getTime();
+    const targetDate = new Date('2026-12-13T19:00:00+05:30').getTime();
     const cdCells = {
       d: document.getElementById('cdDays'),
       h: document.getElementById('cdHours'),

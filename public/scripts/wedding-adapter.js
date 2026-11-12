@@ -82,6 +82,15 @@
       var localStr = localStorage.getItem('wow_custom_wedding_' + currentTemplateId) || 
                      sessionStorage.getItem('wow_active_custom_wedding');
       if (localStr) {
+        if (localStr.indexOf('Dharani') !== -1 || localStr.indexOf('BWSSB') !== -1 || localStr.indexOf('19 November') !== -1 || localStr.indexOf('Malleshwaram') !== -1) {
+          try {
+            localStorage.removeItem('wow_custom_wedding_' + currentTemplateId);
+            sessionStorage.removeItem('wow_active_custom_wedding');
+          } catch (_) {}
+          localStr = null;
+        }
+      }
+      if (localStr) {
         var parsed = JSON.parse(localStr);
         localCustom = {
           b: parsed.bride,
@@ -159,7 +168,7 @@
   var weddingDate = safeStr(customData.d, (firstEvt && (firstEvt.d || firstEvt.date)) || '13 December 2026');
   var weddingTime = safeStr(customData.t, (firstEvt && (firstEvt.t || firstEvt.time)) || '07:00 PM');
   var venueName = safeStr(customData.v, (firstEvt && (firstEvt.v || firstEvt.venue)) || 'The Grand Ballroom & Palace Grounds');
-  var venueAddress = safeStr(customData.a, (firstEvt && (firstEvt.a || firstEvt.address)) || 'Bengaluru, Karnataka');
+  var venueAddress = safeStr(customData.a, (firstEvt && (firstEvt.a || firstEvt.address)) || (customData.v ? '' : 'Bengaluru, Karnataka'));
   var fullVenue = [venueName, venueAddress].filter(Boolean).join(', ');
   var defaultMapUrl = safeStr(customData.m, (firstEvt && (firstEvt.m || firstEvt.mapUrl)) || 'https://maps.google.com/?q=Bangalore');
   var events = [];
@@ -192,7 +201,7 @@
       {
         id: 'muhurtham',
         name: 'Muhurtham & Kalyanam',
-        date: '20 November 2026',
+        date: '14 December 2026',
         time: '09:15 AM - 10:15 AM',
         venue: venueName,
         address: venueAddress,

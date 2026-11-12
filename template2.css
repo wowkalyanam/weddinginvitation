@@ -158,7 +158,7 @@ html, body {
   vertical-align: super;
 }
 
-/* Staggered Royal Entrance Animations: Dharani -> & -> Manu -> Divider -> Date */
+/* Staggered Royal Entrance Animations: Deepthi -> & -> Murali -> Divider -> Date */
 .hero-names .hero-name,
 .hero-names .hero-amp,
 .hero-divider,
@@ -166,7 +166,7 @@ html, body {
   opacity: 0;
 }
 
-/* 1. Dharani appears first */
+/* 1. Deepthi appears first */
 .hero-content.is-visible #heroBride {
   animation: heroNameIn 1.1s cubic-bezier(0.25, 1, 0.5, 1) both 0.15s;
 }
@@ -176,7 +176,7 @@ html, body {
   animation: heroNameIn 0.9s cubic-bezier(0.25, 1, 0.5, 1) both 0.65s;
 }
 
-/* 3. Manu appears after Dharani and & */
+/* 3. Murali appears after Deepthi and & */
 .hero-content.is-visible #heroGroom {
   animation: heroNameIn 1.1s cubic-bezier(0.25, 1, 0.5, 1) both 1.15s;
 }

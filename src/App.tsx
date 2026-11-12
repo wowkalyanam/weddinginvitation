@@ -13,18 +13,41 @@ import {
   LayoutGrid,
   Lock,
   ArrowRight,
-  ShieldCheck
+  ShieldCheck,
+  Plus,
+  Trash2,
+  MapPin,
+  Clock,
+  Users,
+  Image as ImageIcon,
+  Upload,
+  RotateCcw
 } from 'lucide-react';
 
-interface TemplateFormData {
+export interface WeddingEventItem {
+  id: string;
+  name: string;
+  date: string;
+  time: string;
+  venue: string;
+  address?: string;
+  mapUrl: string;
+  desc?: string;
+}
+
+export interface TemplateFormData {
   bride: string;
   groom: string;
+  brideParents: string;
+  groomParents: string;
   date: string;
   time: string;
   functionName: string;
   venue: string;
   address: string;
   mapUrl: string;
+  events: WeddingEventItem[];
+  photos: string[];
 }
 
 interface TemplateItem {
@@ -36,6 +59,61 @@ interface TemplateItem {
   demoUrl: string;
   defaultData: TemplateFormData;
 }
+
+const DEFAULT_PHOTOS = [
+  '/images/gallery/couple_1.webp',
+  '/images/gallery/couple_2.webp',
+  '/images/gallery/couple_3.webp',
+  '/images/gallery/couple_4.webp',
+  '/images/gallery/demo_1.webp',
+  '/images/gallery/demo_2.webp'
+];
+
+const DEFAULT_EVENTS_PICHWAI: WeddingEventItem[] = [
+  {
+    id: 'evt-1',
+    name: 'Wedding Ceremony & Reception',
+    date: '19 November 2026',
+    time: '07:00 PM',
+    venue: 'BWSSB Rajatha Bhavan',
+    address: 'Malleshwaram, Bangalore',
+    mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+    desc: 'An evening of celebration, musical feast, and dinner.'
+  },
+  {
+    id: 'evt-2',
+    name: 'Muhurtham & Kalyanam',
+    date: '20 November 2026',
+    time: '09:15 AM - 10:15 AM',
+    venue: 'BWSSB Rajatha Bhavan',
+    address: '18th Cross, Malleshwaram, Bengaluru',
+    mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+    desc: 'Between 9:15 AM & 10:15 AM (Dhanus Lagna) — Seven sacred steps into forever.'
+  }
+];
+
+const DEFAULT_EVENTS_KASAVU: WeddingEventItem[] = [
+  {
+    id: 'evt-1',
+    name: 'Reception',
+    date: '19 November 2026',
+    time: '07:00 PM',
+    venue: 'BWSSB Rajatha Bhavan',
+    address: 'Malleshwaram, Bangalore',
+    mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+    desc: 'An evening of celebration, musical feast, and dinner.'
+  },
+  {
+    id: 'evt-2',
+    name: 'Muhurtham & Kalyanam',
+    date: '20 November 2026',
+    time: '09:15 AM',
+    venue: 'BWSSB Rajatha Bhavan',
+    address: '18th Cross, Malleshwaram, Bengaluru',
+    mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+    desc: 'Sacred thali tying and blessings from elders.'
+  }
+];
 
 // All Templates Catalog — Maintained in Separate, Independent Boxes
 const TEMPLATES: TemplateItem[] = [
@@ -49,12 +127,16 @@ const TEMPLATES: TemplateItem[] = [
     defaultData: {
       bride: 'Dharani',
       groom: 'Manu',
+      brideParents: 'Sri. K. Ramesh & Smt. Radha',
+      groomParents: 'Sri. M. Suresh & Smt. Shanthi',
       date: '19 November 2026',
       time: '07:00 PM',
       functionName: 'Wedding Ceremony & Reception',
       venue: 'BWSSB Rajatha Bhavan',
       address: 'Malleshwaram, Bangalore',
       mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      events: DEFAULT_EVENTS_PICHWAI,
+      photos: DEFAULT_PHOTOS
     },
   },
   {
@@ -67,12 +149,16 @@ const TEMPLATES: TemplateItem[] = [
     defaultData: {
       bride: 'Dharani',
       groom: 'Manu',
+      brideParents: 'Sri. K. Ramesh & Smt. Radha',
+      groomParents: 'Sri. M. Suresh & Smt. Shanthi',
       date: '20 November 2026',
       time: '09:15 AM',
       functionName: 'Muhurtham & Kalyanam',
       venue: 'BWSSB Rajatha Bhavan',
       address: '18th Cross, Malleshwaram, Bengaluru',
       mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      events: DEFAULT_EVENTS_KASAVU,
+      photos: DEFAULT_PHOTOS
     },
   },
   {
@@ -85,12 +171,16 @@ const TEMPLATES: TemplateItem[] = [
     defaultData: {
       bride: 'Dharani',
       groom: 'Manu',
+      brideParents: 'Sri. K. Ramesh & Smt. Radha',
+      groomParents: 'Sri. M. Suresh & Smt. Shanthi',
       date: '19 November 2026',
       time: '07:00 PM',
       functionName: 'Reception & Muhurtham',
       venue: 'BWSSB Rajatha Bhavan',
       address: '18th Cross, Malleshwaram, Bengaluru',
       mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      events: DEFAULT_EVENTS_PICHWAI,
+      photos: DEFAULT_PHOTOS
     },
   },
   {
@@ -103,12 +193,16 @@ const TEMPLATES: TemplateItem[] = [
     defaultData: {
       bride: 'Dharani',
       groom: 'Manu',
+      brideParents: 'Sri. K. Ramesh & Smt. Radha',
+      groomParents: 'Sri. M. Suresh & Smt. Shanthi',
       date: '19 November 2026',
       time: '07:00 PM',
       functionName: 'Reception & Muhurtham',
       venue: 'BWSSB Rajatha Bhavan',
       address: '18th Cross, Malleshwaram, Bengaluru',
       mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      events: DEFAULT_EVENTS_PICHWAI,
+      photos: DEFAULT_PHOTOS
     },
   },
   {
@@ -121,12 +215,16 @@ const TEMPLATES: TemplateItem[] = [
     defaultData: {
       bride: 'Dharani',
       groom: 'Manu',
+      brideParents: 'Sri. K. Ramesh & Smt. Radha',
+      groomParents: 'Sri. M. Suresh & Smt. Shanthi',
       date: '19 November 2026',
       time: '07:00 PM',
       functionName: 'Reception & Muhurtham',
       venue: 'BWSSB Rajatha Bhavan',
       address: '18th Cross, Malleshwaram, Bengaluru',
       mapUrl: 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      events: DEFAULT_EVENTS_PICHWAI,
+      photos: DEFAULT_PHOTOS
     },
   },
 ];
@@ -181,30 +279,147 @@ export default function App() {
   const activeFormData = templateForms[activeTemplate.id] || activeTemplate.defaultData;
 
   const updateFormData = (templateId: string, updates: Partial<TemplateFormData>) => {
-    setTemplateForms((prev) => ({
-      ...prev,
-      [templateId]: {
-        ...(prev[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData),
-        ...updates,
-      },
-    }));
+    setTemplateForms((prev) => {
+      const cur = prev[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
+      const updated = { ...cur, ...updates };
+      try {
+        localStorage.setItem('wow_custom_wedding_' + templateId, JSON.stringify(updated));
+        sessionStorage.setItem('wow_active_custom_wedding', JSON.stringify(updated));
+      } catch (_) {}
+      return {
+        ...prev,
+        [templateId]: updated,
+      };
+    });
+  };
+
+  const addEvent = (templateId: string) => {
+    const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
+    const count = (cur.events || []).length + 1;
+    const newEvt: WeddingEventItem = {
+      id: 'evt-' + Date.now(),
+      name: count === 3 ? 'Sangeet & Cocktail' : (count === 4 ? 'Haldi Ceremony' : (count === 5 ? 'Mehendi Celebration' : 'Wedding Function ' + count)),
+      date: cur.date || '19 November 2026',
+      time: '06:30 PM onwards',
+      venue: cur.venue || 'BWSSB Rajatha Bhavan',
+      address: cur.address || 'Malleshwaram, Bangalore',
+      mapUrl: cur.mapUrl || 'https://maps.google.com/?q=BWSSB+Rajatha+Bhavan+Malleshwaram+Bangalore',
+      desc: 'Music, joy, and heartfelt celebrations in presence of family.'
+    };
+    updateFormData(templateId, {
+      events: [...(cur.events || []), newEvt]
+    });
+  };
+
+  const updateEvent = (templateId: string, eventId: string, updates: Partial<WeddingEventItem>) => {
+    const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
+    const nextEvents = (cur.events || []).map((e) => (e.id === eventId ? { ...e, ...updates } : e));
+    updateFormData(templateId, { events: nextEvents });
+  };
+
+  const removeEvent = (templateId: string, eventId: string) => {
+    const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
+    if ((cur.events || []).length <= 1) return;
+    const nextEvents = (cur.events || []).filter((e) => e.id !== eventId);
+    updateFormData(templateId, { events: nextEvents });
+  };
+
+  const handlePhotoUpload = (templateId: string, index: number, file: File) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new window.Image();
+      img.onload = () => {
+        const maxDim = 800;
+        let width = img.width;
+        let height = img.height;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.72);
+          const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
+          const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)];
+          nextPhotos[index] = dataUrl;
+          updateFormData(templateId, { photos: nextPhotos });
+        }
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handlePhotoUrlChange = (templateId: string, index: number, url: string) => {
+    const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
+    const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)];
+    nextPhotos[index] = url;
+    updateFormData(templateId, { photos: nextPhotos });
+  };
+
+  const handleResetPhoto = (templateId: string, index: number) => {
+    const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
+    const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)];
+    nextPhotos[index] = DEFAULT_PHOTOS[index] || DEFAULT_PHOTOS[0];
+    updateFormData(templateId, { photos: nextPhotos });
   };
 
   const generateInviteLink = (template: TemplateItem) => {
     const data = templateForms[template.id] || template.defaultData;
-    const def = template.defaultData;
     const baseUrl = typeof window !== 'undefined' ? window.location.origin : '';
 
-    // Compact URL Generator: Only include parameters that differ from the template default
-    const params = new URLSearchParams();
-    if (data.bride && data.bride.trim() !== def.bride.trim()) params.set('b', data.bride.trim());
-    if (data.groom && data.groom.trim() !== def.groom.trim()) params.set('g', data.groom.trim());
-    if (data.date && data.date.trim() !== def.date.trim()) params.set('d', data.date.trim());
-    if (data.time && data.time.trim() !== def.time.trim()) params.set('t', data.time.trim());
-    if (data.venue && data.venue.trim() !== def.venue.trim()) params.set('v', data.venue.trim());
-    if (data.address && data.address.trim() !== def.address.trim()) params.set('a', data.address.trim());
-    if (data.mapUrl && data.mapUrl.trim() !== def.mapUrl.trim()) params.set('m', data.mapUrl.trim());
+    try {
+      localStorage.setItem('wow_custom_wedding_' + template.id, JSON.stringify(data));
+      sessionStorage.setItem('wow_active_custom_wedding', JSON.stringify(data));
+    } catch (_) {}
 
+    const params = new URLSearchParams();
+    if (data.bride) params.set('b', data.bride.trim());
+    if (data.groom) params.set('g', data.groom.trim());
+    if (data.brideParents) params.set('bp', data.brideParents.trim());
+    if (data.groomParents) params.set('gp', data.groomParents.trim());
+    if (data.date) params.set('d', data.date.trim());
+    if (data.time) params.set('t', data.time.trim());
+    if (data.venue) params.set('v', data.venue.trim());
+    if (data.address) params.set('a', data.address.trim());
+    if (data.mapUrl) params.set('m', data.mapUrl.trim());
+
+    // Only serialize clean web URLs for photos to keep URL compact
+    const webPhotos = (data.photos || []).filter((p) => !p.startsWith('data:'));
+    const cfgPayload = {
+      b: data.bride,
+      g: data.groom,
+      bp: data.brideParents,
+      gp: data.groomParents,
+      d: data.date,
+      t: data.time,
+      v: data.venue,
+      a: data.address,
+      m: data.mapUrl,
+      ev: (data.events || []).map((e) => ({
+        id: e.id,
+        n: e.name,
+        d: e.date,
+        t: e.time,
+        v: e.venue,
+        a: e.address,
+        m: e.mapUrl,
+        s: e.desc
+      })),
+      ph: webPhotos.length > 0 ? webPhotos : undefined
+    };
+
+    params.set('cfg', encodeURIComponent(JSON.stringify(cfgPayload)));
     const queryString = params.toString();
     return queryString ? `${baseUrl}${template.demoUrl}?${queryString}` : `${baseUrl}${template.demoUrl}`;
   };
@@ -336,7 +551,7 @@ export default function App() {
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2 bg-neutral-100 border border-neutral-200/80 px-4 py-2 rounded-full text-xs font-medium text-neutral-700">
               <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-              <span>3 Exclusive Wedding Templates</span>
+              <span>{TEMPLATES.length} Exclusive Wedding Templates</span>
             </div>
             <button
               onClick={handleLock}
@@ -385,7 +600,7 @@ export default function App() {
             }`}
           >
             <LayoutGrid className="w-3.5 h-3.5" />
-            <span>All Templates (3)</span>
+            <span>All Templates ({TEMPLATES.length})</span>
           </button>
           {TEMPLATES.map((t) => (
             <button
@@ -406,7 +621,6 @@ export default function App() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-10 max-w-6xl w-full px-4 justify-items-center">
           {filteredTemplates.map((template) => {
             const data = templateForms[template.id] || template.defaultData;
-            const cardInviteLink = generateInviteLink(template);
 
             return (
               <div 
@@ -467,7 +681,7 @@ export default function App() {
                 <div className="flex items-center gap-2 mt-4 w-full">
                   <button
                     onClick={() => setActiveModalTemplateId(template.id)}
-                    className="flex-1 bg-black hover:bg-neutral-800 text-white font-medium text-xs py-2.5 px-3 rounded-full transition-all active:scale-95 shadow-sm flex items-center justify-center gap-1.5"
+                    className="flex-1 bg-black hover:bg-neutral-800 text-white font-medium text-xs py-2.5 px-3 rounded-full transition-all active:scale-95 shadow-sm flex items-center justify-center gap-1.5 cursor-pointer"
                   >
                     <SlidersHorizontal className="w-3.5 h-3.5" />
                     <span>Customize</span>
@@ -499,157 +713,333 @@ export default function App() {
       {/* ── MODAL: CUSTOMIZE & GENERATE SHAREABLE LINK ── */}
       {activeModalTemplateId && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/65 backdrop-blur-sm animate-in fade-in duration-200"
           onClick={() => setActiveModalTemplateId(null)}
         >
           <div 
-            className="bg-white rounded-3xl max-w-xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-neutral-200"
+            className="bg-white rounded-[28px] max-w-3xl w-full max-h-[92vh] overflow-y-auto shadow-2xl border border-neutral-200 flex flex-col"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-center justify-between p-6 sm:p-7 border-b border-neutral-100 sticky top-0 bg-white/95 backdrop-blur-md z-10">
+            <div className="flex items-center justify-between p-5 sm:p-6 border-b border-neutral-100 sticky top-0 bg-white/95 backdrop-blur-md z-20">
               <div className="flex items-center gap-3.5">
                 <img 
                   src={activeTemplate.image} 
                   alt={activeTemplate.title} 
-                  className="w-10 h-14 object-cover rounded-lg border border-neutral-200 shadow-sm"
+                  className="w-11 h-14 object-cover rounded-xl border border-neutral-200 shadow-sm"
                 />
                 <div>
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700">
-                    {activeTemplate.title}
-                  </span>
-                  <h3 className="text-lg sm:text-xl font-bold text-neutral-900 mt-0.5">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-amber-700 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200/60">
+                      {activeTemplate.title}
+                    </span>
+                  </div>
+                  <h3 className="text-lg sm:text-xl font-bold text-neutral-900 mt-1">
                     Customize Wedding Details
                   </h3>
                 </div>
               </div>
               <button
                 onClick={() => setActiveModalTemplateId(null)}
-                className="w-8 h-8 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-500 hover:text-black transition-colors"
+                className="w-9 h-9 rounded-full bg-neutral-100 hover:bg-neutral-200 flex items-center justify-center text-neutral-500 hover:text-black transition-colors cursor-pointer"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            {/* Modal Form */}
-            <div className="p-6 sm:p-7 space-y-5">
+            {/* Modal Body */}
+            <div className="p-5 sm:p-7 space-y-7">
               
-              {/* Couple Names */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                    Bride's Name
-                  </label>
-                  <input
-                    type="text"
-                    value={activeFormData.bride}
-                    onChange={(e) => updateFormData(activeTemplate.id, { bride: e.target.value })}
-                    placeholder="e.g. Dharani"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
-                  />
+              {/* ── SECTION 1: COUPLE & PARENTS' NAMES ── */}
+              <div className="space-y-4 bg-neutral-50/70 p-4 sm:p-5 rounded-2xl border border-neutral-200/80">
+                <div className="flex items-center gap-2 text-neutral-900 font-semibold text-sm border-b border-neutral-200/70 pb-2.5">
+                  <Users className="w-4 h-4 text-amber-600" />
+                  <span>1. Couple &amp; Parents' Names</span>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                    Groom's Name
-                  </label>
-                  <input
-                    type="text"
-                    value={activeFormData.groom}
-                    onChange={(e) => updateFormData(activeTemplate.id, { groom: e.target.value })}
-                    placeholder="e.g. Manu"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
-                  />
-                </div>
-              </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                      Bride's Name
+                    </label>
+                    <input
+                      type="text"
+                      value={activeFormData.bride}
+                      onChange={(e) => updateFormData(activeTemplate.id, { bride: e.target.value })}
+                      placeholder="e.g. Dharani"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
+                    />
+                  </div>
 
-              {/* Date & Time */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                    Wedding Date
-                  </label>
-                  <input
-                    type="text"
-                    value={activeFormData.date}
-                    onChange={(e) => updateFormData(activeTemplate.id, { date: e.target.value })}
-                    placeholder="e.g. 19 November 2026"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
-                  />
-                </div>
-
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                    Ceremony Time
-                  </label>
-                  <input
-                    type="text"
-                    value={activeFormData.time}
-                    onChange={(e) => updateFormData(activeTemplate.id, { time: e.target.value })}
-                    placeholder="e.g. 07:00 PM onwards"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
-                  />
-                </div>
-              </div>
-
-              {/* Function Title */}
-              <div>
-                <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                  Function / Ceremony Title
-                </label>
-                <input
-                  type="text"
-                  value={activeFormData.functionName}
-                  onChange={(e) => updateFormData(activeTemplate.id, { functionName: e.target.value })}
-                  placeholder="e.g. Wedding Ceremony & Reception"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
-                />
-              </div>
-
-              {/* Venue Name & Address */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                    Venue Name
-                  </label>
-                  <input
-                    type="text"
-                    value={activeFormData.venue}
-                    onChange={(e) => updateFormData(activeTemplate.id, { venue: e.target.value })}
-                    placeholder="e.g. BWSSB Rajatha Bhavan"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
-                  />
+                  <div>
+                    <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                      Groom's Name
+                    </label>
+                    <input
+                      type="text"
+                      value={activeFormData.groom}
+                      onChange={(e) => updateFormData(activeTemplate.id, { groom: e.target.value })}
+                      placeholder="e.g. Manu"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
+                    />
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                    Venue City / Address
-                  </label>
-                  <input
-                    type="text"
-                    value={activeFormData.address}
-                    onChange={(e) => updateFormData(activeTemplate.id, { address: e.target.value })}
-                    placeholder="e.g. Malleshwaram, Bangalore"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
-                  />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                      Bride's Parents (Father &amp; Mother)
+                    </label>
+                    <input
+                      type="text"
+                      value={activeFormData.brideParents}
+                      onChange={(e) => updateFormData(activeTemplate.id, { brideParents: e.target.value })}
+                      placeholder="e.g. Sri. K. Ramesh & Smt. Radha"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
+                    />
+                    <p className="text-[11px] text-neutral-500 mt-1">Appears on the ceremonial invitation card</p>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
+                      Groom's Parents (Father &amp; Mother)
+                    </label>
+                    <input
+                      type="text"
+                      value={activeFormData.groomParents}
+                      onChange={(e) => updateFormData(activeTemplate.id, { groomParents: e.target.value })}
+                      placeholder="e.g. Sri. M. Suresh & Smt. Shanthi"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
+                    />
+                    <p className="text-[11px] text-neutral-500 mt-1">Appears on the ceremonial invitation card</p>
+                  </div>
                 </div>
               </div>
 
-              {/* Google Maps Link */}
-              <div>
-                <label className="block text-xs font-semibold text-neutral-700 uppercase tracking-wider mb-1.5">
-                  Google Maps Directions Link
-                </label>
-                <input
-                  type="text"
-                  value={activeFormData.mapUrl}
-                  onChange={(e) => updateFormData(activeTemplate.id, { mapUrl: e.target.value })}
-                  placeholder="Paste Google Maps URL"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-xs font-mono"
-                />
+              {/* ── SECTION 2: WEDDING FUNCTIONS & EVENTS (DYNAMIC) ── */}
+              <div className="space-y-4 bg-neutral-50/70 p-4 sm:p-5 rounded-2xl border border-neutral-200/80">
+                <div className="flex items-center justify-between border-b border-neutral-200/70 pb-2.5">
+                  <div className="flex items-center gap-2 text-neutral-900 font-semibold text-sm">
+                    <Calendar className="w-4 h-4 text-amber-600" />
+                    <span>2. Wedding Functions &amp; Ceremonies ({activeFormData.events?.length || 0})</span>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => addEvent(activeTemplate.id)}
+                    className="flex items-center gap-1.5 text-xs font-bold bg-neutral-900 hover:bg-neutral-800 text-white px-3.5 py-1.5 rounded-full transition-all cursor-pointer shadow-sm active:scale-95"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Add Another Function</span>
+                  </button>
+                </div>
+
+                <p className="text-xs text-neutral-500 -mt-1">
+                  Add all the wedding events you want (Reception, Muhurtham, Sangeet, Haldi, Mehendi, etc.). New event cards with timings and Google Map links will be dynamically generated on the invitation page.
+                </p>
+
+                {/* Event Cards List */}
+                <div className="space-y-4 pt-1">
+                  {activeFormData.events?.map((evt, idx) => (
+                    <div 
+                      key={evt.id}
+                      className="bg-white p-4 sm:p-5 rounded-xl border border-neutral-200 shadow-sm relative space-y-3"
+                    >
+                      {/* Event Card Header */}
+                      <div className="flex items-center justify-between border-b border-neutral-100 pb-2.5">
+                        <span className="text-xs font-bold uppercase tracking-wider text-amber-800 bg-amber-50 px-2.5 py-1 rounded-md border border-amber-200/60 flex items-center gap-1.5">
+                          <span>Function #{idx + 1}:</span>
+                          <span className="font-semibold text-neutral-800">{evt.name || 'Ceremony'}</span>
+                        </span>
+
+                        {activeFormData.events.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => removeEvent(activeTemplate.id, evt.id)}
+                            className="text-xs text-rose-600 hover:text-rose-700 bg-rose-50 hover:bg-rose-100 px-2.5 py-1 rounded-lg border border-rose-200 transition-colors flex items-center gap-1 cursor-pointer"
+                            title="Delete this function"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                            <span>Remove</span>
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Function Name */}
+                      <div>
+                        <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
+                          Function / Ceremony Name
+                        </label>
+                        <input
+                          type="text"
+                          value={evt.name}
+                          onChange={(e) => updateEvent(activeTemplate.id, evt.id, { name: e.target.value })}
+                          placeholder="e.g. Wedding Ceremony & Reception, Sangeet, Haldi, Mehendi"
+                          className="w-full px-3 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm font-medium"
+                        />
+                      </div>
+
+                      {/* Date & Time */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1 flex items-center gap-1">
+                            <Calendar className="w-3 h-3 text-neutral-400" />
+                            <span>Date</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={evt.date}
+                            onChange={(e) => updateEvent(activeTemplate.id, evt.id, { date: e.target.value })}
+                            placeholder="e.g. 19 November 2026"
+                            className="w-full px-3 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1 flex items-center gap-1">
+                            <Clock className="w-3 h-3 text-neutral-400" />
+                            <span>Timing</span>
+                          </label>
+                          <input
+                            type="text"
+                            value={evt.time}
+                            onChange={(e) => updateEvent(activeTemplate.id, evt.id, { time: e.target.value })}
+                            placeholder="e.g. 07:00 PM onwards"
+                            className="w-full px-3 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Venue Name & Address */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                          <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
+                            Venue Name
+                          </label>
+                          <input
+                            type="text"
+                            value={evt.venue}
+                            onChange={(e) => updateEvent(activeTemplate.id, evt.id, { venue: e.target.value })}
+                            placeholder="e.g. BWSSB Rajatha Bhavan"
+                            className="w-full px-3 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
+                            Venue Address / City
+                          </label>
+                          <input
+                            type="text"
+                            value={evt.address || ''}
+                            onChange={(e) => updateEvent(activeTemplate.id, evt.id, { address: e.target.value })}
+                            placeholder="e.g. Malleshwaram, Bangalore"
+                            className="w-full px-3 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Google Maps Directions Link */}
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider flex items-center gap-1">
+                            <MapPin className="w-3 h-3 text-amber-600" />
+                            <span>Google Maps Link for this function</span>
+                          </label>
+                          {evt.mapUrl && (
+                            <a
+                              href={evt.mapUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="text-[10px] text-amber-700 hover:text-amber-800 font-semibold underline flex items-center gap-0.5"
+                            >
+                              <span>Test Map Link</span>
+                              <ExternalLink className="w-2.5 h-2.5" />
+                            </a>
+                          )}
+                        </div>
+                        <input
+                          type="text"
+                          value={evt.mapUrl}
+                          onChange={(e) => updateEvent(activeTemplate.id, evt.id, { mapUrl: e.target.value })}
+                          placeholder="Paste Google Maps directions link (e.g. https://maps.google.com/?q=...)"
+                          className="w-full px-3 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-xs font-mono"
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
 
-              {/* Generated Shareable Link Box */}
+              {/* ── SECTION 3: COUPLE PHOTO GALLERY (6 PHOTOS) ── */}
+              <div className="space-y-4 bg-neutral-50/70 p-4 sm:p-5 rounded-2xl border border-neutral-200/80">
+                <div className="flex items-center justify-between border-b border-neutral-200/70 pb-2.5">
+                  <div className="flex items-center gap-2 text-neutral-900 font-semibold text-sm">
+                    <ImageIcon className="w-4 h-4 text-amber-600" />
+                    <span>3. Couple Photo Gallery (6 Photos)</span>
+                  </div>
+                  <span className="text-[11px] text-neutral-500 font-medium">
+                    Upload image files or paste image URLs
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4">
+                  {(activeFormData.photos || DEFAULT_PHOTOS).slice(0, 6).map((photoSrc, idx) => (
+                    <div 
+                      key={idx}
+                      className="bg-white p-3 rounded-xl border border-neutral-200 shadow-sm flex flex-col items-center space-y-2.5"
+                    >
+                      {/* Photo Thumbnail */}
+                      <div className="relative w-full aspect-[4/5] rounded-lg overflow-hidden bg-neutral-100 border border-neutral-200 group">
+                        <img 
+                          src={photoSrc} 
+                          alt={`Couple Photo ${idx + 1}`} 
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                        />
+                        <span className="absolute top-1.5 left-1.5 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                          Photo #{idx + 1}
+                        </span>
+                      </div>
+
+                      {/* Upload / Replace Controls */}
+                      <div className="w-full space-y-2">
+                        <label className="w-full bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-[11px] font-semibold py-1.5 px-2.5 rounded-lg border border-neutral-200 flex items-center justify-center gap-1.5 cursor-pointer transition-colors text-center">
+                          <Upload className="w-3 h-3 text-neutral-600" />
+                          <span>Upload File</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const f = e.target.files?.[0];
+                              if (f) handlePhotoUpload(activeTemplate.id, idx, f);
+                            }}
+                          />
+                        </label>
+
+                        <div className="flex items-center gap-1">
+                          <input
+                            type="text"
+                            value={photoSrc.startsWith('data:') ? 'Uploaded image' : photoSrc}
+                            onChange={(e) => handlePhotoUrlChange(activeTemplate.id, idx, e.target.value)}
+                            placeholder="Or paste URL"
+                            className="w-full px-2 py-1 text-[10px] rounded-md border border-neutral-200 text-neutral-600 font-mono truncate focus:outline-none focus:ring-1 focus:ring-black"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => handleResetPhoto(activeTemplate.id, idx)}
+                            title="Reset to default photo"
+                            className="p-1 rounded-md hover:bg-neutral-100 text-neutral-400 hover:text-neutral-700 transition-colors shrink-0"
+                          >
+                            <RotateCcw className="w-3 h-3" />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* ── SECTION 4: GENERATED SHAREABLE LINK BOX ── */}
               <div className="bg-[#f5f5f4] p-4 sm:p-5 rounded-2xl border border-neutral-200 space-y-3">
                 <div className="flex items-center justify-between">
                   <span className="text-xs font-bold uppercase tracking-wider text-neutral-800 flex items-center gap-1.5">
@@ -666,11 +1056,11 @@ export default function App() {
                     type="text"
                     readOnly
                     value={generateInviteLink(activeTemplate)}
-                    className="flex-1 bg-white px-3 py-2 rounded-xl border border-neutral-300 text-xs text-neutral-600 font-mono select-all focus:outline-none"
+                    className="flex-1 bg-white px-3 py-2.5 rounded-xl border border-neutral-300 text-xs text-neutral-600 font-mono select-all focus:outline-none"
                   />
                   <button
                     onClick={() => handleCopy(generateInviteLink(activeTemplate))}
-                    className="bg-black hover:bg-neutral-800 text-white px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 shrink-0"
+                    className="bg-black hover:bg-neutral-800 text-white px-4 py-2.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 shrink-0 cursor-pointer"
                   >
                     {copied ? (
                       <>
@@ -687,7 +1077,7 @@ export default function App() {
                 </div>
 
                 <p className="text-[11px] text-neutral-500">
-                  Guests opening this link land <strong>directly on the full-screen invitation</strong> ({activeTemplate.title}) with these details.
+                  Guests opening this link land <strong>directly on the full-screen invitation</strong> ({activeTemplate.title}) with customized parents' names, dynamic event cards, and photo gallery.
                 </p>
               </div>
 
@@ -697,7 +1087,7 @@ export default function App() {
                   href={generateInviteLink(activeTemplate)}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex-1 bg-black hover:bg-neutral-800 text-white font-semibold text-sm py-3 px-6 rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all text-center"
+                  className="flex-1 bg-black hover:bg-neutral-800 text-white font-semibold text-sm py-3.5 px-6 rounded-xl flex items-center justify-center gap-2 shadow-sm transition-all text-center cursor-pointer"
                 >
                   <span>Open &amp; Test Guest View</span>
                   <ExternalLink className="w-4 h-4" />
@@ -706,7 +1096,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setActiveModalTemplateId(null)}
-                  className="px-5 py-3 rounded-xl border border-neutral-300 hover:border-black text-sm font-semibold text-neutral-700 transition-colors"
+                  className="px-6 py-3.5 rounded-xl border border-neutral-300 hover:border-black text-sm font-semibold text-neutral-700 transition-colors cursor-pointer"
                 >
                   Done
                 </button>

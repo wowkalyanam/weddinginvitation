@@ -58,42 +58,6 @@ const TEMPLATES: TemplateItem[] = [
     },
   },
   {
-    id: 'meenaya-pastel',
-    title: 'Meenaya Traditional Pastel',
-    subtitle: 'Blue Canvas Sky · Sacred Gopuram · Floating Lanterns',
-    badge: 'Popular',
-    image: '/images/cards/meenaya-cover.webp',
-    demoUrl: '/meenaya.html',
-    defaultData: {
-      bride: 'Kavya',
-      groom: 'Vishu',
-      date: '19 November 2026',
-      time: '07:00 PM',
-      functionName: 'Wedding Ceremony & Reception',
-      venue: 'Meenakshi Sundareswarar Temple Gardens',
-      address: 'Madurai, Tamil Nadu',
-      mapUrl: 'https://maps.google.com/?q=Meenakshi+Temple+Madurai',
-    },
-  },
-  {
-    id: 'tirupati-vedic',
-    title: 'Sacred Vedic Union',
-    subtitle: 'Tirupati Mandap · Vedic Rituals · Music & RSVP',
-    badge: 'Classic Vedic',
-    image: '/images/cards/tirupati-cover.webp',
-    demoUrl: '/invite.html',
-    defaultData: {
-      bride: 'Tanya',
-      groom: 'Rohan',
-      date: '12 December 2026',
-      time: '11:00 AM',
-      functionName: 'Vedic Kalyanam & Lunch',
-      venue: 'The Oberoi Udaivilas',
-      address: 'Udaipur, Rajasthan',
-      mapUrl: 'https://maps.google.com/?q=Oberoi+Udaivilas+Udaipur',
-    },
-  },
-  {
     id: 'kasavu-kerala',
     title: 'Kerala Kasavu Backwaters',
     subtitle: "God's Own Country · 3-Layer Parallax · Nilavilakku Ceremony",
@@ -223,11 +187,12 @@ export default function App() {
   };
 
   // Separate, independent form state per template — ensuring data never mixes
-  const [templateForms, setTemplateForms] = useState<Record<string, TemplateFormData>>({
-    'pichwai-palace': { ...TEMPLATES[0].defaultData },
-    'meenaya-pastel': { ...TEMPLATES[1].defaultData },
-    'tirupati-vedic': { ...TEMPLATES[2].defaultData },
-    'kasavu-kerala': { ...TEMPLATES[3].defaultData },
+  const [templateForms, setTemplateForms] = useState<Record<string, TemplateFormData>>(() => {
+    const initial: Record<string, TemplateFormData> = {};
+    TEMPLATES.forEach((t) => {
+      initial[t.id] = { ...t.defaultData };
+    });
+    return initial;
   });
 
   const activeTemplate = TEMPLATES.find((t) => t.id === activeModalTemplateId) || TEMPLATES[0];

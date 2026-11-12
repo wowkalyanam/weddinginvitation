@@ -4,3 +4,11 @@
 .farman-stop.is-open .farman-content, .farman-stop.is-open .farman-open-wrap, .farman-stop.is-open .ev-fit { visibility: visible !important; opacity: 1 !important; pointer-events: auto !important; }
 .farman-stop.is-open .farman-open-wrap { clip-path: inset(0 0 0% 0 round 2px) !important; }
 .farman-stop.is-open .farman-motif, .farman-stop.is-open .farman-name, .farman-stop.is-open .farman-rule, .farman-stop.is-open .farman-datetime, .farman-stop.is-open .farman-venue, .farman-stop.is-open .farman-note, .farman-stop.is-open .farman-map, .farman-stop.is-open .farman-map-rule { opacity: 1 !important; }
+
+/* Remove date and venue from entry preloader screen */
+#introDate, #introVenue, .intro-reveal .date, .intro-reveal .venue {
+  display: none !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}

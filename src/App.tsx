@@ -75,7 +75,7 @@ const DEFAULT_EVENTS_PICHWAI: WeddingEventItem[] = [
   {
     id: 'evt-1',
     name: 'Wedding Ceremony & Reception',
-    date: '13 December 2026',
+    date: '',
     time: '07:00 PM',
     venue: 'The Grand Ballroom & Palace Grounds',
     address: 'Bengaluru, Karnataka',
@@ -85,7 +85,7 @@ const DEFAULT_EVENTS_PICHWAI: WeddingEventItem[] = [
   {
     id: 'evt-2',
     name: 'Muhurtham & Kalyanam',
-    date: '14 December 2026',
+    date: '',
     time: '09:15 AM - 10:15 AM',
     venue: 'The Grand Ballroom & Palace Grounds',
     address: 'Bengaluru, Karnataka',
@@ -131,7 +131,7 @@ const TEMPLATES: TemplateItem[] = [
       groom: 'Murali',
       brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
       groomParents: 'Shri. K. Muralidharan & Smt. M. Geetha',
-      date: '13 December 2026',
+      date: '',
       time: '07:00 PM',
       functionName: 'Wedding Ceremony & Reception',
       venue: 'The Grand Ballroom & Palace Grounds',
@@ -175,7 +175,7 @@ const TEMPLATES: TemplateItem[] = [
       groom: 'Murali',
       brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
       groomParents: 'Shri. K. Muralidharan & Smt. M. Geetha',
-      date: '13 December 2026',
+      date: '',
       time: '07:00 PM',
       functionName: 'Reception & Muhurtham',
       venue: 'The Grand Ballroom & Palace Grounds',
@@ -197,7 +197,7 @@ const TEMPLATES: TemplateItem[] = [
       groom: 'Murali',
       brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
       groomParents: 'Shri. K. Muralidharan & Smt. M. Geetha',
-      date: '13 December 2026',
+      date: '',
       time: '07:00 PM',
       functionName: 'Reception & Muhurtham',
       venue: 'The Grand Ballroom & Palace Grounds',
@@ -219,7 +219,7 @@ const TEMPLATES: TemplateItem[] = [
       groom: 'Murali',
       brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
       groomParents: 'Shri. K. Muralidharan & Smt. M. Geetha',
-      date: '13 December 2026',
+      date: '',
       time: '07:00 PM',
       functionName: 'Reception & Muhurtham',
       venue: 'The Grand Ballroom & Palace Grounds',
@@ -641,7 +641,7 @@ export default function App() {
     if (data.groom) params.set('g', data.groom.trim());
     if (data.brideParents) params.set('bp', data.brideParents.trim());
     if (data.groomParents) params.set('gp', data.groomParents.trim());
-    if (data.date) params.set('d', data.date.trim());
+    if (data.date && data.date.trim()) params.set('d', data.date.trim());
     if (data.time) params.set('t', data.time.trim());
     if (data.venue) params.set('v', data.venue.trim());
     if (data.address) params.set('a', data.address.trim());
@@ -1269,7 +1269,14 @@ export default function App() {
                           <input
                             type="text"
                             value={evt.date}
-                            onChange={(e) => updateEvent(activeTemplate.id, evt.id, { date: e.target.value })}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              updateEvent(activeTemplate.id, evt.id, { date: val });
+                              const lower = (evt.name || '').toLowerCase();
+                              if (idx === 0 || lower.includes('reception')) {
+                                updateFormData(activeTemplate.id, { date: val });
+                              }
+                            }}
                             placeholder="e.g. 13 December 2026"
                             className="w-full px-3 py-2 rounded-lg border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm"
                           />

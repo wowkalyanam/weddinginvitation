@@ -398,20 +398,28 @@
     }
 
     // 4. Primary Date & Venue
+    var userCustomDate = (customData && (customData.d || customData.date)) || params.get('d') || params.get('date') || '';
     var recEvt = null;
-    if (events && events.length > 0) {
+    if (customData && customData.ev && customData.ev.length > 0) {
       recEvt = events.find(function (e) {
         return (e.name || e.n || '').toLowerCase().indexOf('reception') !== -1;
       }) || events[0];
     }
-    var receptionDate = (recEvt && (recEvt.date || recEvt.d)) || weddingDate || '13 December 2026';
+    var userEnteredDate = (recEvt && (recEvt.date || recEvt.d)) || userCustomDate || '';
+    userEnteredDate = (userEnteredDate || '').trim();
 
     document.querySelectorAll('.hero-date, .pl-date, .i-date, #inviteDate').forEach(function (el) {
-      el.textContent = weddingDate;
+      if (userEnteredDate) el.textContent = userEnteredDate;
     });
-    // Template 09 invitation card: ONLY updated reception date, NO venue name
+    // Template 09 invitation card: ONLY show date that user will enter; hide if not entered
     document.querySelectorAll('.inv-date').forEach(function (el) {
-      el.textContent = receptionDate;
+      if (userEnteredDate) {
+        el.textContent = userEnteredDate;
+        el.style.display = '';
+      } else {
+        el.textContent = '';
+        el.style.display = 'none';
+      }
     });
     document.querySelectorAll('.inv-venue').forEach(function (el) {
       el.textContent = '';
@@ -779,13 +787,16 @@
 
   // ── TEMPLATE 09 (Royal Pichwai Lotus Courtyard) ──
   function applyTemplate09EventsAndGallery() {
-    // Ensure invitation card shows only updated reception date, and NO venue
-    var recEvt = (events && events.length > 0) ? (events.find(function(e) {
-      return (e.name || e.n || '').toLowerCase().indexOf('reception') !== -1;
-    }) || events[0]) : null;
-    var recDate = (recEvt && (recEvt.date || recEvt.d)) || weddingDate || '13 December 2026';
+    // Ensure invitation card shows ONLY date that user will enter, and NO venue
+    var uDate = userEnteredDate || '';
     document.querySelectorAll('.inv-date').forEach(function(el) {
-      el.textContent = recDate;
+      if (uDate && uDate.trim()) {
+        el.textContent = uDate.trim();
+        el.style.display = '';
+      } else {
+        el.textContent = '';
+        el.style.display = 'none';
+      }
     });
     document.querySelectorAll('.inv-venue').forEach(function(el) {
       el.textContent = '';

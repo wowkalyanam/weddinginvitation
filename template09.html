@@ -86,9 +86,11 @@
   var firstEvt = (rawEvents && rawEvents.length > 0) ? rawEvents[0] : null;
   var bride = (cfg && (cfg.b || cfg.bride)) || getQueryParam('b') || getQueryParam('bride') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.bride) || 'Deepthi';
   var groom = (cfg && (cfg.g || cfg.groom)) || getQueryParam('g') || getQueryParam('groom') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.groom) || 'Murali';
-  var date  = customD || (firstEvt && (firstEvt.d || firstEvt.date)) || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.date) || '13 December 2026';
-  var receptionDate = formatWeddingDate((recEvt && (recEvt.d || recEvt.date)) || date);
-  var venue = (cfg && (cfg.v || cfg.venue)) || getQueryParam('v') || getQueryParam('venue') || (firstEvt && (firstEvt.v || firstEvt.venue)) || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.venue) || 'The Grand Ballroom & Palace Grounds, Bengaluru';
+  // ONLY show date that user will enter
+  var userEnteredDate = (recEvt && (recEvt.d || recEvt.date)) || customD || '';
+  userEnteredDate = formatWeddingDate(userEnteredDate);
+  var date  = userEnteredDate;
+  var venue = (cfg && (cfg.v || cfg.venue)) || getQueryParam('v') || getQueryParam('venue') || (firstEvt && (firstEvt.v || firstEvt.venue)) || '';
 
   function updatePreloader() {
     // Names in preloader
@@ -126,9 +128,15 @@
       }
     });
 
-    // Invitation card: show only updated reception date, and remove venue name
+    // Invitation card: ONLY show date that user will enter; hide completely if not entered
     document.querySelectorAll('.inv-date').forEach(function(el) {
-      el.textContent = receptionDate;
+      if (userEnteredDate && userEnteredDate.trim()) {
+        el.textContent = userEnteredDate.trim();
+        el.style.display = '';
+      } else {
+        el.textContent = '';
+        el.style.display = 'none';
+      }
     });
     document.querySelectorAll('.inv-venue').forEach(function(el) {
       el.textContent = '';
@@ -150,7 +158,7 @@
 <meta name="color-scheme" content="only light">
 <style>
 :root,html,body{color-scheme:only light}
-#introDate, #introVenue, .intro-reveal .date, .intro-reveal .venue, .inv-venue { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }
+#introDate, #introVenue, .intro-reveal .date, .intro-reveal .venue, .inv-venue, .inv-date:empty { display: none !important; opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; height: 0 !important; margin: 0 !important; padding: 0 !important; }
 </style>
 
   <meta charset="utf-8">
@@ -305,7 +313,7 @@
       <p class="inv-occasion">invite you to celebrate their wedding</p>
 
       <div class="inv-meta">
-        <p class="inv-date">13 December 2026</p>
+        <p class="inv-date"></p>
       </div>
 
     </div>

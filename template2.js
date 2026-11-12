@@ -430,12 +430,14 @@ function initApp() {
   // Initialize Gallery Section Carousel & Lightbox
   const gallerySection = document.getElementById('gallery');
   if (gallerySection) {
-    const photos = [
-      { src: '/images/gallery/couple_1.webp', caption: 'Moments we love' },
-      { src: '/images/gallery/couple_2.webp', caption: 'Moments we love' },
-      { src: '/images/gallery/couple_3.webp', caption: 'Moments we love' },
-      { src: '/images/gallery/couple_4.webp', caption: 'Moments we love' }
-    ];
+    let photos = (window.__CUSTOM_WEDDING_DATA__ && window.__CUSTOM_WEDDING_DATA__.photos && window.__CUSTOM_WEDDING_DATA__.photos.length > 0)
+      ? window.__CUSTOM_WEDDING_DATA__.photos.map(p => ({ src: typeof p === 'string' ? p : p.src, caption: 'Moments we love' }))
+      : [
+          { src: '/images/gallery/couple_1.webp', caption: 'Moments we love' },
+          { src: '/images/gallery/couple_2.webp', caption: 'Moments we love' },
+          { src: '/images/gallery/couple_3.webp', caption: 'Moments we love' },
+          { src: '/images/gallery/couple_4.webp', caption: 'Moments we love' }
+        ];
 
     const featured = document.getElementById('galleryFeatured');
     const featuredPhoto = document.getElementById('galleryMainPhoto') || document.getElementById('galleryFeaturedPhoto');
@@ -452,6 +454,47 @@ function initApp() {
 
     let currentIndex = 0;
     let lbIndex = 0;
+
+    function rebuildDotsAndThumbs() {
+      if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        photos.forEach((_, idx) => {
+          const dot = document.createElement('button');
+          dot.className = 'gallery-dot' + (idx === currentIndex ? ' is-active' : '');
+          dot.setAttribute('role', 'tab');
+          dot.setAttribute('aria-label', 'Photo ' + (idx + 1));
+          dot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setPhoto(idx);
+          });
+          dotsContainer.appendChild(dot);
+        });
+      }
+      if (thumbsContainer) {
+        thumbsContainer.innerHTML = '';
+        photos.forEach((p, idx) => {
+          const thumb = document.createElement('div');
+          thumb.className = 'gallery-thumb' + (idx === currentIndex ? ' is-active' : '');
+          thumb.setAttribute('role', 'listitem');
+          thumb.setAttribute('aria-label', 'Show photo ' + (idx + 1));
+          thumb.innerHTML = '<img class="gallery-thumb-photo" src="' + p.src + '" alt="Thumbnail ' + (idx + 1) + '" decoding="async" loading="lazy">';
+          thumb.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setPhoto(idx);
+          });
+          thumbsContainer.appendChild(thumb);
+        });
+      }
+    }
+
+    window.__updateTemplate2Gallery = function(newPhotos) {
+      if (!newPhotos || !newPhotos.length) return;
+      photos = newPhotos.map(p => ({ src: typeof p === 'string' ? p : p.src, caption: 'Moments we love' }));
+      rebuildDotsAndThumbs();
+      setPhoto(0, true);
+    };
+
+    rebuildDotsAndThumbs();
 
     function setPhoto(index, immediate = false) {
       index = (index + photos.length) % photos.length;

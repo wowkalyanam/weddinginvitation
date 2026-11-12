@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   X, 
   Copy, 
@@ -21,7 +21,9 @@ import {
   Users,
   Image as ImageIcon,
   Upload,
-  RotateCcw
+  UploadCloud,
+  RotateCcw,
+  Loader2
 } from 'lucide-react';
 
 export interface WeddingEventItem {
@@ -229,6 +231,138 @@ const TEMPLATES: TemplateItem[] = [
   },
 ];
 
+const DB_NAME = 'wow_wedding_db';
+const DB_VERSION = 1;
+const STORE_NAME = 'photos';
+
+function openPhotoDB(): Promise<IDBDatabase | null> {
+  return new Promise((resolve) => {
+    if (typeof indexedDB === 'undefined') return resolve(null);
+    try {
+      const req = indexedDB.open(DB_NAME, DB_VERSION);
+      req.onupgradeneeded = (e: any) => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(STORE_NAME)) {
+          db.createObjectStore(STORE_NAME);
+        }
+      };
+      req.onsuccess = (e: any) => resolve(e.target.result);
+      req.onerror = () => resolve(null);
+    } catch (_) {
+      resolve(null);
+    }
+  });
+}
+
+function savePhotosToStorage(templateId: string, photos: string[]) {
+  if (!Array.isArray(photos) || photos.length === 0) return;
+
+  // 1. SessionStorage
+  try {
+    sessionStorage.setItem('wow_photos_' + templateId, JSON.stringify(photos));
+    sessionStorage.setItem('wow_photos_latest', JSON.stringify(photos));
+  } catch (_) {}
+
+  // 2. LocalStorage
+  try {
+    localStorage.setItem('wow_photos_' + templateId, JSON.stringify(photos));
+    localStorage.setItem('wow_photos_latest', JSON.stringify(photos));
+  } catch (_) {}
+
+  // 3. IndexedDB (unlimited quota)
+  openPhotoDB().then((db) => {
+    if (!db) return;
+    try {
+      const tx = db.transaction(STORE_NAME, 'readwrite');
+      const store = tx.objectStore(STORE_NAME);
+      store.put(photos, 'template_' + templateId);
+      store.put(photos, 'latest');
+    } catch (_) {}
+  });
+}
+
+async function loadSavedPhotos(templateId: string): Promise<string[] | null> {
+  // 1. SessionStorage
+  try {
+    const s = sessionStorage.getItem('wow_photos_' + templateId) || sessionStorage.getItem('wow_photos_latest');
+    if (s) {
+      const parsed = JSON.parse(s);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (_) {}
+
+  // 2. LocalStorage
+  try {
+    const l = localStorage.getItem('wow_photos_' + templateId) || localStorage.getItem('wow_photos_latest');
+    if (l) {
+      const parsed = JSON.parse(l);
+      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+    }
+  } catch (_) {}
+
+  // 3. IndexedDB
+  const db = await openPhotoDB();
+  if (!db) return null;
+  return new Promise((resolve) => {
+    try {
+      const tx = db.transaction(STORE_NAME, 'readonly');
+      const store = tx.objectStore(STORE_NAME);
+      const req = store.get('template_' + templateId);
+      req.onsuccess = () => {
+        if (req.result && Array.isArray(req.result) && req.result.length > 0) {
+          resolve(req.result);
+        } else {
+          const reqLatest = store.get('latest');
+          reqLatest.onsuccess = () => {
+            resolve(reqLatest.result && Array.isArray(reqLatest.result) ? reqLatest.result : null);
+          };
+          reqLatest.onerror = () => resolve(null);
+        }
+      };
+      req.onerror = () => resolve(null);
+    } catch (_) {
+      resolve(null);
+    }
+  });
+}
+
+function processImageFile(file: File, maxDim = 960, quality = 0.76): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onerror = () => reject(new Error('Failed to read file'));
+    reader.onload = (e) => {
+      const img = new window.Image();
+      img.onerror = () => reject(new Error('Failed to load image'));
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+        if (width > maxDim || height > maxDim) {
+          if (width > height) {
+            height = Math.round((height * maxDim) / width);
+            width = maxDim;
+          } else {
+            width = Math.round((width * maxDim) / height);
+            height = maxDim;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          resolve(e.target?.result as string);
+          return;
+        }
+        ctx.drawImage(img, 0, 0, width, height);
+        const dataUrl = canvas.toDataURL('image/jpeg', quality);
+        resolve(dataUrl);
+      };
+      img.src = e.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
 export default function App() {
   // Password Protection for Home Page: 'WOW@89'
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
@@ -245,6 +379,8 @@ export default function App() {
   const [filterId, setFilterId] = useState<string>('all');
   const [activeModalTemplateId, setActiveModalTemplateId] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [isProcessingPhotos, setIsProcessingPhotos] = useState<boolean>(false);
+  const [photoMsg, setPhotoMsg] = useState<string>('');
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -271,9 +407,39 @@ export default function App() {
     const initial: Record<string, TemplateFormData> = {};
     TEMPLATES.forEach((t) => {
       initial[t.id] = { ...t.defaultData };
+      if (typeof window !== 'undefined') {
+        try {
+          const savedStr = localStorage.getItem('wow_custom_wedding_' + t.id);
+          if (savedStr) {
+            const parsed = JSON.parse(savedStr);
+            initial[t.id] = { ...t.defaultData, ...parsed };
+          }
+        } catch (_) {}
+      }
     });
     return initial;
   });
+
+  // Restore saved photos from IndexedDB / Storage on mount
+  useEffect(() => {
+    TEMPLATES.forEach(async (t) => {
+      try {
+        const savedPhotos = await loadSavedPhotos(t.id);
+        if (savedPhotos && savedPhotos.length > 0) {
+          setTemplateForms((prev) => {
+            const cur = prev[t.id] || t.defaultData;
+            return {
+              ...prev,
+              [t.id]: {
+                ...cur,
+                photos: savedPhotos
+              }
+            };
+          });
+        }
+      } catch (_) {}
+    });
+  }, []);
 
   const activeTemplate = TEMPLATES.find((t) => t.id === activeModalTemplateId) || TEMPLATES[0];
   const activeFormData = templateForms[activeTemplate.id] || activeTemplate.defaultData;
@@ -286,6 +452,9 @@ export default function App() {
         localStorage.setItem('wow_custom_wedding_' + templateId, JSON.stringify(updated));
         sessionStorage.setItem('wow_active_custom_wedding', JSON.stringify(updated));
       } catch (_) {}
+      if (updates.photos) {
+        savePhotosToStorage(templateId, updates.photos);
+      }
       return {
         ...prev,
         [templateId]: updated,
@@ -324,40 +493,63 @@ export default function App() {
     updateFormData(templateId, { events: nextEvents });
   };
 
-  const handlePhotoUpload = (templateId: string, index: number, file: File) => {
+  // Bulk Multi-File Upload: Pick up to 6 photos at once
+  const handleBulkPhotosUpload = async (templateId: string, files: FileList | null) => {
+    if (!files || files.length === 0) return;
+    setIsProcessingPhotos(true);
+    setPhotoMsg('Compressing photos...');
+    try {
+      const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
+      const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)];
+      const count = Math.min(files.length, 6);
+      for (let i = 0; i < count; i++) {
+        const file = files[i];
+        if (file) {
+          setPhotoMsg(`Processing photo ${i + 1} of ${count}...`);
+          const dataUrl = await processImageFile(file);
+          nextPhotos[i] = dataUrl;
+        }
+      }
+      while (nextPhotos.length < 6) {
+        nextPhotos.push(DEFAULT_PHOTOS[nextPhotos.length] || DEFAULT_PHOTOS[0]);
+      }
+      updateFormData(templateId, { photos: nextPhotos });
+      savePhotosToStorage(templateId, nextPhotos);
+      setPhotoMsg(`✓ ${count} photos uploaded and saved!`);
+      setTimeout(() => setPhotoMsg(''), 3500);
+    } catch (err) {
+      console.error(err);
+      setPhotoMsg('Error uploading photos. Please try again.');
+      setTimeout(() => setPhotoMsg(''), 3500);
+    } finally {
+      setIsProcessingPhotos(false);
+    }
+  };
+
+  // Single Slot Upload / Replace
+  const handlePhotoUpload = async (templateId: string, index: number, file: File) => {
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (e) => {
-      const img = new window.Image();
-      img.onload = () => {
-        const maxDim = 800;
-        let width = img.width;
-        let height = img.height;
-        if (width > maxDim || height > maxDim) {
-          if (width > height) {
-            height = Math.round((height * maxDim) / width);
-            width = maxDim;
-          } else {
-            width = Math.round((width * maxDim) / height);
-            height = maxDim;
-          }
-        }
-        const canvas = document.createElement('canvas');
-        canvas.width = width;
-        canvas.height = height;
-        const ctx = canvas.getContext('2d');
-        if (ctx) {
-          ctx.drawImage(img, 0, 0, width, height);
-          const dataUrl = canvas.toDataURL('image/jpeg', 0.72);
-          const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
-          const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)];
-          nextPhotos[index] = dataUrl;
-          updateFormData(templateId, { photos: nextPhotos });
-        }
-      };
-      img.src = e.target?.result as string;
-    };
-    reader.readAsDataURL(file);
+    setIsProcessingPhotos(true);
+    setPhotoMsg(`Processing photo #${index + 1}...`);
+    try {
+      const dataUrl = await processImageFile(file);
+      const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
+      const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)];
+      nextPhotos[index] = dataUrl;
+      while (nextPhotos.length < 6) {
+        nextPhotos.push(DEFAULT_PHOTOS[nextPhotos.length] || DEFAULT_PHOTOS[0]);
+      }
+      updateFormData(templateId, { photos: nextPhotos });
+      savePhotosToStorage(templateId, nextPhotos);
+      setPhotoMsg(`✓ Photo #${index + 1} updated!`);
+      setTimeout(() => setPhotoMsg(''), 3000);
+    } catch (err) {
+      console.error(err);
+      setPhotoMsg('Error processing photo.');
+      setTimeout(() => setPhotoMsg(''), 3000);
+    } finally {
+      setIsProcessingPhotos(false);
+    }
   };
 
   const handlePhotoUrlChange = (templateId: string, index: number, url: string) => {
@@ -372,6 +564,17 @@ export default function App() {
     const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)];
     nextPhotos[index] = DEFAULT_PHOTOS[index] || DEFAULT_PHOTOS[0];
     updateFormData(templateId, { photos: nextPhotos });
+    savePhotosToStorage(templateId, nextPhotos);
+    setPhotoMsg(`Reset Photo #${index + 1} to default`);
+    setTimeout(() => setPhotoMsg(''), 2500);
+  };
+
+  const handleResetAllPhotos = (templateId: string) => {
+    const reset = [...DEFAULT_PHOTOS];
+    updateFormData(templateId, { photos: reset });
+    savePhotosToStorage(templateId, reset);
+    setPhotoMsg('All 6 photos reset to default');
+    setTimeout(() => setPhotoMsg(''), 3000);
   };
 
   const generateInviteLink = (template: TemplateItem) => {
@@ -977,66 +1180,141 @@ export default function App() {
                     <ImageIcon className="w-4 h-4 text-amber-600" />
                     <span>3. Couple Photo Gallery (6 Photos)</span>
                   </div>
-                  <span className="text-[11px] text-neutral-500 font-medium">
-                    Upload image files or paste image URLs
-                  </span>
+                  <div className="flex items-center gap-2">
+                    {photoMsg && (
+                      <span className="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1 animate-in fade-in">
+                        {isProcessingPhotos && <Loader2 className="w-3 h-3 animate-spin text-emerald-600" />}
+                        <span>{photoMsg}</span>
+                      </span>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => handleResetAllPhotos(activeTemplate.id)}
+                      className="text-[11px] text-neutral-500 hover:text-neutral-800 underline transition-colors cursor-pointer"
+                      title="Reset all 6 photos to template defaults"
+                    >
+                      Reset All
+                    </button>
+                  </div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4">
-                  {(activeFormData.photos || DEFAULT_PHOTOS).slice(0, 6).map((photoSrc, idx) => (
-                    <div 
-                      key={idx}
-                      className="bg-white p-3 rounded-xl border border-neutral-200 shadow-sm flex flex-col items-center space-y-2.5"
-                    >
-                      {/* Photo Thumbnail */}
-                      <div className="relative w-full aspect-[4/5] rounded-lg overflow-hidden bg-neutral-100 border border-neutral-200 group">
-                        <img 
-                          src={photoSrc} 
-                          alt={`Couple Photo ${idx + 1}`} 
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        <span className="absolute top-1.5 left-1.5 bg-black/70 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-                          Photo #{idx + 1}
-                        </span>
-                      </div>
+                {/* Prominent Multi-Photo Upload Banner */}
+                <div className="bg-gradient-to-r from-amber-50/70 to-orange-50/70 p-4 rounded-xl border border-amber-200/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 shadow-xs">
+                  <div className="space-y-1">
+                    <div className="flex items-center gap-1.5 font-bold text-xs text-neutral-900">
+                      <UploadCloud className="w-4 h-4 text-amber-700" />
+                      <span>Upload All 6 Photos at Once</span>
+                    </div>
+                    <p className="text-[11px] text-neutral-600 leading-tight">
+                      Select up to 6 photos together from your device. They will automatically fill all 6 slots and appear on your invitation website immediately.
+                    </p>
+                  </div>
 
-                      {/* Upload / Replace Controls */}
-                      <div className="w-full space-y-2">
-                        <label className="w-full bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-[11px] font-semibold py-1.5 px-2.5 rounded-lg border border-neutral-200 flex items-center justify-center gap-1.5 cursor-pointer transition-colors text-center">
-                          <Upload className="w-3 h-3 text-neutral-600" />
-                          <span>Upload File</span>
-                          <input
-                            type="file"
-                            accept="image/*"
-                            className="hidden"
-                            onChange={(e) => {
-                              const f = e.target.files?.[0];
-                              if (f) handlePhotoUpload(activeTemplate.id, idx, f);
-                            }}
-                          />
-                        </label>
+                  <label className="bg-neutral-900 hover:bg-neutral-800 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-all cursor-pointer flex items-center gap-2 shadow-sm shrink-0 active:scale-95">
+                    {isProcessingPhotos ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        <span>Processing...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="w-3.5 h-3.5" />
+                        <span>Select 6 Photos</span>
+                      </>
+                    )}
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      className="hidden"
+                      disabled={isProcessingPhotos}
+                      onClick={(e) => {
+                        (e.target as HTMLInputElement).value = '';
+                      }}
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files.length > 0) {
+                          handleBulkPhotosUpload(activeTemplate.id, e.target.files);
+                        }
+                      }}
+                    />
+                  </label>
+                </div>
 
-                        <div className="flex items-center gap-1">
-                          <input
-                            type="text"
-                            value={photoSrc.startsWith('data:') ? 'Uploaded image' : photoSrc}
-                            onChange={(e) => handlePhotoUrlChange(activeTemplate.id, idx, e.target.value)}
-                            placeholder="Or paste URL"
-                            className="w-full px-2 py-1 text-[10px] rounded-md border border-neutral-200 text-neutral-600 font-mono truncate focus:outline-none focus:ring-1 focus:ring-black"
+                {/* 6 Photo Slots Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4 pt-1">
+                  {(activeFormData.photos || DEFAULT_PHOTOS).slice(0, 6).map((photoSrc, idx) => {
+                    const isCustom = !DEFAULT_PHOTOS.includes(photoSrc);
+                    return (
+                      <div 
+                        key={idx}
+                        className="bg-white p-3 rounded-xl border border-neutral-200 shadow-sm flex flex-col items-center space-y-2.5 relative group/card"
+                      >
+                        {/* Photo Thumbnail */}
+                        <div className="relative w-full aspect-[4/5] rounded-lg overflow-hidden bg-neutral-100 border border-neutral-200 group">
+                          <img 
+                            src={photoSrc} 
+                            alt={`Couple Photo ${idx + 1}`} 
+                            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                           />
-                          <button
-                            type="button"
-                            onClick={() => handleResetPhoto(activeTemplate.id, idx)}
-                            title="Reset to default photo"
-                            className="p-1 rounded-md hover:bg-neutral-100 text-neutral-400 hover:text-neutral-700 transition-colors shrink-0"
-                          >
-                            <RotateCcw className="w-3 h-3" />
-                          </button>
+                          <div className="absolute top-1.5 left-1.5 flex items-center gap-1">
+                            <span className="bg-black/75 backdrop-blur-md text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                              Photo #{idx + 1}
+                            </span>
+                            {isCustom && (
+                              <span className="bg-emerald-600/90 backdrop-blur-md text-white text-[9px] font-semibold px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
+                                <Check className="w-2.5 h-2.5" />
+                                <span>Custom</span>
+                              </span>
+                            )}
+                          </div>
+                        </div>
+
+                        {/* Upload / Replace Controls */}
+                        <div className="w-full space-y-2">
+                          <label className="w-full bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-[11px] font-semibold py-1.5 px-2.5 rounded-lg border border-neutral-200 flex items-center justify-center gap-1.5 cursor-pointer transition-colors text-center active:scale-95">
+                            <Upload className="w-3 h-3 text-neutral-600" />
+                            <span>{isCustom ? 'Replace Photo' : 'Upload File'}</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              disabled={isProcessingPhotos}
+                              onClick={(e) => {
+                                (e.target as HTMLInputElement).value = '';
+                              }}
+                              onChange={(e) => {
+                                const f = e.target.files?.[0];
+                                if (f) handlePhotoUpload(activeTemplate.id, idx, f);
+                              }}
+                            />
+                          </label>
+
+                          <div className="flex items-center gap-1">
+                            <input
+                              type="text"
+                              value={photoSrc.startsWith('data:') ? 'Custom uploaded photo' : photoSrc}
+                              onChange={(e) => handlePhotoUrlChange(activeTemplate.id, idx, e.target.value)}
+                              placeholder="Or paste URL"
+                              className="w-full px-2 py-1 text-[10px] rounded-md border border-neutral-200 text-neutral-600 font-mono truncate focus:outline-none focus:ring-1 focus:ring-black"
+                            />
+                            <button
+                              type="button"
+                              onClick={() => handleResetPhoto(activeTemplate.id, idx)}
+                              title="Reset to default photo"
+                              className="p-1 rounded-md hover:bg-neutral-100 text-neutral-400 hover:text-neutral-700 transition-colors shrink-0 cursor-pointer"
+                            >
+                              <RotateCcw className="w-3 h-3" />
+                            </button>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
+
+                <p className="text-[11px] text-neutral-500 leading-tight">
+                  💡 <strong>Tip:</strong> Photos you upload are saved locally on this browser and immediately appear across all template preview pages and galleries.
+                </p>
               </div>
 
               {/* ── SECTION 4: GENERATED SHAREABLE LINK BOX ── */}

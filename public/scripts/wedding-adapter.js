@@ -12,10 +12,34 @@
 (function () {
   'use strict';
 
+  var DB_NAME = 'wow_wedding_db';
+  var DB_VERSION = 1;
+  var STORE_NAME = 'photos';
+
   function safeStr(val, fallback) {
     if (val === undefined || val === null) return fallback || '';
     var s = String(val).trim();
     return s.length > 0 ? s : (fallback || '');
+  }
+
+  // Open IndexedDB safely
+  function openDB() {
+    return new Promise(function (resolve) {
+      if (typeof indexedDB === 'undefined') return resolve(null);
+      try {
+        var req = indexedDB.open(DB_NAME, DB_VERSION);
+        req.onupgradeneeded = function (e) {
+          var db = e.target.result;
+          if (!db.objectStoreNames.contains(STORE_NAME)) {
+            db.createObjectStore(STORE_NAME);
+          }
+        };
+        req.onsuccess = function (e) { resolve(e.target.result); };
+        req.onerror = function () { resolve(null); };
+      } catch (_) {
+        resolve(null);
+      }
+    });
   }
 
   // Detect current template ID
@@ -52,41 +76,47 @@
       }
     }
 
-    // 2. Check localStorage fallback for this template
-    if (!custom) {
-      try {
-        var localStr = localStorage.getItem('wow_custom_wedding_' + currentTemplateId) || 
-                       sessionStorage.getItem('wow_active_custom_wedding');
-        if (localStr) {
-          var parsed = JSON.parse(localStr);
-          custom = {
-            b: parsed.bride,
-            g: parsed.groom,
-            bp: parsed.brideParents,
-            gp: parsed.groomParents,
-            d: parsed.date,
-            t: parsed.time,
-            v: parsed.venue,
-            a: parsed.address,
-            m: parsed.mapUrl,
-            ev: parsed.events ? parsed.events.map(function(e) {
-              return {
-                id: e.id,
-                n: e.name,
-                d: e.date,
-                t: e.time,
-                v: e.venue,
-                a: e.address,
-                m: e.mapUrl,
-                s: e.desc
-              };
-            }) : null,
-            ph: parsed.photos
-          };
-        }
-      } catch (err) {
-        console.warn('LocalStorage wedding data read error', err);
+    // 2. Check localStorage / sessionStorage for this template
+    var localCustom = null;
+    try {
+      var localStr = localStorage.getItem('wow_custom_wedding_' + currentTemplateId) || 
+                     sessionStorage.getItem('wow_active_custom_wedding');
+      if (localStr) {
+        var parsed = JSON.parse(localStr);
+        localCustom = {
+          b: parsed.bride,
+          g: parsed.groom,
+          bp: parsed.brideParents,
+          gp: parsed.groomParents,
+          d: parsed.date,
+          t: parsed.time,
+          v: parsed.venue,
+          a: parsed.address,
+          m: parsed.mapUrl,
+          ev: parsed.events ? parsed.events.map(function(e) {
+            return {
+              id: e.id,
+              n: e.name,
+              d: e.date,
+              t: e.time,
+              v: e.venue,
+              a: e.address,
+              m: e.mapUrl,
+              s: e.desc
+            };
+          }) : null,
+          ph: parsed.photos
+        };
       }
+    } catch (err) {
+      console.warn('LocalStorage wedding data read error', err);
+    }
+
+    if (!custom) {
+      custom = localCustom;
+    } else if (localCustom && (!custom.ph || custom.ph.length === 0)) {
+      // Merge photos from local storage if URL payload didn't carry full photos
+      custom.ph = localCustom.ph;
     }
 
     // 3. Fallback to individual URL query params if present
@@ -116,10 +146,7 @@
     return custom;
   }
 
-  var customData = loadCustomConfig();
-  if (!customData) {
-    return; // No customizations requested, keep pristine template defaults
-  }
+  var customData = loadCustomConfig() || {};
 
   // Normalize data structure
   var bride = safeStr(customData.b, 'Dharani');
@@ -183,11 +210,31 @@
     '/images/gallery/demo_1.webp',
     '/images/gallery/demo_2.webp'
   ];
-  var photos = Array.isArray(customData.ph) && customData.ph.length > 0
-    ? customData.ph.slice(0, 6)
-    : defaultPhotos;
 
-  // Make sure photos array has at least 6 items
+  // Try synchronous photos first (from customData or direct photo storage)
+  var initialPhotos = Array.isArray(customData.ph) && customData.ph.length > 0 ? customData.ph : null;
+
+  if (!initialPhotos) {
+    try {
+      var syncS = sessionStorage.getItem('wow_photos_' + currentTemplateId) || sessionStorage.getItem('wow_photos_latest');
+      if (syncS) {
+        var parsedS = JSON.parse(syncS);
+        if (Array.isArray(parsedS) && parsedS.length > 0) initialPhotos = parsedS;
+      }
+    } catch (_) {}
+  }
+
+  if (!initialPhotos) {
+    try {
+      var syncL = localStorage.getItem('wow_photos_' + currentTemplateId) || localStorage.getItem('wow_photos_latest');
+      if (syncL) {
+        var parsedL = JSON.parse(syncL);
+        if (Array.isArray(parsedL) && parsedL.length > 0) initialPhotos = parsedL;
+      }
+    } catch (_) {}
+  }
+
+  var photos = (initialPhotos && initialPhotos.length > 0) ? initialPhotos.slice(0, 6) : defaultPhotos.slice(0, 6);
   while (photos.length < 6) {
     photos.push(defaultPhotos[photos.length] || defaultPhotos[0]);
   }
@@ -209,42 +256,47 @@
   };
 
   // Sync with window.__WEDDING_CONFIG__ if existing
-  if (typeof window.__WEDDING_CONFIG__ !== 'undefined' && window.__WEDDING_CONFIG__) {
-    var wc = window.__WEDDING_CONFIG__;
-    if (wc.couple) {
-      wc.couple.bride = bride;
-      wc.couple.groom = groom;
-      wc.couple.date = weddingDate;
-      wc.couple.venue = fullVenue;
-      wc.couple.hashtag = '#' + bride.replace(/\s+/g, '') + 'Weds' + groom.replace(/\s+/g, '');
-    }
-    if (wc.invite) {
-      wc.invite.brideFather = brideParents;
-      wc.invite.groomFather = groomParents;
-      wc.invite.brideParents = brideParents;
-      wc.invite.groomParents = groomParents;
-    }
-    if (wc.gallery) {
-      wc.gallery.photos = photos;
-    }
-    if (wc.events) {
-      wc.events = events.map(function (e) {
-        return {
-          id: e.id,
-          name: e.name,
-          date: e.date,
-          time: e.time,
-          venue: e.venue + (e.address ? ', ' + e.address : ''),
-          desc: e.desc,
-          mapsLink: e.mapUrl,
-          map: e.mapUrl
-        };
-      });
+  function syncWeddingConfig() {
+    if (typeof window.__WEDDING_CONFIG__ !== 'undefined' && window.__WEDDING_CONFIG__) {
+      var wc = window.__WEDDING_CONFIG__;
+      if (wc.couple) {
+        wc.couple.bride = bride;
+        wc.couple.groom = groom;
+        wc.couple.date = weddingDate;
+        wc.couple.venue = fullVenue;
+        wc.couple.hashtag = '#' + bride.replace(/\s+/g, '') + 'Weds' + groom.replace(/\s+/g, '');
+      }
+      if (wc.invite) {
+        wc.invite.brideFather = brideParents;
+        wc.invite.groomFather = groomParents;
+        wc.invite.brideParents = brideParents;
+        wc.invite.groomParents = groomParents;
+      }
+      if (wc.gallery) {
+        wc.gallery.photos = photos;
+      }
+      if (wc.events) {
+        wc.events = events.map(function (e) {
+          return {
+            id: e.id,
+            name: e.name,
+            date: e.date,
+            time: e.time,
+            venue: e.venue + (e.address ? ', ' + e.address : ''),
+            desc: e.desc,
+            mapsLink: e.mapUrl,
+            map: e.mapUrl
+          };
+        });
+      }
     }
   }
+  syncWeddingConfig();
 
   // Apply customizations to DOM on ready
   function applyCustomizations() {
+    syncWeddingConfig();
+
     // 1. Page Title
     if (bride && groom) {
       document.title = bride + ' & ' + groom + ' — Wedding Invitation | Wow Kalyanam';
@@ -259,7 +311,6 @@
     });
 
     // 3. Parents' Names
-    // Template 09 / Kasavu / Template 10 / Meenaya / Template 2
     var bParentsEls = document.querySelectorAll('#invBrideParents, #iBrideParents, .inv-bride-parents');
     bParentsEls.forEach(function (el) {
       el.textContent = brideParents;
@@ -379,33 +430,37 @@
       });
     }
 
-    // Gallery Photos in Template 2
-    var featuredImg = document.getElementById('galleryFeaturedPhoto');
-    if (featuredImg && photos[0]) {
-      featuredImg.src = photos[0];
-    }
-    var dotsContainer = document.getElementById('galleryDots');
-    if (dotsContainer) {
-      dotsContainer.innerHTML = '';
-      photos.forEach(function (_, i) {
-        var dot = document.createElement('button');
-        dot.className = 'gallery-dot' + (i === 0 ? ' is-active' : '');
-        dot.setAttribute('role', 'tab');
-        dot.setAttribute('aria-label', 'Photo ' + (i + 1));
-        dotsContainer.appendChild(dot);
-      });
-    }
-    var thumbsContainer = document.getElementById('galleryThumbs');
-    if (thumbsContainer) {
-      thumbsContainer.innerHTML = '';
-      photos.forEach(function (src, i) {
-        var thumb = document.createElement('div');
-        thumb.className = 'gallery-thumb' + (i === 0 ? ' is-active' : '');
-        thumb.setAttribute('role', 'listitem');
-        thumb.setAttribute('aria-label', 'Show photo ' + (i + 1));
-        thumb.innerHTML = '<img class="gallery-thumb-photo" src="' + src + '" alt="Thumbnail ' + (i + 1) + '" decoding="async" loading="lazy">';
-        thumbsContainer.appendChild(thumb);
-      });
+    // Call dynamic template2 gallery hook if ready
+    if (typeof window.__updateTemplate2Gallery === 'function') {
+      window.__updateTemplate2Gallery(photos);
+    } else {
+      var featuredImg = document.getElementById('galleryFeaturedPhoto') || document.getElementById('galleryMainPhoto');
+      if (featuredImg && photos[0]) {
+        featuredImg.src = photos[0];
+      }
+      var dotsContainer = document.getElementById('galleryDots');
+      if (dotsContainer) {
+        dotsContainer.innerHTML = '';
+        photos.forEach(function (_, i) {
+          var dot = document.createElement('button');
+          dot.className = 'gallery-dot' + (i === 0 ? ' is-active' : '');
+          dot.setAttribute('role', 'tab');
+          dot.setAttribute('aria-label', 'Photo ' + (i + 1));
+          dotsContainer.appendChild(dot);
+        });
+      }
+      var thumbsContainer = document.getElementById('galleryThumbs');
+      if (thumbsContainer) {
+        thumbsContainer.innerHTML = '';
+        photos.forEach(function (src, i) {
+          var thumb = document.createElement('div');
+          thumb.className = 'gallery-thumb' + (i === 0 ? ' is-active' : '');
+          thumb.setAttribute('role', 'listitem');
+          thumb.setAttribute('aria-label', 'Show photo ' + (i + 1));
+          thumb.innerHTML = '<img class="gallery-thumb-photo" src="' + src + '" alt="Thumbnail ' + (i + 1) + '" decoding="async" loading="lazy">';
+          thumbsContainer.appendChild(thumb);
+        });
+      }
     }
   }
 
@@ -631,6 +686,24 @@
         aperture.appendChild(img);
       });
     }
+
+    // Meenaya Gallery Dots
+    var dotsWrap = document.getElementById('galleryDots');
+    if (dotsWrap) {
+      dotsWrap.innerHTML = '';
+      photos.forEach(function (_, idx) {
+        var dot = document.createElement('span');
+        dot.className = 'gallery-dot' + (idx === 0 ? ' active' : '');
+        dot.setAttribute('data-index', String(idx));
+        dot.onclick = function() {
+          var slides = aperture.querySelectorAll('.gallery-slide');
+          var dots = dotsWrap.querySelectorAll('.gallery-dot');
+          slides.forEach(function(s, i) { s.classList.toggle('active', i === idx); });
+          dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+        };
+        dotsWrap.appendChild(dot);
+      });
+    }
   }
 
   // ── TEMPLATE 09 (Royal Pichwai Lotus Courtyard) ──
@@ -709,44 +782,137 @@
       });
     }
 
-    // Gallery in Template 09
-    var galWall = document.getElementById('galWall');
-    if (galWall) {
-      galWall.innerHTML = '';
-      var orients = ['hero', 'portrait', 'landscape', 'portrait', 'landscape', 'portrait'];
-      photos.forEach(function (src, idx) {
-        var orient = orients[idx % orients.length];
-        var slot = document.createElement('div');
-        slot.className = 'gal-frame-slot gal-slot-' + orient;
-        slot.setAttribute('role', 'listitem');
-        slot.style.cursor = 'pointer';
+    // Call dynamic template09 gallery hook if ready
+    if (typeof window.__updateTemplate09Gallery === 'function') {
+      window.__updateTemplate09Gallery(photos);
+    } else {
+      var galWall = document.getElementById('galWall');
+      if (galWall) {
+        galWall.innerHTML = '';
+        var orients = ['hero', 'portrait', 'landscape', 'portrait', 'landscape', 'portrait'];
+        photos.forEach(function (src, idx) {
+          var orient = orients[idx % orients.length];
+          var slot = document.createElement('div');
+          slot.className = 'gal-frame-slot gal-slot-' + orient;
+          slot.setAttribute('role', 'listitem');
+          slot.style.cursor = 'pointer';
 
-        var frameAsset = orient === 'hero' ? '/templates/template09/assets/gallery/pn-gal-fr-hanging-hero-arch-x-v01.webp' :
-          (orient === 'landscape' ? '/templates/template09/assets/gallery/pn-gal-fr-hanging-landscape-x-v01.webp' :
-          '/templates/template09/assets/gallery/pn-gal-fr-hanging-portrait-x-v01.webp');
+          var frameAsset = orient === 'hero' ? '/templates/template09/assets/gallery/pn-gal-fr-hanging-hero-arch-x-v01.webp' :
+            (orient === 'landscape' ? '/templates/template09/assets/gallery/pn-gal-fr-hanging-landscape-x-v01.webp' :
+            '/templates/template09/assets/gallery/pn-gal-fr-hanging-portrait-x-v01.webp');
 
-        slot.innerHTML = `
-          <div class="gal-frame-inner">
-            <div class="gal-photo-wrap">
-              <img class="gal-photo" src="${src}" alt="Couple photo ${idx + 1}" decoding="async" loading="lazy">
+          slot.innerHTML = `
+            <div class="gal-frame-inner">
+              <div class="gal-photo-wrap">
+                <img class="gal-photo" src="${src}" alt="Couple photo ${idx + 1}" decoding="async" loading="lazy">
+              </div>
+              <img class="gal-frame-art" src="${frameAsset}" alt="" aria-hidden="true" decoding="async" loading="lazy">
             </div>
-            <img class="gal-frame-art" src="${frameAsset}" alt="" aria-hidden="true" decoding="async" loading="lazy">
-          </div>
-        `;
-        galWall.appendChild(slot);
+          `;
+          galWall.appendChild(slot);
+        });
+      }
+    }
+  }
+
+  // Asynchronously retrieve photos from IndexedDB if not found yet or to ensure newest
+  function fetchAndApplyStoredPhotos() {
+    openDB().then(function (db) {
+      if (!db) return;
+      try {
+        var tx = db.transaction(STORE_NAME, 'readonly');
+        var store = tx.objectStore(STORE_NAME);
+        var req1 = store.get('template_' + currentTemplateId);
+        req1.onsuccess = function () {
+          var result = (req1.result && Array.isArray(req1.result) && req1.result.length > 0) ? req1.result : null;
+          if (!result) {
+            var req2 = store.get('latest');
+            req2.onsuccess = function () {
+              if (req2.result && Array.isArray(req2.result) && req2.result.length > 0) {
+                applyNewPhotos(req2.result);
+              }
+            };
+          } else {
+            applyNewPhotos(result);
+          }
+        };
+      } catch (_) {}
+    });
+  }
+
+  function applyNewPhotos(newPhotos) {
+    if (!newPhotos || !newPhotos.length) return;
+    photos = newPhotos.slice(0, 6);
+    while (photos.length < 6) {
+      photos.push(defaultPhotos[photos.length] || defaultPhotos[0]);
+    }
+    window.__CUSTOM_WEDDING_DATA__.photos = photos;
+    if (typeof window.__WEDDING_CONFIG__ !== 'undefined' && window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.gallery) {
+      window.__WEDDING_CONFIG__.gallery.photos = photos;
+    }
+
+    if (currentTemplateId === 'pichwai-palace') {
+      if (typeof window.__updateTemplate2Gallery === 'function') {
+        window.__updateTemplate2Gallery(photos);
+      } else {
+        var featuredImg = document.getElementById('galleryFeaturedPhoto') || document.getElementById('galleryMainPhoto');
+        if (featuredImg && photos[0]) featuredImg.src = photos[0];
+        var thumbsContainer = document.getElementById('galleryThumbs');
+        if (thumbsContainer) {
+          var thumbImgs = thumbsContainer.querySelectorAll('.gallery-thumb-photo');
+          thumbImgs.forEach(function (img, i) {
+            if (photos[i]) img.src = photos[i];
+          });
+        }
+      }
+    } else if (currentTemplateId === 'pichwai-lotus-courtyard') {
+      if (typeof window.__updateTemplate09Gallery === 'function') {
+        window.__updateTemplate09Gallery(photos);
+      } else {
+        var galWall = document.getElementById('galWall');
+        if (galWall) {
+          var galPhotos = galWall.querySelectorAll('.gal-photo');
+          galPhotos.forEach(function(img, i) {
+            if (photos[i]) img.src = photos[i];
+          });
+        }
+      }
+    } else if (currentTemplateId === 'champagne-luxury') {
+      var frameIds = ['glHero', 'glLeft', 'glRight', 'glBottom'];
+      frameIds.forEach(function (fid, idx) {
+        var frame = document.getElementById(fid);
+        if (frame && photos[idx]) {
+          var img = frame.querySelector('img');
+          if (img) img.src = photos[idx];
+        }
       });
+    } else if (currentTemplateId === 'kasavu-kerala') {
+      applyKasavuEventsAndGallery();
+    } else if (currentTemplateId === 'meenaya-temple-baroque') {
+      applyMeenayaEventsAndGallery();
     }
   }
 
   // Trigger on DOMContentLoaded or immediately if DOM is ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyCustomizations);
+    document.addEventListener('DOMContentLoaded', function() {
+      applyCustomizations();
+      fetchAndApplyStoredPhotos();
+    });
   } else {
     applyCustomizations();
+    fetchAndApplyStoredPhotos();
   }
 
   // Re-run safely after window load to catch delayed template hydration
   window.addEventListener('load', function () {
-    setTimeout(applyCustomizations, 150);
+    setTimeout(function() {
+      applyCustomizations();
+      fetchAndApplyStoredPhotos();
+    }, 150);
+    setTimeout(function() {
+      applyCustomizations();
+      fetchAndApplyStoredPhotos();
+    }, 500);
   });
 })();

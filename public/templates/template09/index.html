@@ -55,7 +55,15 @@
     } catch (_) {}
   }
 
-  if (!cfg && typeof window !== 'undefined') {
+  var fid = getQueryParam('fid');
+  if (fid && typeof window !== 'undefined') {
+    try {
+      var sForm = localStorage.getItem('wow_form_' + fid);
+      if (sForm) cfg = JSON.parse(sForm);
+    } catch (_) {}
+  }
+
+  if (!cfg && !fid && !rawCfg && !getQueryParam('b') && typeof window !== 'undefined') {
     try {
       var saved = sessionStorage.getItem('wow_active_custom_wedding') || localStorage.getItem('wow_custom_wedding_pichwai-lotus-courtyard');
       if (saved) cfg = JSON.parse(saved);

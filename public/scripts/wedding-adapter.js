@@ -100,10 +100,48 @@
   function loadCustomConfig() {
     var params = new URLSearchParams(window.location.search);
     var custom = null;
+    var fid = params.get('fid');
 
-    // 1. Check for encoded 'cfg' query param
+    // 1. If fid (Form ID) is present, load specifically for this isolated form from localStorage
+    if (fid) {
+      try {
+        var formJson = localStorage.getItem('wow_form_' + fid);
+        if (formJson) {
+          var pf = JSON.parse(formJson);
+          custom = {
+            fid: fid,
+            b: pf.bride,
+            g: pf.groom,
+            bp: pf.brideParents,
+            gp: pf.groomParents,
+            d: pf.date || '',
+            t: pf.time || '',
+            v: pf.venue || '',
+            a: pf.address || '',
+            m: pf.mapUrl || '',
+            ev: pf.events ? pf.events.map(function(e) {
+              return {
+                id: e.id,
+                n: e.name,
+                d: e.date || '',
+                t: e.time || '',
+                v: e.venue || '',
+                a: e.address || '',
+                m: e.mapUrl || '',
+                s: e.desc || ''
+              };
+            }) : null,
+            ph: pf.photos
+          };
+        }
+      } catch (err) {
+        console.warn('Could not read isolated form data for fid=' + fid, err);
+      }
+    }
+
+    // 2. Check for encoded 'cfg' query param (self-contained guest payload)
     var cfgParam = params.get('cfg');
-    if (cfgParam) {
+    if (!custom && cfgParam) {
       try {
         var jsonStr = decodeURIComponent(cfgParam);
         custom = JSON.parse(jsonStr);
@@ -115,66 +153,6 @@
           console.warn('Could not parse cfg URL parameter', e2);
         }
       }
-    }
-
-    // 2. Check localStorage / sessionStorage for this template
-    var localCustom = null;
-    try {
-      for (var k in localStorage) {
-        if (k && k.indexOf('wow_') === 0) {
-          var val = localStorage.getItem(k);
-          if (val && (val.indexOf('Dharani') !== -1 || val.indexOf('BWSSB') !== -1 || val.indexOf('19 November') !== -1 || val.indexOf('Malleshwaram') !== -1)) {
-            localStorage.removeItem(k);
-          }
-        }
-      }
-      for (var sk in sessionStorage) {
-        if (sk && sk.indexOf('wow_') === 0) {
-          var sval = sessionStorage.getItem(sk);
-          if (sval && (sval.indexOf('Dharani') !== -1 || sval.indexOf('BWSSB') !== -1 || sval.indexOf('19 November') !== -1 || sval.indexOf('Malleshwaram') !== -1)) {
-            sessionStorage.removeItem(sk);
-          }
-        }
-      }
-
-      var localStr = localStorage.getItem('wow_custom_wedding_' + currentTemplateId) || 
-                     sessionStorage.getItem('wow_active_custom_wedding');
-      if (localStr) {
-        var parsed = JSON.parse(localStr);
-        localCustom = {
-          b: parsed.bride,
-          g: parsed.groom,
-          bp: parsed.brideParents,
-          gp: parsed.groomParents,
-          d: parsed.date,
-          t: parsed.time,
-          v: parsed.venue,
-          a: parsed.address,
-          m: parsed.mapUrl,
-          ev: parsed.events ? parsed.events.map(function(e) {
-            return {
-              id: e.id,
-              n: e.name,
-              d: e.date,
-              t: e.time,
-              v: e.venue,
-              a: e.address,
-              m: e.mapUrl,
-              s: e.desc
-            };
-          }) : null,
-          ph: parsed.photos
-        };
-      }
-    } catch (err) {
-      console.warn('LocalStorage wedding data read error', err);
-    }
-
-    if (!custom) {
-      custom = localCustom;
-    } else if (localCustom && (!custom.ph || custom.ph.length === 0)) {
-      // Merge photos from local storage if URL payload didn't carry full photos
-      custom.ph = localCustom.ph;
     }
 
     // 3. Fallback to individual URL query params if present
@@ -201,6 +179,60 @@
       if (paramMap) custom.m = paramMap;
     }
 
+    // 4. CRITICAL: ONLY IF NO fid, NO cfg, AND NO URL params (bare template preview)
+    if (!custom && !fid && !cfgParam && !paramBride) {
+      try {
+        for (var k in localStorage) {
+          if (k && k.indexOf('wow_') === 0) {
+            var val = localStorage.getItem(k);
+            if (val && (val.indexOf('Dharani') !== -1 || val.indexOf('BWSSB') !== -1 || val.indexOf('19 November') !== -1 || val.indexOf('Malleshwaram') !== -1)) {
+              localStorage.removeItem(k);
+            }
+          }
+        }
+        for (var sk in sessionStorage) {
+          if (sk && sk.indexOf('wow_') === 0) {
+            var sval = sessionStorage.getItem(sk);
+            if (sval && (sval.indexOf('Dharani') !== -1 || sval.indexOf('BWSSB') !== -1 || sval.indexOf('19 November') !== -1 || sval.indexOf('Malleshwaram') !== -1)) {
+              sessionStorage.removeItem(sk);
+            }
+          }
+        }
+
+        var localStr = localStorage.getItem('wow_custom_wedding_' + currentTemplateId) || 
+                       sessionStorage.getItem('wow_active_custom_wedding');
+        if (localStr) {
+          var parsed = JSON.parse(localStr);
+          custom = {
+            b: parsed.bride,
+            g: parsed.groom,
+            bp: parsed.brideParents,
+            gp: parsed.groomParents,
+            d: parsed.date || '',
+            t: parsed.time,
+            v: parsed.venue,
+            a: parsed.address,
+            m: parsed.mapUrl,
+            ev: parsed.events ? parsed.events.map(function(e) {
+              return {
+                id: e.id,
+                n: e.name,
+                d: e.date || '',
+                t: e.time,
+                v: e.venue,
+                a: e.address,
+                m: e.mapUrl,
+                s: e.desc
+              };
+            }) : null,
+            ph: parsed.photos
+          };
+        }
+      } catch (err) {
+        console.warn('LocalStorage wedding data read error', err);
+      }
+    }
+
     return custom;
   }
 
@@ -209,12 +241,12 @@
   var rawEvents = Array.isArray(customData.ev) ? customData.ev : null;
   var firstEvt = (rawEvents && rawEvents.length > 0) ? rawEvents[0] : null;
 
-  // Normalize data structure
+  // Normalize data structure — NO default hardcoded custom dates
   var bride = safeStr(customData.b, 'Deepthi');
   var groom = safeStr(customData.g, 'Murali');
   var brideParents = safeStr(customData.bp, 'Shri. S. Ravi & Smt. R. Jyothilakshmi');
   var groomParents = safeStr(customData.gp, 'Shri. K. Muralidharan & Smt. M. Geetha');
-  var weddingDate = safeStr(customData.d, (firstEvt && (firstEvt.d || firstEvt.date)) || '13 December 2026');
+  var weddingDate = safeStr(customData.d, (firstEvt && (firstEvt.d || firstEvt.date)) || '');
   var weddingTime = safeStr(customData.t, (firstEvt && (firstEvt.t || firstEvt.time)) || '07:00 PM');
   var venueName = safeStr(customData.v, (firstEvt && (firstEvt.v || firstEvt.venue)) || 'The Grand Ballroom & Palace Grounds');
   var venueAddress = safeStr(customData.a, (firstEvt && (firstEvt.a || firstEvt.address)) || (customData.v ? '' : 'Bengaluru, Karnataka'));
@@ -235,7 +267,7 @@
       };
     });
   } else {
-    // Default 2 events
+    // Default 2 events — NO hardcoded dates
     events = [
       {
         id: 'reception',
@@ -250,7 +282,7 @@
       {
         id: 'muhurtham',
         name: 'Muhurtham & Kalyanam',
-        date: '14 December 2026',
+        date: weddingDate,
         time: '09:15 AM - 10:15 AM',
         venue: venueName,
         address: venueAddress,
@@ -268,10 +300,22 @@
     '/images/gallery/couple_4.webp'
   ];
 
-  // Try synchronous photos first (from customData or direct photo storage)
+  // Try synchronous photos first (from isolated form, customData, or direct photo storage)
   var initialPhotos = Array.isArray(customData.ph) && customData.ph.length > 0 ? customData.ph : null;
+  var currentFid = customData.fid || new URLSearchParams(window.location.search).get('fid');
 
-  if (!initialPhotos) {
+  // If fid is present, load strictly for this form!
+  if (!initialPhotos && currentFid) {
+    try {
+      var formPh = localStorage.getItem('wow_photos_form_' + currentFid);
+      if (formPh) {
+        var parsedPh = JSON.parse(formPh);
+        if (Array.isArray(parsedPh) && parsedPh.length > 0) initialPhotos = parsedPh;
+      }
+    } catch (_) {}
+  }
+
+  if (!initialPhotos && !currentFid) {
     try {
       var syncS = sessionStorage.getItem('wow_photos_' + currentTemplateId) || sessionStorage.getItem('wow_photos_latest');
       if (syncS) {
@@ -281,7 +325,7 @@
     } catch (_) {}
   }
 
-  if (!initialPhotos) {
+  if (!initialPhotos && !currentFid) {
     try {
       var syncL = localStorage.getItem('wow_photos_' + currentTemplateId) || localStorage.getItem('wow_photos_latest');
       if (syncL) {
@@ -980,6 +1024,15 @@
       try {
         var tx = db.transaction(STORE_NAME, 'readonly');
         var store = tx.objectStore(STORE_NAME);
+        if (currentFid) {
+          var reqFid = store.get('form_' + currentFid);
+          reqFid.onsuccess = function () {
+            if (reqFid.result && Array.isArray(reqFid.result) && reqFid.result.length > 0) {
+              applyNewPhotos(reqFid.result);
+            }
+          };
+          return;
+        }
         var req1 = store.get('template_' + currentTemplateId);
         req1.onsuccess = function () {
           var result = (req1.result && Array.isArray(req1.result) && req1.result.length > 0) ? req1.result : null;

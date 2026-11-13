@@ -34,7 +34,14 @@
       try { cfg = JSON.parse(decodeURIComponent(rawCfg)); } catch (_) { cfg = JSON.parse(atob(rawCfg)); }
     }
   } catch (_) {}
-  if (!cfg && typeof window !== 'undefined') {
+  var fid = getQueryParam('fid');
+  if (fid && typeof window !== 'undefined') {
+    try {
+      var sForm = localStorage.getItem('wow_form_' + fid);
+      if (sForm) cfg = JSON.parse(sForm);
+    } catch (_) {}
+  }
+  if (!cfg && !fid && !rawCfg && !getQueryParam('b') && typeof window !== 'undefined') {
     try {
       var saved = sessionStorage.getItem('wow_active_custom_wedding') || localStorage.getItem('wow_custom_wedding_champagne-luxury');
       if (saved) cfg = JSON.parse(saved);
@@ -42,7 +49,7 @@
   }
   var bride = (cfg && (cfg.b || cfg.bride)) || getQueryParam('b') || getQueryParam('bride') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.bride) || 'Deepthi';
   var groom = (cfg && (cfg.g || cfg.groom)) || getQueryParam('g') || getQueryParam('groom') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.groom) || 'Murali';
-  var date  = (cfg && (cfg.d || cfg.date)) || getQueryParam('d') || getQueryParam('date') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.date) || '13 December 2026';
+  var date  = (cfg && (cfg.d || cfg.date)) || getQueryParam('d') || getQueryParam('date') || (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.date) || '';
   function updatePreloader() {
     // Names in preloader
     var n1 = document.querySelector('.pl-n1');

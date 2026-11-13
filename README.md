@@ -33,7 +33,7 @@ An interactive, responsive digital wedding invitation platform featuring curated
 ## 🔒 Catalog Security & Password Gate
 
 The main catalog (`/`) is password-protected:
-- **Default Passcode:** `WOW@89`
+- **Default Passcode:** `WOW@775`
 - Includes session storage persistence and manual lock controls.
 
 ---

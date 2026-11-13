@@ -364,7 +364,7 @@ function processImageFile(file: File, maxDim = 960, quality = 0.76): Promise<str
 }
 
 export default function App() {
-  // Password Protection for Home Page: 'WOW@89'
+  // Password Protection for Home Page: 'WOW@775'
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     if (typeof window !== 'undefined') {
       return sessionStorage.getItem('wow_home_authenticated') === 'true';
@@ -384,7 +384,7 @@ export default function App() {
 
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput.trim() === 'WOW@89') {
+    if (passwordInput.trim() === 'WOW@775') {
       sessionStorage.setItem('wow_home_authenticated', 'true');
       setIsAuthenticated(true);
       setPasswordError('');
@@ -687,7 +687,7 @@ export default function App() {
     ? TEMPLATES 
     : TEMPLATES.filter((t) => t.id === filterId);
 
-  // ── PASSWORD GATE (Passcode: WOW@89) ──
+  // ── PASSWORD GATE (Passcode: WOW@775) ──
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-[#faf9f6] text-neutral-900 font-sans flex flex-col justify-between selection:bg-neutral-900 selection:text-white relative overflow-hidden">

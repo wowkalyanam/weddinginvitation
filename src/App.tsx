@@ -158,9 +158,9 @@ const TEMPLATES: TemplateItem[] = [
           name: 'Muhurtham',
           date: '20 November 2026',
           time: 'Between 9:15 AM - 10:15 AM',
-          venue: 'BWSSB Rajatha Bhavan',
-          address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
-          mapUrl: 'https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D',
+          venue: '',
+          address: '',
+          mapUrl: '',
           desc: 'Sacred thali tying and auspicious wedding rituals in presence of family and elders.'
         }
       ],

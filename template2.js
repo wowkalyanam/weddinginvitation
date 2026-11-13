@@ -490,6 +490,7 @@ function initApp() {
     let lbIndex = 0;
 
     function rebuildDotsAndThumbs() {
+      if (!photos || photos.length === 0) return;
       if (dotsContainer) {
         dotsContainer.innerHTML = '';
         photos.forEach((_, idx) => {
@@ -526,6 +527,7 @@ function initApp() {
       if (!cleanPhotos.length) {
         gallerySection.style.display = 'none';
         if (galNav && galNav.closest('li')) galNav.closest('li').style.display = 'none';
+        photos = [];
         return;
       }
       gallerySection.style.display = '';
@@ -533,7 +535,9 @@ function initApp() {
       photos = cleanPhotos.map(p => ({ src: typeof p === 'string' ? p : p.src, caption: 'Moments we love' }));
       currentIndex = 0;
       rebuildDotsAndThumbs();
-      setPhoto(0, true);
+      if (photos.length > 0) {
+        setPhoto(0, true);
+      }
     };
 
     if (photos.length > 0) {
@@ -542,13 +546,14 @@ function initApp() {
     }
 
     function setPhoto(index, immediate = false) {
+      if (!photos || photos.length === 0) return;
       index = (index + photos.length) % photos.length;
       currentIndex = index;
 
       const updateImg = () => {
-        if (featuredPhoto) {
+        if (featuredPhoto && photos[index]) {
           featuredPhoto.src = photos[index].src;
-          featuredPhoto.alt = photos[index].caption;
+          featuredPhoto.alt = photos[index].caption || '';
         }
         if (featured) {
           featured.classList.remove('is-fading');
@@ -712,7 +717,9 @@ function initApp() {
       }
     });
 
-    setPhoto(0, true);
+    if (photos && photos.length > 0) {
+      setPhoto(0, true);
+    }
   }
 
   // Initialize RSVP Section (Scroll Reveal, Calendar URLs, Canvas Fireworks)
@@ -895,7 +902,23 @@ function initApp() {
   // Initialize Countdown Section Timer
   const countdownSection = document.getElementById('countdown');
   if (countdownSection) {
-    const targetDate = new Date('2026-11-19T19:00:00+05:30').getTime();
+    function getCountdownTarget() {
+      try {
+        const cfg = window.__CUSTOM_WEDDING_DATA__ || window.__WEDDING_CONFIG__;
+        const dStr = (cfg && (cfg.d || (cfg.couple && cfg.couple.date))) || '19 November 2026';
+        const match = String(dStr).match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
+        if (match) {
+          const mNames = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+          const mIdx = mNames.findIndex(m => match[2].toLowerCase().startsWith(m));
+          if (mIdx !== -1) {
+            return new Date(parseInt(match[3], 10), mIdx, parseInt(match[1], 10), 19, 0, 0).getTime();
+          }
+        }
+      } catch (_) {}
+      return new Date(2026, 10, 19, 19, 0, 0).getTime();
+    }
+
+    const targetDate = getCountdownTarget();
     const cdCells = {
       d: document.getElementById('cdDays'),
       h: document.getElementById('cdHours'),

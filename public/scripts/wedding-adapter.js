@@ -83,6 +83,15 @@
     });
   }
 
+  function getQueryParam(key) {
+    try {
+      var p = new URLSearchParams(window.location.search);
+      return p.get(key) || '';
+    } catch (_) {
+      return '';
+    }
+  }
+
   // Detect current template ID
   function detectTemplateId() {
     var path = window.location.pathname.toLowerCase();
@@ -215,6 +224,7 @@
             ph: parsed.photos
           };
         }
+        }
       } catch (err) {
         console.warn('LocalStorage wedding data read error', err);
       }
@@ -283,9 +293,9 @@
         name: 'Muhurtham',
         date: 'Friday, 20th November 2026',
         time: 'Between 9:15 AM - 10:15 AM',
-        venue: 'BWSSB Rajatha Bhavan',
-        address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
-        mapUrl: defaultMapUrl,
+        venue: '',
+        address: '',
+        mapUrl: '',
         desc: 'Sacred thali tying and auspicious wedding rituals in presence of family and elders.'
       }
     ];
@@ -501,7 +511,7 @@
     }
 
     // 4. Primary Date & Venue
-    var userCustomDate = (customData && (customData.d || customData.date)) || params.get('d') || params.get('date') || '';
+    var userCustomDate = (customData && (customData.d || customData.date)) || getQueryParam('d') || getQueryParam('date') || '';
     var recEvt = null;
     if (customData && customData.ev && customData.ev.length > 0) {
       recEvt = events.find(function (e) {
@@ -560,6 +570,52 @@
     } else if (currentTemplateId === 'pichwai-lotus-courtyard') {
       applyTemplate09EventsAndGallery();
     }
+
+    // 6. Universal Countdown Timer Handler (Template 2, 10, 13)
+    initCountdownTimer();
+  }
+
+  function initCountdownTimer() {
+    var cdDays = document.getElementById('cdDays');
+    if (!cdDays) return;
+    var cdHours = document.getElementById('cdHours');
+    var cdMins = document.getElementById('cdMins');
+    var cdSecs = document.getElementById('cdSecs');
+
+    function parseTarget() {
+      try {
+        var raw = weddingDate || '19 November 2026';
+        var match = String(raw).match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
+        if (match) {
+          var mNames = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+          var mIdx = mNames.findIndex(function(m){ return match[2].toLowerCase().indexOf(m) === 0; });
+          if (mIdx !== -1) {
+            return new Date(parseInt(match[3], 10), mIdx, parseInt(match[1], 10), 19, 0, 0).getTime();
+          }
+        }
+      } catch (_) {}
+      return new Date(2026, 10, 19, 19, 0, 0).getTime();
+    }
+
+    var target = parseTarget();
+    var pad = function(n) { return (n < 10 ? '0' : '') + Math.floor(n < 0 ? 0 : n); };
+
+    function update() {
+      var diff = Math.max(0, target - Date.now());
+      var tot = Math.floor(diff / 1000);
+      var d = Math.floor(tot / 86400);
+      var h = Math.floor((tot % 86400) / 3600);
+      var m = Math.floor((tot % 3600) / 60);
+      var s = tot % 60;
+      if (cdDays) cdDays.textContent = pad(d);
+      if (cdHours) cdHours.textContent = pad(h);
+      if (cdMins) cdMins.textContent = pad(m);
+      if (cdSecs) cdSecs.textContent = pad(s);
+    }
+    update();
+    if (!window.__wowCdInterval) {
+      window.__wowCdInterval = setInterval(update, 1000);
+    }
   }
 
   // ── TEMPLATE 2 (Royal Pichwai Palace) ──
@@ -599,7 +655,12 @@
         article.setAttribute('role', 'listitem');
         article.setAttribute('aria-label', (idx + 1) + ' of ' + events.length + ': ' + ev.name);
 
-        var mapBtnHtml = ev.mapUrl ? `
+        var isMuhurtham = (ev.name || '').toLowerCase().indexOf('muhurtham') !== -1;
+        var noteHtml = isMuhurtham ? '<p class="event-note">(Dhanus Lagna)</p>' : '';
+        var venueHtml = (!isMuhurtham && ev.venue && ev.venue.trim().length > 0)
+          ? `<p class="event-venue">${ev.venue}${ev.address ? '<br>' + ev.address : ''}</p>`
+          : '';
+        var mapBtnHtml = (!isMuhurtham && ev.mapUrl) ? `
           <a href="${ev.mapUrl}" target="_blank" rel="noopener" class="event-map-btn" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:7px 16px;background:linear-gradient(135deg,#d4af37,#b8860b);color:#1b1406;border-radius:24px;font-size:11px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,0.18);letter-spacing:0.5px;text-transform:uppercase;transition:transform 0.2s ease;">
             <svg width="12" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             <span>Get Directions</span>
@@ -617,7 +678,8 @@
                   <span class="event-date">${ev.date}</span>
                   <span class="event-time">${ev.time}</span>
                 </p>
-                <p class="event-venue">${ev.venue}${ev.address ? '<br>' + ev.address : ''}</p>
+                ${noteHtml}
+                ${venueHtml}
                 ${mapBtnHtml}
               </div>
             </div>
@@ -1174,20 +1236,6 @@
         if (meeGal) meeGal.style.display = '';
         applyMeenayaEventsAndGallery();
       }
-    }
-  }
-      var frameIds = ['glHero', 'glLeft', 'glRight', 'glBottom'];
-      frameIds.forEach(function (fid, idx) {
-        var frame = document.getElementById(fid);
-        if (frame && photos[idx]) {
-          var img = frame.querySelector('img');
-          if (img) img.src = photos[idx];
-        }
-      });
-    } else if (currentTemplateId === 'kasavu-kerala') {
-      applyKasavuEventsAndGallery();
-    } else if (currentTemplateId === 'meenaya-temple-baroque') {
-      applyMeenayaEventsAndGallery();
     }
   }
 

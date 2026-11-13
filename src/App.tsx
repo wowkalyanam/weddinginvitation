@@ -73,12 +73,7 @@ interface TemplateItem {
   defaultData: TemplateFormData;
 }
 
-const DEFAULT_PHOTOS = [
-  '/images/gallery/couple_1.webp',
-  '/images/gallery/couple_2.webp',
-  '/images/gallery/couple_3.webp',
-  '/images/gallery/couple_4.webp'
-];
+const DEFAULT_PHOTOS: string[] = [];
 
 // Clean events without any hardcoded dates
 const DEFAULT_EVENTS_PICHWAI: WeddingEventItem[] = [
@@ -137,18 +132,39 @@ const TEMPLATES: TemplateItem[] = [
     image: '/images/cards/pichwai-cover.webp',
     demoUrl: '/template2.html',
     defaultData: {
-      bride: 'Deepthi',
-      groom: 'Murali',
-      brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
-      groomParents: 'Shri. K. Muralidharan & Smt. M. Geetha',
-      date: '',
+      bride: 'Dharani',
+      groom: 'Manu',
+      brideParents: 'Smt. Jalajakshi V. and Ram Murthy N.',
+      groomParents: 'Smt. Narasamma K.S. and Lakshmikanth S.K.',
+      date: '19 November 2026',
       time: '07:00 PM',
-      functionName: 'Wedding Ceremony & Reception',
-      venue: 'The Grand Ballroom & Palace Grounds',
-      address: 'Bengaluru, Karnataka',
-      mapUrl: 'https://maps.google.com/?q=Bangalore',
-      events: DEFAULT_EVENTS_PICHWAI,
-      photos: DEFAULT_PHOTOS
+      functionName: 'Reception & Muhurtham',
+      venue: 'BWSSB Rajatha Bhavan',
+      address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
+      mapUrl: 'https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D',
+      events: [
+        {
+          id: 'reception',
+          name: 'Reception',
+          date: '19 November 2026',
+          time: '07:00 PM',
+          venue: 'BWSSB Rajatha Bhavan',
+          address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
+          mapUrl: 'https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D',
+          desc: 'An evening of celebration, musical feast, and dinner.'
+        },
+        {
+          id: 'muhurtham',
+          name: 'Muhurtham',
+          date: '20 November 2026',
+          time: 'Between 9:15 AM - 10:15 AM',
+          venue: 'BWSSB Rajatha Bhavan',
+          address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
+          mapUrl: 'https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D',
+          desc: 'Sacred thali tying and auspicious wedding rituals in presence of family and elders.'
+        }
+      ],
+      photos: []
     },
   },
   {
@@ -170,7 +186,7 @@ const TEMPLATES: TemplateItem[] = [
       address: 'Bengaluru, Karnataka',
       mapUrl: 'https://maps.google.com/?q=Bangalore',
       events: DEFAULT_EVENTS_KASAVU,
-      photos: DEFAULT_PHOTOS
+      photos: []
     },
   },
   {
@@ -192,7 +208,7 @@ const TEMPLATES: TemplateItem[] = [
       address: 'Bengaluru, Karnataka',
       mapUrl: 'https://maps.google.com/?q=Bangalore',
       events: DEFAULT_EVENTS_PICHWAI,
-      photos: DEFAULT_PHOTOS
+      photos: []
     },
   },
   {
@@ -214,7 +230,7 @@ const TEMPLATES: TemplateItem[] = [
       address: 'Bengaluru, Karnataka',
       mapUrl: 'https://maps.google.com/?q=Bangalore',
       events: DEFAULT_EVENTS_PICHWAI,
-      photos: DEFAULT_PHOTOS
+      photos: []
     },
   },
   {
@@ -236,7 +252,7 @@ const TEMPLATES: TemplateItem[] = [
       address: 'Bengaluru, Karnataka',
       mapUrl: 'https://maps.google.com/?q=Bangalore',
       events: DEFAULT_EVENTS_PICHWAI,
-      photos: DEFAULT_PHOTOS
+      photos: []
     },
   },
 ];
@@ -423,31 +439,30 @@ export default function App() {
   const [savedForms, setSavedForms] = useState<SavedInvitationForm[]>(() => {
     if (typeof window === 'undefined') return [];
     try {
-      // Clean up previous client demo artifacts
-      for (let i = localStorage.length - 1; i >= 0; i--) {
-        const k = localStorage.key(i);
-        if (k && k.startsWith('wow_')) {
-          const val = localStorage.getItem(k);
-          if (val && (val.includes('Dharani') || val.includes('BWSSB') || val.includes('19 November') || val.includes('Malleshwaram'))) {
-            localStorage.removeItem(k);
-          }
-        }
-      }
       const savedStr = localStorage.getItem('wow_saved_invitations');
       if (savedStr) {
         const parsed = JSON.parse(savedStr);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.filter((f) => f && f.data && !(
-            f.data.bride === 'Dharani' || 
-            f.data.groom === 'Manu' || 
-            (f.data.venue && f.data.venue.includes('BWSSB')) ||
-            (f.data.address && f.data.address.includes('Malleshwaram'))
-          ));
+          return parsed.filter((f) => f && f.data);
         }
       }
     } catch (_) {}
 
-    // Initialize with 1 clean default form
+    // Initialize with Dharani & Manu (Royal Pichwai Palace) + 1 template09 form
+    const t2 = TEMPLATES[0]; // Royal Pichwai Palace
+    const t2Id = 'inv_dharani_manu';
+    const t2Data: TemplateFormData = { ...t2.defaultData };
+    const t2Link = generateInviteLink(t2Id, t2.id, t2Data);
+    const t2Form: SavedInvitationForm = {
+      id: t2Id,
+      templateId: t2.id,
+      title: 'Dharani & Manu',
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      data: t2Data,
+      link: t2Link
+    };
+
     const defT = TEMPLATES[4]; // Royal Pichwai Lotus Courtyard
     const defId = 'inv_default';
     const defData: TemplateFormData = {
@@ -460,16 +475,18 @@ export default function App() {
       id: defId,
       templateId: defT.id,
       title: 'Deepthi & Murali',
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
+      createdAt: Date.now() - 1000,
+      updatedAt: Date.now() - 1000,
       data: defData,
       link: defLink
     };
+
     try {
+      localStorage.setItem('wow_form_' + t2Id, JSON.stringify(t2Data));
       localStorage.setItem('wow_form_' + defId, JSON.stringify(defData));
-      localStorage.setItem('wow_saved_invitations', JSON.stringify([defForm]));
+      localStorage.setItem('wow_saved_invitations', JSON.stringify([t2Form, defForm]));
     } catch (_) {}
-    return [defForm];
+    return [t2Form, defForm];
   });
 
   // Modal Editing State
@@ -726,7 +743,7 @@ export default function App() {
     setIsProcessingPhotos(true);
     setPhotoMsg('Compressing photos...');
     try {
-      const nextPhotos = [...(activeFormData.photos || DEFAULT_PHOTOS)].slice(0, 4);
+      const nextPhotos = [...(activeFormData.photos || [])];
       const count = Math.min(files.length, 4);
       for (let i = 0; i < count; i++) {
         const file = files[i];
@@ -735,9 +752,6 @@ export default function App() {
           const dataUrl = await processImageFile(file);
           nextPhotos[i] = dataUrl;
         }
-      }
-      while (nextPhotos.length < 4) {
-        nextPhotos.push(DEFAULT_PHOTOS[nextPhotos.length] || DEFAULT_PHOTOS[0]);
       }
       const finalPhotos = nextPhotos.slice(0, 4);
       updateActiveFormData({ photos: finalPhotos });
@@ -758,11 +772,8 @@ export default function App() {
     setPhotoMsg(`Processing photo #${index + 1}...`);
     try {
       const dataUrl = await processImageFile(file);
-      const nextPhotos = [...(activeFormData.photos || DEFAULT_PHOTOS)].slice(0, 4);
+      const nextPhotos = [...(activeFormData.photos || [])];
       nextPhotos[index] = dataUrl;
-      while (nextPhotos.length < 4) {
-        nextPhotos.push(DEFAULT_PHOTOS[nextPhotos.length] || DEFAULT_PHOTOS[0]);
-      }
       const finalPhotos = nextPhotos.slice(0, 4);
       updateActiveFormData({ photos: finalPhotos });
       setPhotoMsg(`✓ Photo #${index + 1} updated!`);
@@ -777,24 +788,23 @@ export default function App() {
   };
 
   const handlePhotoUrlChange = (index: number, url: string) => {
-    const nextPhotos = [...(activeFormData.photos || DEFAULT_PHOTOS)].slice(0, 4);
+    const nextPhotos = [...(activeFormData.photos || [])];
     nextPhotos[index] = url;
     updateActiveFormData({ photos: nextPhotos });
   };
 
-  const handleResetPhoto = (index: number) => {
-    const nextPhotos = [...(activeFormData.photos || DEFAULT_PHOTOS)].slice(0, 4);
-    nextPhotos[index] = DEFAULT_PHOTOS[index] || DEFAULT_PHOTOS[0];
+  const handleRemovePhoto = (index: number) => {
+    const nextPhotos = [...(activeFormData.photos || [])];
+    nextPhotos[index] = '';
     updateActiveFormData({ photos: nextPhotos });
-    setPhotoMsg(`Reset Photo #${index + 1} to default`);
+    setPhotoMsg(`Removed Photo #${index + 1}`);
     setTimeout(() => setPhotoMsg(''), 2500);
   };
 
-  const handleResetAllPhotos = () => {
-    const reset = [...DEFAULT_PHOTOS].slice(0, 4);
-    updateActiveFormData({ photos: reset });
-    setPhotoMsg('All 4 photos reset to default');
-    setTimeout(() => setPhotoMsg(''), 3000);
+  const handleClearAllPhotos = () => {
+    updateActiveFormData({ photos: [] });
+    setPhotoMsg('All photos cleared');
+    setTimeout(() => setPhotoMsg(''), 2500);
   };
 
   const handleCopyLink = (linkStr: string, id: string) => {
@@ -1597,7 +1607,7 @@ export default function App() {
                 <div className="flex items-center justify-between border-b border-neutral-200/70 pb-2.5">
                   <div className="flex items-center gap-2 text-neutral-900 font-semibold text-sm">
                     <ImageIcon className="w-4 h-4 text-amber-600" />
-                    <span>3. Couple Photo Gallery (4 Photos)</span>
+                    <span>3. Couple Photo Gallery (Up to 4 Photos)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     {photoMsg && (
@@ -1606,14 +1616,16 @@ export default function App() {
                         <span>{photoMsg}</span>
                       </span>
                     )}
-                    <button
-                      type="button"
-                      onClick={handleResetAllPhotos}
-                      className="text-[11px] text-neutral-500 hover:text-neutral-800 underline transition-colors cursor-pointer"
-                      title="Reset all 4 photos to defaults"
-                    >
-                      Reset All
-                    </button>
+                    {(activeFormData.photos || []).some(Boolean) && (
+                      <button
+                        type="button"
+                        onClick={handleClearAllPhotos}
+                        className="text-[11px] text-neutral-500 hover:text-rose-600 underline transition-colors cursor-pointer"
+                        title="Clear all photos"
+                      >
+                        Clear All
+                      </button>
+                    )}
                   </div>
                 </div>
 
@@ -1624,7 +1636,7 @@ export default function App() {
                       <span>Upload All 4 Photos at Once</span>
                     </div>
                     <p className="text-[11px] text-neutral-600 leading-tight">
-                      Select up to 4 photos together from your device. They will automatically fill all 4 slots for this invitation.
+                      Select up to 4 photos together from your device. Only photos you upload will appear in the invitation.
                     </p>
                   </div>
 
@@ -1637,7 +1649,7 @@ export default function App() {
                     ) : (
                       <>
                         <Upload className="w-3.5 h-3.5" />
-                        <span>Select 4 Photos</span>
+                        <span>Select Photos</span>
                       </>
                     )}
                     <input
@@ -1653,47 +1665,58 @@ export default function App() {
 
                 {/* 4 Photo Slots Grid */}
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4 pt-1">
-                  {(activeFormData.photos || DEFAULT_PHOTOS).slice(0, 4).map((photoSrc, idx) => {
-                    const isCustom = !DEFAULT_PHOTOS.includes(photoSrc);
-                    return (
-                      <div 
-                        key={idx}
-                        className="group/card bg-white rounded-xl border border-neutral-200/90 overflow-hidden shadow-2xs hover:shadow-md transition-all flex flex-col"
-                      >
-                        <div className="aspect-[3/4] relative bg-neutral-100 overflow-hidden">
-                          <img
-                            src={photoSrc}
-                            alt={`Photo #${idx + 1}`}
-                            className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-300"
-                          />
-                          <span className="absolute top-2 left-2 bg-black/75 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
-                            #{idx + 1}
-                          </span>
-                          {isCustom && (
+                  {[0, 1, 2, 3].map((idx) => {
+                    const photoSrc = (activeFormData.photos || [])[idx] || '';
+                    const hasPhoto = Boolean(photoSrc && photoSrc.trim());
+
+                    if (hasPhoto) {
+                      return (
+                        <div 
+                          key={idx}
+                          className="group/card bg-white rounded-xl border border-neutral-200/90 overflow-hidden shadow-2xs hover:shadow-md transition-all flex flex-col"
+                        >
+                          <div className="aspect-[3/4] relative bg-neutral-100 overflow-hidden">
+                            <img
+                              src={photoSrc}
+                              alt={`Photo #${idx + 1}`}
+                              className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-300"
+                            />
+                            <span className="absolute top-2 left-2 bg-black/75 backdrop-blur-xs text-white text-[10px] font-bold px-2 py-0.5 rounded-md">
+                              #{idx + 1}
+                            </span>
                             <span className="absolute top-2 right-2 bg-emerald-600/90 backdrop-blur-xs text-white text-[9px] font-bold px-1.5 py-0.5 rounded-md flex items-center gap-0.5">
                               <Check className="w-2.5 h-2.5" />
-                              <span>Custom</span>
+                              <span>Added</span>
                             </span>
-                          )}
-                        </div>
+                          </div>
 
-                        <div className="p-2 space-y-1.5 bg-white border-t border-neutral-100 flex-1 flex flex-col justify-between">
-                          <label className="w-full bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-[11px] font-semibold py-1.5 px-2 rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1 text-center">
-                            <Upload className="w-3 h-3 text-neutral-600" />
-                            <span>Replace</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              disabled={isProcessingPhotos}
-                              onChange={(e) => {
-                                const f = e.target.files?.[0];
-                                if (f) handlePhotoUpload(idx, f);
-                              }}
-                            />
-                          </label>
+                          <div className="p-2 space-y-1.5 bg-white border-t border-neutral-100 flex-1 flex flex-col justify-between">
+                            <div className="flex items-center gap-1.5">
+                              <label className="flex-1 bg-neutral-100 hover:bg-neutral-200 text-neutral-800 text-[11px] font-semibold py-1.5 px-2 rounded-lg transition-colors cursor-pointer flex items-center justify-center gap-1 text-center">
+                                <Upload className="w-3 h-3 text-neutral-600" />
+                                <span>Replace</span>
+                                <input
+                                  type="file"
+                                  accept="image/*"
+                                  className="hidden"
+                                  disabled={isProcessingPhotos}
+                                  onChange={(e) => {
+                                    const f = e.target.files?.[0];
+                                    if (f) handlePhotoUpload(idx, f);
+                                  }}
+                                />
+                              </label>
 
-                          <div className="flex items-center gap-1">
+                              <button
+                                type="button"
+                                onClick={() => handleRemovePhoto(idx)}
+                                title="Remove photo"
+                                className="p-1.5 rounded-lg border border-neutral-200 hover:bg-rose-50 hover:border-rose-200 text-neutral-400 hover:text-rose-600 transition-colors shrink-0 cursor-pointer"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </button>
+                            </div>
+
                             <input
                               type="text"
                               value={photoSrc.startsWith('data:') ? 'Custom uploaded photo' : photoSrc}
@@ -1701,15 +1724,46 @@ export default function App() {
                               placeholder="Or paste URL"
                               className="w-full px-2 py-1 text-[10px] rounded-md border border-neutral-200 text-neutral-600 font-mono truncate focus:outline-none focus:ring-1 focus:ring-black"
                             />
-                            <button
-                              type="button"
-                              onClick={() => handleResetPhoto(idx)}
-                              title="Reset to default photo"
-                              className="p-1 rounded-md hover:bg-neutral-100 text-neutral-400 hover:text-neutral-700 transition-colors shrink-0 cursor-pointer"
-                            >
-                              <RotateCcw className="w-3 h-3" />
-                            </button>
                           </div>
+                        </div>
+                      );
+                    }
+
+                    return (
+                      <div 
+                        key={idx}
+                        className="group/card bg-white rounded-xl border border-dashed border-neutral-300 hover:border-amber-500 overflow-hidden shadow-2xs hover:shadow-md transition-all flex flex-col"
+                      >
+                        <label className="aspect-[3/4] relative bg-neutral-50 hover:bg-amber-50/40 transition-colors cursor-pointer flex flex-col items-center justify-center p-3 text-center">
+                          <div className="w-10 h-10 rounded-full bg-neutral-100 group-hover/card:bg-amber-100/80 flex items-center justify-center mb-2 transition-colors">
+                            <Upload className="w-5 h-5 text-neutral-400 group-hover/card:text-amber-700 transition-colors" />
+                          </div>
+                          <span className="text-xs font-bold text-neutral-700 group-hover/card:text-amber-900">
+                            Photo #{idx + 1}
+                          </span>
+                          <span className="text-[10px] text-neutral-400 group-hover/card:text-amber-700/80 mt-0.5">
+                            Click to upload
+                          </span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            disabled={isProcessingPhotos}
+                            onChange={(e) => {
+                              const f = e.target.files?.[0];
+                              if (f) handlePhotoUpload(idx, f);
+                            }}
+                          />
+                        </label>
+
+                        <div className="p-2 bg-white border-t border-neutral-100">
+                          <input
+                            type="text"
+                            value=""
+                            onChange={(e) => handlePhotoUrlChange(idx, e.target.value)}
+                            placeholder="Or paste URL"
+                            className="w-full px-2 py-1 text-[10px] rounded-md border border-neutral-200 text-neutral-600 font-mono truncate focus:outline-none focus:ring-1 focus:ring-black"
+                          />
                         </div>
                       </div>
                     );

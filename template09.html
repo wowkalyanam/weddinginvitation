@@ -34,26 +34,7 @@
       }
     }
   } catch (_) {}
-  if (typeof window !== 'undefined') {
-    try {
-      for (var k in localStorage) {
-        if (k && k.indexOf('wow_') === 0) {
-          var val = localStorage.getItem(k);
-          if (val && (val.indexOf('Dharani') !== -1 || val.indexOf('BWSSB') !== -1 || val.indexOf('19 November') !== -1 || val.indexOf('Malleshwaram') !== -1)) {
-            localStorage.removeItem(k);
-          }
-        }
-      }
-      for (var sk in sessionStorage) {
-        if (sk && sk.indexOf('wow_') === 0) {
-          var sval = sessionStorage.getItem(sk);
-          if (sval && (sval.indexOf('Dharani') !== -1 || sval.indexOf('BWSSB') !== -1 || sval.indexOf('19 November') !== -1 || sval.indexOf('Malleshwaram') !== -1)) {
-            sessionStorage.removeItem(sk);
-          }
-        }
-      }
-    } catch (_) {}
-  }
+
 
   var fid = getQueryParam('fid');
   if (fid && typeof window !== 'undefined') {

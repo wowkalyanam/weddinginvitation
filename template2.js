@@ -28,14 +28,44 @@ function initApp() {
   }
   window.scrollTo(0, 0);
 
-  // Dynamic URL parameters support (Deepthi & Murali remains default base data)
-  // Supports both compact (b, g, d, v, a) and verbose (bride, groom, date, venue, address) keys
+  // Dynamic URL parameters support (Dharani & Manu default base data)
+  // Supports both compact (b, g, d, v, a, cfg, fid) and verbose (bride, groom, date, venue, address) keys
   const urlParams = new URLSearchParams(window.location.search);
-  const paramBride = urlParams.get('b') || urlParams.get('bride');
-  const paramGroom = urlParams.get('g') || urlParams.get('groom');
-  const paramDate = urlParams.get('d') || urlParams.get('date');
-  const paramVenue = urlParams.get('v') || urlParams.get('venue');
-  const paramAddress = urlParams.get('a') || urlParams.get('address');
+  let customCfg = null;
+  const rawCfg = urlParams.get('cfg');
+  if (rawCfg) {
+    try {
+      customCfg = JSON.parse(decodeURIComponent(rawCfg));
+    } catch (_) {
+      try { customCfg = JSON.parse(atob(rawCfg)); } catch (_) {}
+    }
+  }
+  const fid = urlParams.get('fid');
+  if (fid && typeof window !== 'undefined') {
+    try {
+      const sForm = localStorage.getItem('wow_form_' + fid);
+      if (sForm) customCfg = JSON.parse(sForm);
+    } catch (_) {}
+  }
+  if (!customCfg && !fid && !rawCfg && !urlParams.get('b') && typeof window !== 'undefined') {
+    try {
+      const saved = localStorage.getItem('wow_custom_wedding_pichwai-palace');
+      if (saved) {
+        const pSaved = JSON.parse(saved);
+        if (pSaved.bride === 'Deepthi' && pSaved.groom === 'Murali') {
+          localStorage.removeItem('wow_custom_wedding_pichwai-palace');
+        } else {
+          customCfg = pSaved;
+        }
+      }
+    } catch (_) {}
+  }
+
+  const paramBride = (customCfg && (customCfg.b || customCfg.bride)) || urlParams.get('b') || urlParams.get('bride');
+  const paramGroom = (customCfg && (customCfg.g || customCfg.groom)) || urlParams.get('g') || urlParams.get('groom');
+  const paramDate = (customCfg && (customCfg.d || customCfg.date)) || urlParams.get('d') || urlParams.get('date');
+  const paramVenue = (customCfg && (customCfg.v || customCfg.venue)) || urlParams.get('v') || urlParams.get('venue');
+  const paramAddress = (customCfg && (customCfg.a || customCfg.address)) || urlParams.get('a') || urlParams.get('address');
 
   if (paramBride) {
     const el = document.getElementById('heroBride');
@@ -186,7 +216,7 @@ function initApp() {
       }
     }, 600);
 
-    // 3. Reveal royal wedding typography ("Deepthi & Murali", 13th Dec 2026)
+    // 3. Reveal royal wedding typography ("Dharani & Manu", 19th Nov 2026)
     setTimeout(() => {
       if (heroContent) {
         heroContent.classList.add('is-visible');
@@ -431,13 +461,17 @@ function initApp() {
   const gallerySection = document.getElementById('gallery');
   if (gallerySection) {
     let photos = (window.__CUSTOM_WEDDING_DATA__ && window.__CUSTOM_WEDDING_DATA__.photos && window.__CUSTOM_WEDDING_DATA__.photos.length > 0)
-      ? window.__CUSTOM_WEDDING_DATA__.photos.map(p => ({ src: typeof p === 'string' ? p : p.src, caption: 'Moments we love' }))
-      : [
-          { src: '/images/gallery/couple_1.webp', caption: 'Moments we love' },
-          { src: '/images/gallery/couple_2.webp', caption: 'Moments we love' },
-          { src: '/images/gallery/couple_3.webp', caption: 'Moments we love' },
-          { src: '/images/gallery/couple_4.webp', caption: 'Moments we love' }
-        ];
+      ? window.__CUSTOM_WEDDING_DATA__.photos.filter(Boolean).map(p => ({ src: typeof p === 'string' ? p : p.src, caption: 'Moments we love' }))
+      : [];
+
+    const galNav = document.querySelector('a[href="#gallery"]');
+    if (photos.length === 0) {
+      gallerySection.style.display = 'none';
+      if (galNav && galNav.closest('li')) galNav.closest('li').style.display = 'none';
+    } else {
+      gallerySection.style.display = '';
+      if (galNav && galNav.closest('li')) galNav.closest('li').style.display = '';
+    }
 
     const featured = document.getElementById('galleryFeatured');
     const featuredPhoto = document.getElementById('galleryMainPhoto') || document.getElementById('galleryFeaturedPhoto');
@@ -488,13 +522,24 @@ function initApp() {
     }
 
     window.__updateTemplate2Gallery = function(newPhotos) {
-      if (!newPhotos || !newPhotos.length) return;
-      photos = newPhotos.map(p => ({ src: typeof p === 'string' ? p : p.src, caption: 'Moments we love' }));
+      const cleanPhotos = (newPhotos || []).filter(Boolean);
+      if (!cleanPhotos.length) {
+        gallerySection.style.display = 'none';
+        if (galNav && galNav.closest('li')) galNav.closest('li').style.display = 'none';
+        return;
+      }
+      gallerySection.style.display = '';
+      if (galNav && galNav.closest('li')) galNav.closest('li').style.display = '';
+      photos = cleanPhotos.map(p => ({ src: typeof p === 'string' ? p : p.src, caption: 'Moments we love' }));
+      currentIndex = 0;
       rebuildDotsAndThumbs();
       setPhoto(0, true);
     };
 
-    rebuildDotsAndThumbs();
+    if (photos.length > 0) {
+      rebuildDotsAndThumbs();
+      setPhoto(0, true);
+    }
 
     function setPhoto(index, immediate = false) {
       index = (index + photos.length) % photos.length;
@@ -691,13 +736,13 @@ function initApp() {
     }
 
     // Google Calendar & Apple Calendar Links
-    const weddingTitle = "Deepthi & Murali's Wedding";
-    const weddingLoc = "The Grand Ballroom & Palace Grounds, Bengaluru, Bangalore";
-    const weddingDesc = "Join us to celebrate the wedding of Deepthi & Murali.";
+    const weddingTitle = `${paramBride || 'Dharani'} & ${paramGroom || 'Manu'}'s Wedding`;
+    const weddingLoc = paramVenue ? [paramVenue, paramAddress].filter(Boolean).join(', ') : "BWSSB Rajatha Bhavan, 8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012";
+    const weddingDesc = `Join us to celebrate the wedding of ${paramBride || 'Dharani'} & ${paramGroom || 'Manu'}.`;
     const gcalBtn = document.getElementById('rsvpGcalBtn');
     const icalBtn = document.getElementById('rsvpIcalBtn');
     if (gcalBtn) {
-      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(weddingTitle)}&dates=20261213T133000Z/20261214T063000Z&location=${encodeURIComponent(weddingLoc)}&details=${encodeURIComponent(weddingDesc)}`;
+      const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent(weddingTitle)}&dates=20261119T133000Z/20261120T063000Z&location=${encodeURIComponent(weddingLoc)}&details=${encodeURIComponent(weddingDesc)}`;
       gcalBtn.href = gcalUrl;
     }
     if (icalBtn) {
@@ -707,8 +752,8 @@ function initApp() {
         'PRODID:-//Wow Kalyanam//Wedding Invitation//EN',
         'CALSCALE:GREGORIAN',
         'BEGIN:VEVENT',
-        'DTSTART:20261213T133000Z',
-        'DTEND:20261214T063000Z',
+        'DTSTART:20261119T133000Z',
+        'DTEND:20261120T063000Z',
         `SUMMARY:${weddingTitle}`,
         `DESCRIPTION:${weddingDesc}`,
         `LOCATION:${weddingLoc}`,
@@ -716,7 +761,7 @@ function initApp() {
         'END:VCALENDAR'
       ].join('\r\n');
       icalBtn.href = 'data:text/calendar;charset=utf8,' + encodeURIComponent(icsData);
-      icalBtn.setAttribute('download', 'deepthi-murali-wedding.ics');
+      icalBtn.setAttribute('download', 'wedding-invitation.ics');
     }
 
     // Canvas Fireworks Animation
@@ -850,7 +895,7 @@ function initApp() {
   // Initialize Countdown Section Timer
   const countdownSection = document.getElementById('countdown');
   if (countdownSection) {
-    const targetDate = new Date('2026-12-13T19:00:00+05:30').getTime();
+    const targetDate = new Date('2026-11-19T19:00:00+05:30').getTime();
     const cdCells = {
       d: document.getElementById('cdDays'),
       h: document.getElementById('cdHours'),

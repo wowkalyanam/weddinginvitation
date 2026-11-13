@@ -6,7 +6,7 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>Deepthi & Murali — Wedding Invitation</title>
+  <title>Dharani & Manu — Wedding Invitation</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg">
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -15,6 +15,50 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:wght@400;500;600&family=Luxurious+Script&family=Pinyon+Script&family=Tangerine:wght@400;700&display=swap">
+  <script type="application/json" id="wedding-config">{"couple":{"bride":"Dharani","groom":"Manu","date":"19 November 2026","endDate":"2026-11-20","venue":"BWSSB Rajatha Bhavan, 8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012","whatsapp":"919999999999","hashtag":"#DharaniWedsManu"},"invite":{"blessing":"With the blessings of the divine","brideFather":"Smt. Jalajakshi V. and Ram Murthy N.","groomFather":"Smt. Narasamma K.S. and Lakshmikanth S.K.","showGrandparents":false},"events":[{"id":"reception","name":"Reception","date":"Thursday, 19th November 2026","time":"7:00 PM","venue":"BWSSB Rajatha Bhavan","address":"8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012","desc":"An evening of celebration, musical feast, and dinner.","mapsLink":"https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D"},{"id":"muhurtham","name":"Muhurtham","date":"Friday, 20th November 2026","time":"Between 9:15 AM - 10:15 AM","venue":"BWSSB Rajatha Bhavan","address":"8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012","desc":"Sacred thali tying and auspicious wedding rituals in presence of family and elders.","mapsLink":"https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D"}],"story":{"show":true,"storyText":"A beautiful Bengaluru evening, a city full of dreams, and two hearts destined to find each other. Surrounded by love, laughter, and countless beautiful moments, Dharani & Manu are ready to begin their most beautiful chapter yet.","customHashtag":"#DharaniWedsManu"},"gallery":{"show":false,"photos":[]}}</script>
+  <script>window.__WEDDING_CONFIG__ = JSON.parse(document.getElementById('wedding-config').textContent);</script>
+  <script>
+  (function() {
+    function getQueryParam(k) {
+      try {
+        var p = new URLSearchParams(window.location.search);
+        return p.get(k) || '';
+      } catch (_) { return ''; }
+    }
+    var cfg = null;
+    var rawCfg = getQueryParam('cfg');
+    if (rawCfg) {
+      try {
+        cfg = JSON.parse(decodeURIComponent(rawCfg));
+      } catch (_) {
+        try { cfg = JSON.parse(atob(rawCfg)); } catch (_) {}
+      }
+    }
+    var fid = getQueryParam('fid');
+    if (fid && typeof window !== 'undefined') {
+      try {
+        var sForm = localStorage.getItem('wow_form_' + fid);
+        if (sForm) cfg = JSON.parse(sForm);
+      } catch (_) {}
+    }
+    if (!cfg && !fid && !rawCfg && !getQueryParam('b') && typeof window !== 'undefined') {
+      try {
+        var saved = localStorage.getItem('wow_custom_wedding_pichwai-palace');
+        if (saved) {
+          var pSaved = JSON.parse(saved);
+          if (pSaved.bride === 'Deepthi' && pSaved.groom === 'Murali') {
+            localStorage.removeItem('wow_custom_wedding_pichwai-palace');
+          } else {
+            cfg = pSaved;
+          }
+        }
+      } catch (_) {}
+    }
+    var b = (cfg && (cfg.b || cfg.bride)) || getQueryParam('b') || getQueryParam('bride') || 'Dharani';
+    var g = (cfg && (cfg.g || cfg.groom)) || getQueryParam('g') || getQueryParam('groom') || 'Manu';
+    document.title = b + ' & ' + g + ' — Wedding Invitation';
+  })();
+  </script>
   <style>
     *, *::before, *::after {
       box-sizing: border-box;
@@ -204,7 +248,7 @@
       vertical-align: super;
     }
 
-    /* Staggered Royal Entrance Animations: Deepthi -> & -> Murali -> Divider -> Date */
+    /* Staggered Royal Entrance Animations: Dharani -> & -> Manu -> Divider -> Date */
     .hero-names .hero-name,
     .hero-names .hero-amp,
     .hero-divider,
@@ -212,7 +256,7 @@
       opacity: 0;
     }
 
-    /* 1. Deepthi appears first */
+    /* 1. Dharani appears first */
     .hero-content.is-visible #heroBride {
       animation: heroNameIn 1.1s cubic-bezier(0.25, 1, 0.5, 1) both 0.15s;
     }
@@ -222,7 +266,7 @@
       animation: heroNameIn 0.9s cubic-bezier(0.25, 1, 0.5, 1) both 0.65s;
     }
 
-    /* 3. Murali appears after Deepthi and & */
+    /* 3. Manu appears after Dharani and & */
     .hero-content.is-visible #heroGroom {
       animation: heroNameIn 1.1s cubic-bezier(0.25, 1, 0.5, 1) both 1.15s;
     }
@@ -2657,9 +2701,9 @@
       <!-- Hero Royal Wedding Typography -->
       <div class="hero-content" id="heroContent">
         <h1 class="hero-names">
-          <span class="hero-name" id="heroBride">Deepthi</span>
+          <span class="hero-name" id="heroBride">Dharani</span>
           <span class="hero-amp" aria-hidden="true">&amp;</span>
-          <span class="hero-name" id="heroGroom">Murali</span>
+          <span class="hero-name" id="heroGroom">Manu</span>
         </h1>
       </div>
 
@@ -2699,12 +2743,12 @@
 
           <h2 class="invite-names" id="inviteNames">
             <span class="invite-person">
-              <span class="invite-name">Deepthi</span>
+              <span class="invite-name">Dharani</span>
               <span class="invite-parent">(D/o Smt. Jalajakshi V. and Ram Murthy N.)</span>
             </span>
             <span class="invite-amp" aria-hidden="true">&amp;</span>
             <span class="invite-person">
-              <span class="invite-name">Murali</span>
+              <span class="invite-name">Manu</span>
               <span class="invite-parent">(S/o Smt. Narasamma K.S. and Lakshmikanth S.K.)</span>
             </span>
           </h2>
@@ -2713,7 +2757,7 @@
 
           <div class="invite-meta">
             <p class="invite-date" id="inviteDate">19<sup class="date-ord">TH</sup> NOVEMBER 2026</p>
-            <p class="invite-venue" id="inviteVenue">The Grand Ballroom & Palace Grounds<br>Bengaluru, Karnataka</p>
+            <p class="invite-venue" id="inviteVenue">BWSSB Rajatha Bhavan<br>Malleshwaram, Bengaluru</p>
           </div>
         </div>
       </div>
@@ -2758,10 +2802,10 @@
                 <h3 class="event-name">Reception</h3>
                 <div class="event-rule" aria-hidden="true"></div>
                 <p class="event-datetime">
-                  <span class="event-date">19<sup class="event-ord">TH</sup> NOV 2026</span>
+                  <span class="event-date">Thursday, 19<sup class="event-ord">TH</sup> Nov 2026</span>
                   <span class="event-time">7:00 PM</span>
                 </p>
-                <p class="event-venue">The Grand Ballroom & Palace Grounds<br>Bengaluru, Karnataka</p>
+                <p class="event-venue">BWSSB Rajatha Bhavan<br>Malleshwaram, Bengaluru</p>
               </div>
             </div>
           </div>
@@ -2778,9 +2822,10 @@
                 <div class="event-rule" aria-hidden="true"></div>
                 <p class="event-datetime">
                   <span class="event-date">Friday, 20<sup class="event-ord">TH</sup> Nov 2026</span>
-                  <span class="event-time">between 9:15 AM and 10:15 AM</span>
+                  <span class="event-time">between 9:15 AM - 10:15 AM</span>
                 </p>
                 <p class="event-note">(Dhanus Lagna)</p>
+                <p class="event-venue">BWSSB Rajatha Bhavan<br>Malleshwaram, Bengaluru</p>
               </div>
             </div>
           </div>
@@ -2812,8 +2857,8 @@
 
       <!-- Centered Interactive Venue Map Card & Directions -->
       <div class="venue-card-wrapper venue-map-wrapper reveal-item" id="venueCard">
-        <a class="venue-map-card" id="venueMapCard" href="https://www.google.com/maps/dir/?api=1&destination=The Grand Ballroom+Rajatha+Bhavan,+18th+Cross,+Malleshwaram,+Bengaluru" target="_blank" rel="noopener noreferrer" role="button" aria-label="Open Google Maps directions to The Grand Ballroom & Palace Grounds, Bengaluru">
-          <img src="images/venue-map.jpg" alt="Map view of The Grand Ballroom & Palace Grounds, Bengaluru" class="venue-map-img" width="768" height="768" loading="lazy" decoding="async" draggable="false">
+        <a class="venue-map-card" id="venueMapCard" href="https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer" role="button" aria-label="Open Google Maps directions to BWSSB Rajatha Bhavan, Malleshwaram, Bengaluru">
+          <img src="images/venue-map.jpg" alt="Map view of BWSSB Rajatha Bhavan, Malleshwaram, Bengaluru" class="venue-map-img" width="768" height="768" loading="lazy" decoding="async" draggable="false">
           
           <div class="map-pin-badge" aria-hidden="true">
             <div class="map-pin-pulse"></div>
@@ -2822,23 +2867,23 @@
                 <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
               </svg>
             </div>
-            <span class="map-pin-label" id="evtVenueName">THE GRAND BALLROOM & PALACE GROUNDS</span>
+            <span class="map-pin-label" id="evtVenueName">BWSSB RAJATHA BHAVAN</span>
           </div>
 
           <div class="map-card-vignette" aria-hidden="true"></div>
 
           <figcaption class="map-card-caption">
-            <small>18TH CROSS · MALLESHWARAM</small>
-            <strong class="map-card-script">Bengaluru, Karnataka</strong>
+            <small>8TH, 19TH CROSS RD · MALLESHWARAM</small>
+            <strong class="map-card-script">Bengaluru, Karnataka 560012</strong>
           </figcaption>
         </a>
 
         <div class="venue-address-block">
-          <p class="venue-addr-street" id="evtVenueAddress">18th Cross, Malleshwaram</p>
-          <p class="venue-addr-city">Bengaluru, Karnataka</p>
+          <p class="venue-addr-street" id="evtVenueAddress">8th, 19th Cross Rd, Malleshwaram</p>
+          <p class="venue-addr-city">Bengaluru, Karnataka 560012</p>
         </div>
 
-        <a class="venue-directions-btn" id="evtVenueMap" href="https://www.google.com/maps/dir/?api=1&destination=The Grand Ballroom+Rajatha+Bhavan,+18th+Cross,+Malleshwaram,+Bengaluru" target="_blank" rel="noopener noreferrer">
+        <a class="venue-directions-btn" id="evtVenueMap" href="https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D" target="_blank" rel="noopener noreferrer">
           Get directions <b>↗</b>
         </a>
       </div>
@@ -2871,15 +2916,15 @@
         <div class="couple-story">
           <div class="couple-story-body" id="coupleStory">
             <p class="couple-story-p">A beautiful Bengaluru evening, a city full of dreams, and two hearts destined to find each other.</p>
-            <p class="couple-story-p">Surrounded by love, laughter, and countless beautiful moments, Deepthi &amp; Murali are ready to begin their most beautiful chapter yet.</p>
+            <p class="couple-story-p">Surrounded by love, laughter, and countless beautiful moments, Dharani &amp; Manu are ready to begin their most beautiful chapter yet.</p>
           </div>
-          <p class="couple-hashtag" id="coupleHashtag">#DeepthiWedsMurali</p>
+          <p class="couple-hashtag" id="coupleHashtag">#DharaniWedsManu</p>
         </div>
       </div>
     </section>
 
     <!-- SECTION 6: Photo Gallery -->
-    <section class="section gallery-section" id="gallery" aria-labelledby="galleryTitle">
+    <section class="section gallery-section" id="gallery" aria-labelledby="galleryTitle" style="display:none;">
       <div class="gallery-bg" aria-hidden="true">
         <img src="images/gallery/gallery_bg.webp" alt="" decoding="async" draggable="false">
       </div>
@@ -2893,7 +2938,7 @@
 
         <!-- Featured photo in the ornate frame -->
         <div class="gallery-featured reveal-item" id="galleryFeatured" role="button" tabindex="0" aria-label="View photo full screen">
-          <img class="gallery-featured-photo" id="galleryFeaturedPhoto" src="/images/gallery/couple_1.webp" alt="Moments we love" decoding="async">
+          <img class="gallery-featured-photo" id="galleryFeaturedPhoto" src="" alt="Moments we love" decoding="async">
           <img class="gallery-featured-art" src="/images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
           <button class="gallery-arrow gallery-arrow--prev" id="galleryPrev" type="button" aria-label="Previous photo">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2905,30 +2950,10 @@
 
         <p class="gallery-caption" id="galleryCaption">Moments we love</p>
         <div class="gallery-dots" id="galleryDots" role="tablist" aria-label="Gallery navigation">
-          <button class="gallery-dot is-active" role="tab" aria-label="Photo 1"></button>
-          <button class="gallery-dot" role="tab" aria-label="Photo 2"></button>
-          <button class="gallery-dot" role="tab" aria-label="Photo 3"></button>
-          <button class="gallery-dot" role="tab" aria-label="Photo 4"></button>
         </div>
 
         <!-- Thumbnail strip -->
         <div class="gallery-thumbs" id="galleryThumbs" role="list" aria-label="Photo thumbnails">
-          <div class="gallery-thumb is-active" role="listitem" aria-label="Show photo 1">
-            <img class="gallery-thumb-photo" src="/images/gallery/couple_1.webp" alt="" decoding="async">
-            <img class="gallery-thumb-art" src="/images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
-          </div>
-          <div class="gallery-thumb" role="listitem" aria-label="Show photo 2">
-            <img class="gallery-thumb-photo" src="/images/gallery/couple_2.webp" alt="" decoding="async">
-            <img class="gallery-thumb-art" src="/images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
-          </div>
-          <div class="gallery-thumb" role="listitem" aria-label="Show photo 3">
-            <img class="gallery-thumb-photo" src="/images/gallery/couple_3.webp" alt="" decoding="async">
-            <img class="gallery-thumb-art" src="/images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
-          </div>
-          <div class="gallery-thumb" role="listitem" aria-label="Show photo 4">
-            <img class="gallery-thumb-photo" src="/images/gallery/couple_4.webp" alt="" decoding="async">
-            <img class="gallery-thumb-art" src="/images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
-          </div>
         </div>
       </div>
 
@@ -2962,7 +2987,7 @@
 
         <div class="rsvp-cta-wrap rsvp-reveal">
           <a class="rsvp-btn" id="rsvpBtn"
-             href="https://wa.me/?text=Hi%2C%20I%27ll%20be%20attending%20Deepthi%20%26%20Murali%27s%20Wedding%21"
+             href="https://wa.me/?text=Hi%2C%20I%27ll%20be%20attending%20Dharani%20%26%20Manu%27s%20Wedding%21"
              target="_blank" rel="noreferrer">
             <span class="rsvp-btn-inner" id="rsvpBtnText">YES, I'LL BE THERE</span>
           </a>
@@ -3022,9 +3047,9 @@
         <img class="ft-border" src="images/countdown/border_5.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
 
         <p class="ft-names">
-          <span class="ft-name" id="ftBride">Deepthi</span>
+          <span class="ft-name" id="ftBride">Dharani</span>
           <span class="ft-amp" aria-hidden="true">&amp;</span>
-          <span class="ft-name" id="ftGroom">Murali</span>
+          <span class="ft-name" id="ftGroom">Manu</span>
         </p>
 
         <p class="ft-tagline">Forever begins today</p>

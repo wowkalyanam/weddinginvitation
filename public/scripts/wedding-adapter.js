@@ -182,27 +182,14 @@
     // 4. CRITICAL: ONLY IF NO fid, NO cfg, AND NO URL params (bare template preview)
     if (!custom && !fid && !cfgParam && !paramBride) {
       try {
-        for (var k in localStorage) {
-          if (k && k.indexOf('wow_') === 0) {
-            var val = localStorage.getItem(k);
-            if (val && (val.indexOf('Dharani') !== -1 || val.indexOf('BWSSB') !== -1 || val.indexOf('19 November') !== -1 || val.indexOf('Malleshwaram') !== -1)) {
-              localStorage.removeItem(k);
-            }
-          }
-        }
-        for (var sk in sessionStorage) {
-          if (sk && sk.indexOf('wow_') === 0) {
-            var sval = sessionStorage.getItem(sk);
-            if (sval && (sval.indexOf('Dharani') !== -1 || sval.indexOf('BWSSB') !== -1 || sval.indexOf('19 November') !== -1 || sval.indexOf('Malleshwaram') !== -1)) {
-              sessionStorage.removeItem(sk);
-            }
-          }
-        }
-
-        var localStr = localStorage.getItem('wow_custom_wedding_' + currentTemplateId) || 
-                       sessionStorage.getItem('wow_active_custom_wedding');
+        var localStr = localStorage.getItem('wow_custom_wedding_' + currentTemplateId);
         if (localStr) {
           var parsed = JSON.parse(localStr);
+          if (currentTemplateId === 'pichwai-palace' && parsed.bride === 'Deepthi' && parsed.groom === 'Murali') {
+            try { localStorage.removeItem('wow_custom_wedding_' + currentTemplateId); } catch (_) {}
+            parsed = null;
+          }
+          if (parsed) {
           custom = {
             b: parsed.bride,
             g: parsed.groom,
@@ -241,17 +228,30 @@
   var rawEvents = Array.isArray(customData.ev) ? customData.ev : null;
   var firstEvt = (rawEvents && rawEvents.length > 0) ? rawEvents[0] : null;
 
-  // Normalize data structure — NO default hardcoded custom dates
-  var bride = safeStr(customData.b, 'Deepthi');
-  var groom = safeStr(customData.g, 'Murali');
-  var brideParents = safeStr(customData.bp, 'Shri. S. Ravi & Smt. R. Jyothilakshmi');
-  var groomParents = safeStr(customData.gp, 'Shri. K. Muralidharan & Smt. M. Geetha');
-  var weddingDate = safeStr(customData.d, (firstEvt && (firstEvt.d || firstEvt.date)) || '');
-  var weddingTime = safeStr(customData.t, (firstEvt && (firstEvt.t || firstEvt.time)) || '07:00 PM');
-  var venueName = safeStr(customData.v, (firstEvt && (firstEvt.v || firstEvt.venue)) || 'The Grand Ballroom & Palace Grounds');
-  var venueAddress = safeStr(customData.a, (firstEvt && (firstEvt.a || firstEvt.address)) || (customData.v ? '' : 'Bengaluru, Karnataka'));
+  // Normalize data structure — template2 defaults to Dharani & Manu
+  var isT2 = currentTemplateId === 'pichwai-palace';
+  var defB = isT2 ? 'Dharani' : 'Deepthi';
+  var defG = isT2 ? 'Manu' : 'Murali';
+  var defBP = isT2 ? 'Smt. Jalajakshi V. and Ram Murthy N.' : 'Shri. S. Ravi & Smt. R. Jyothilakshmi';
+  var defGP = isT2 ? 'Smt. Narasamma K.S. and Lakshmikanth S.K.' : 'Shri. K. Muralidharan & Smt. M. Geetha';
+  var defDate = isT2 ? '19 November 2026' : '';
+  var defTime = isT2 ? '07:00 PM' : '07:00 PM';
+  var defV = isT2 ? 'BWSSB Rajatha Bhavan' : 'The Grand Ballroom & Palace Grounds';
+  var defA = isT2 ? '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012' : (customData.v ? '' : 'Bengaluru, Karnataka');
+  var defMap = isT2 
+    ? 'https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D'
+    : 'https://maps.google.com/?q=Bangalore';
+
+  var bride = safeStr(customData.b, defB);
+  var groom = safeStr(customData.g, defG);
+  var brideParents = safeStr(customData.bp, defBP);
+  var groomParents = safeStr(customData.gp, defGP);
+  var weddingDate = safeStr(customData.d, (firstEvt && (firstEvt.d || firstEvt.date)) || defDate);
+  var weddingTime = safeStr(customData.t, (firstEvt && (firstEvt.t || firstEvt.time)) || defTime);
+  var venueName = safeStr(customData.v, (firstEvt && (firstEvt.v || firstEvt.venue)) || defV);
+  var venueAddress = safeStr(customData.a, (firstEvt && (firstEvt.a || firstEvt.address)) || defA);
   var fullVenue = [venueName, venueAddress].filter(Boolean).join(', ');
-  var defaultMapUrl = safeStr(customData.m, (firstEvt && (firstEvt.m || firstEvt.mapUrl)) || 'https://maps.google.com/?q=Bangalore');
+  var defaultMapUrl = safeStr(customData.m, (firstEvt && (firstEvt.m || firstEvt.mapUrl)) || defMap);
   var events = [];
   if (rawEvents && rawEvents.length > 0) {
     events = rawEvents.map(function (e, idx) {
@@ -266,6 +266,29 @@
         desc: safeStr(e.s || e.desc, 'An auspicious celebration of family, sacred vows, and love.')
       };
     });
+  } else if (isT2) {
+    events = [
+      {
+        id: 'reception',
+        name: 'Reception',
+        date: 'Thursday, 19th November 2026',
+        time: '7:00 PM',
+        venue: 'BWSSB Rajatha Bhavan',
+        address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
+        mapUrl: defaultMapUrl,
+        desc: 'An evening of celebration, musical feast, and dinner.'
+      },
+      {
+        id: 'muhurtham',
+        name: 'Muhurtham',
+        date: 'Friday, 20th November 2026',
+        time: 'Between 9:15 AM - 10:15 AM',
+        venue: 'BWSSB Rajatha Bhavan',
+        address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
+        mapUrl: defaultMapUrl,
+        desc: 'Sacred thali tying and auspicious wedding rituals in presence of family and elders.'
+      }
+    ];
   } else {
     // Default 2 events — NO hardcoded dates
     events = [
@@ -292,13 +315,8 @@
     ];
   }
 
-  // 4 Photos list
-  var defaultPhotos = [
-    '/images/gallery/couple_1.webp',
-    '/images/gallery/couple_2.webp',
-    '/images/gallery/couple_3.webp',
-    '/images/gallery/couple_4.webp'
-  ];
+  // 4 Photos list — ZERO default stock photos (user enters photos)
+  var defaultPhotos = [];
 
   // Try synchronous photos first (from isolated form, customData, or direct photo storage)
   var initialPhotos = Array.isArray(customData.ph) && customData.ph.length > 0 ? customData.ph : null;
@@ -335,10 +353,9 @@
     } catch (_) {}
   }
 
-  var photos = (initialPhotos && initialPhotos.length > 0) ? initialPhotos.slice(0, 4) : defaultPhotos.slice(0, 4);
-  while (photos.length < 4) {
-    photos.push(defaultPhotos[photos.length] || defaultPhotos[0]);
-  }
+  var photos = (initialPhotos && initialPhotos.length > 0)
+    ? initialPhotos.filter(function (p) { return p && typeof p === 'string' && p.trim().length > 0; }).slice(0, 4)
+    : [];
 
   // Expose global clean object
   window.__CUSTOM_WEDDING_DATA__ = {
@@ -495,7 +512,13 @@
     userEnteredDate = (userEnteredDate || '').trim();
 
     document.querySelectorAll('.hero-date, .pl-date, .i-date, #inviteDate').forEach(function (el) {
-      if (userEnteredDate) el.textContent = userEnteredDate;
+      if (userEnteredDate) {
+        el.textContent = userEnteredDate;
+        el.style.display = '';
+      } else {
+        el.textContent = '';
+        el.style.display = 'none';
+      }
     });
     // Template 09 invitation card: ONLY show date that user will enter; hide if not entered
     document.querySelectorAll('.inv-date').forEach(function (el) {
@@ -514,6 +537,16 @@
     document.querySelectorAll('#inviteVenue').forEach(function (el) {
       el.innerHTML = venueName + (venueAddress ? '<br>' + venueAddress : '');
     });
+
+    // Update Venue Card on Template 2 if present
+    var t2VCard = document.getElementById('venueMapCard');
+    if (t2VCard && defaultMapUrl) t2VCard.href = defaultMapUrl;
+    var t2VMap = document.getElementById('evtVenueMap');
+    if (t2VMap && defaultMapUrl) t2VMap.href = defaultMapUrl;
+    var t2VName = document.getElementById('evtVenueName');
+    if (t2VName && venueName) t2VName.textContent = venueName.toUpperCase();
+    var t2VAddr = document.getElementById('evtVenueAddress');
+    if (t2VAddr && venueAddress) t2VAddr.textContent = venueAddress;
 
     // 5. Template-Specific Dynamic Events & Photos Handlers
     if (currentTemplateId === 'pichwai-palace') {
@@ -595,10 +628,20 @@
       });
     }
 
+    var galSec = document.getElementById('gallery');
+    var galNav = document.querySelector('a[href="#gallery"]');
+    if (photos.length === 0) {
+      if (galSec) galSec.style.display = 'none';
+      if (galNav && galNav.closest('li')) galNav.closest('li').style.display = 'none';
+    } else {
+      if (galSec) galSec.style.display = '';
+      if (galNav && galNav.closest('li')) galNav.closest('li').style.display = '';
+    }
+
     // Call dynamic template2 gallery hook if ready
     if (typeof window.__updateTemplate2Gallery === 'function') {
       window.__updateTemplate2Gallery(photos);
-    } else {
+    } else if (photos.length > 0) {
       var featuredImg = document.getElementById('galleryFeaturedPhoto') || document.getElementById('galleryMainPhoto');
       if (featuredImg && photos[0]) {
         featuredImg.src = photos[0];
@@ -1052,20 +1095,26 @@
   }
 
   function applyNewPhotos(newPhotos) {
-    if (!newPhotos || !newPhotos.length) return;
-    photos = newPhotos.slice(0, 4);
-    while (photos.length < 4) {
-      photos.push(defaultPhotos[photos.length] || defaultPhotos[0]);
-    }
+    if (!newPhotos) return;
+    photos = (newPhotos || []).filter(function (p) { return p && typeof p === 'string' && p.trim().length > 0; }).slice(0, 4);
     window.__CUSTOM_WEDDING_DATA__.photos = photos;
     if (typeof window.__WEDDING_CONFIG__ !== 'undefined' && window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.gallery) {
       window.__WEDDING_CONFIG__.gallery.photos = photos;
     }
 
     if (currentTemplateId === 'pichwai-palace') {
+      var galSec = document.getElementById('gallery');
+      var galNav = document.querySelector('a[href="#gallery"]');
+      if (photos.length === 0) {
+        if (galSec) galSec.style.display = 'none';
+        if (galNav && galNav.closest('li')) galNav.closest('li').style.display = 'none';
+      } else {
+        if (galSec) galSec.style.display = '';
+        if (galNav && galNav.closest('li')) galNav.closest('li').style.display = '';
+      }
       if (typeof window.__updateTemplate2Gallery === 'function') {
         window.__updateTemplate2Gallery(photos);
-      } else {
+      } else if (photos.length > 0) {
         var featuredImg = document.getElementById('galleryFeaturedPhoto') || document.getElementById('galleryMainPhoto');
         if (featuredImg && photos[0]) featuredImg.src = photos[0];
         var thumbsContainer = document.getElementById('galleryThumbs');
@@ -1077,9 +1126,15 @@
         }
       }
     } else if (currentTemplateId === 'pichwai-lotus-courtyard') {
+      var t09Gal = document.getElementById('gallery') || document.querySelector('.gallery-section');
+      if (photos.length === 0) {
+        if (t09Gal) t09Gal.style.display = 'none';
+      } else {
+        if (t09Gal) t09Gal.style.display = '';
+      }
       if (typeof window.__updateTemplate09Gallery === 'function') {
         window.__updateTemplate09Gallery(photos);
-      } else {
+      } else if (photos.length > 0) {
         var galWall = document.getElementById('galWall');
         if (galWall) {
           var galPhotos = galWall.querySelectorAll('.gal-photo');
@@ -1089,6 +1144,38 @@
         }
       }
     } else if (currentTemplateId === 'champagne-luxury') {
+      var t10Gal = document.getElementById('glGallery') || document.querySelector('.gl-section');
+      if (photos.length === 0) {
+        if (t10Gal) t10Gal.style.display = 'none';
+      } else {
+        if (t10Gal) t10Gal.style.display = '';
+        var frameIds = ['glHero', 'glLeft', 'glRight', 'glBottom'];
+        frameIds.forEach(function (fid, idx) {
+          var frame = document.getElementById(fid);
+          if (frame && photos[idx]) {
+            var img = frame.querySelector('img');
+            if (img) img.src = photos[idx];
+          }
+        });
+      }
+    } else if (currentTemplateId === 'kasavu-kerala') {
+      var kasGal = document.getElementById('gallery') || document.querySelector('.gal-section');
+      if (photos.length === 0) {
+        if (kasGal) kasGal.style.display = 'none';
+      } else {
+        if (kasGal) kasGal.style.display = '';
+        applyKasavuEventsAndGallery();
+      }
+    } else if (currentTemplateId === 'meenaya-temple-baroque') {
+      var meeGal = document.getElementById('gallery') || document.querySelector('.gallery-section');
+      if (photos.length === 0) {
+        if (meeGal) meeGal.style.display = 'none';
+      } else {
+        if (meeGal) meeGal.style.display = '';
+        applyMeenayaEventsAndGallery();
+      }
+    }
+  }
       var frameIds = ['glHero', 'glLeft', 'glRight', 'glBottom'];
       frameIds.forEach(function (fid, idx) {
         var frame = document.getElementById(fid);

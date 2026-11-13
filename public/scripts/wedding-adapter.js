@@ -692,13 +692,8 @@
 
     var galSec = document.getElementById('gallery');
     var galNav = document.querySelector('a[href="#gallery"]');
-    if (photos.length === 0) {
-      if (galSec) galSec.style.display = 'none';
-      if (galNav && galNav.closest('li')) galNav.closest('li').style.display = 'none';
-    } else {
-      if (galSec) galSec.style.display = '';
-      if (galNav && galNav.closest('li')) galNav.closest('li').style.display = '';
-    }
+    if (galSec) galSec.style.display = '';
+    if (galNav && galNav.closest('li')) galNav.closest('li').style.display = '';
 
     // Call dynamic template2 gallery hook if ready
     if (typeof window.__updateTemplate2Gallery === 'function') {
@@ -1167,13 +1162,8 @@
     if (currentTemplateId === 'pichwai-palace') {
       var galSec = document.getElementById('gallery');
       var galNav = document.querySelector('a[href="#gallery"]');
-      if (photos.length === 0) {
-        if (galSec) galSec.style.display = 'none';
-        if (galNav && galNav.closest('li')) galNav.closest('li').style.display = 'none';
-      } else {
-        if (galSec) galSec.style.display = '';
-        if (galNav && galNav.closest('li')) galNav.closest('li').style.display = '';
-      }
+      if (galSec) galSec.style.display = '';
+      if (galNav && galNav.closest('li')) galNav.closest('li').style.display = '';
       if (typeof window.__updateTemplate2Gallery === 'function') {
         window.__updateTemplate2Gallery(photos);
       } else if (photos.length > 0) {

@@ -460,18 +460,19 @@ function initApp() {
   // Initialize Gallery Section Carousel & Lightbox
   const gallerySection = document.getElementById('gallery');
   if (gallerySection) {
+    const defaultGalleryPhotos = [
+      { src: '/images/gallery/couple_1.webp', caption: 'Moments we love' },
+      { src: '/images/gallery/couple_2.webp', caption: 'Moments we love' },
+      { src: '/images/gallery/couple_3.webp', caption: 'Moments we love' },
+      { src: '/images/gallery/couple_4.webp', caption: 'Moments we love' }
+    ];
     let photos = (window.__CUSTOM_WEDDING_DATA__ && window.__CUSTOM_WEDDING_DATA__.photos && window.__CUSTOM_WEDDING_DATA__.photos.length > 0)
       ? window.__CUSTOM_WEDDING_DATA__.photos.filter(Boolean).map(p => ({ src: typeof p === 'string' ? p : p.src, caption: 'Moments we love' }))
-      : [];
+      : defaultGalleryPhotos;
 
     const galNav = document.querySelector('a[href="#gallery"]');
-    if (photos.length === 0) {
-      gallerySection.style.display = 'none';
-      if (galNav && galNav.closest('li')) galNav.closest('li').style.display = 'none';
-    } else {
-      gallerySection.style.display = '';
-      if (galNav && galNav.closest('li')) galNav.closest('li').style.display = '';
-    }
+    gallerySection.style.display = '';
+    if (galNav && galNav.closest('li')) galNav.closest('li').style.display = '';
 
     const featured = document.getElementById('galleryFeatured');
     const featuredPhoto = document.getElementById('galleryMainPhoto') || document.getElementById('galleryFeaturedPhoto');
@@ -524,15 +525,11 @@ function initApp() {
 
     window.__updateTemplate2Gallery = function(newPhotos) {
       const cleanPhotos = (newPhotos || []).filter(Boolean);
-      if (!cleanPhotos.length) {
-        gallerySection.style.display = 'none';
-        if (galNav && galNav.closest('li')) galNav.closest('li').style.display = 'none';
-        photos = [];
-        return;
-      }
+      photos = cleanPhotos.length > 0
+        ? cleanPhotos.map(p => ({ src: typeof p === 'string' ? p : p.src, caption: 'Moments we love' }))
+        : defaultGalleryPhotos;
       gallerySection.style.display = '';
       if (galNav && galNav.closest('li')) galNav.closest('li').style.display = '';
-      photos = cleanPhotos.map(p => ({ src: typeof p === 'string' ? p : p.src, caption: 'Moments we love' }));
       currentIndex = 0;
       rebuildDotsAndThumbs();
       if (photos.length > 0) {

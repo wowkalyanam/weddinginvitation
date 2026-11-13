@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=DM+Sans:wght@400;500;600&family=Luxurious+Script&family=Pinyon+Script&family=Tangerine:wght@400;700&display=swap">
-  <script type="application/json" id="wedding-config">{"couple":{"bride":"Dharani","groom":"Manu","date":"19 November 2026","endDate":"2026-11-20","venue":"BWSSB Rajatha Bhavan, 8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012","whatsapp":"919999999999","hashtag":"#DharaniWedsManu"},"invite":{"blessing":"With the blessings of the divine","brideFather":"Smt. Jalajakshi V. and Ram Murthy N.","groomFather":"Smt. Narasamma K.S. and Lakshmikanth S.K.","showGrandparents":false},"events":[{"id":"reception","name":"Reception","date":"Thursday, 19th November 2026","time":"7:00 PM","venue":"BWSSB Rajatha Bhavan","address":"8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012","desc":"An evening of celebration, musical feast, and dinner.","mapsLink":"https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D"},{"id":"muhurtham","name":"Muhurtham","date":"Friday, 20th November 2026","time":"Between 9:15 AM - 10:15 AM","venue":"","address":"","desc":"Sacred thali tying and auspicious wedding rituals in presence of family and elders.","mapsLink":""}],"story":{"show":true,"storyText":"A beautiful Bengaluru evening, a city full of dreams, and two hearts destined to find each other. Surrounded by love, laughter, and countless beautiful moments, Dharani & Manu are ready to begin their most beautiful chapter yet.","customHashtag":"#DharaniWedsManu"},"gallery":{"show":false,"photos":[]}}</script>
+  <script type="application/json" id="wedding-config">{"couple":{"bride":"Dharani","groom":"Manu","date":"19 November 2026","endDate":"2026-11-20","venue":"BWSSB Rajatha Bhavan, 8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012","whatsapp":"919999999999","hashtag":"#DharaniWedsManu"},"invite":{"blessing":"With the blessings of the divine","brideFather":"Smt. Jalajakshi V. and Ram Murthy N.","groomFather":"Smt. Narasamma K.S. and Lakshmikanth S.K.","showGrandparents":false},"events":[{"id":"reception","name":"Reception","date":"Thursday, 19th November 2026","time":"7:00 PM","venue":"BWSSB Rajatha Bhavan","address":"8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012","desc":"An evening of celebration, musical feast, and dinner.","mapsLink":"https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D"},{"id":"muhurtham","name":"Muhurtham","date":"Friday, 20th November 2026","time":"Between 9:15 AM - 10:15 AM","venue":"","address":"","desc":"Sacred thali tying and auspicious wedding rituals in presence of family and elders.","mapsLink":""}],"story":{"show":true,"storyText":"A beautiful Bengaluru evening, a city full of dreams, and two hearts destined to find each other. Surrounded by love, laughter, and countless beautiful moments, Dharani & Manu are ready to begin their most beautiful chapter yet.","customHashtag":"#DharaniWedsManu"},"gallery":{"show":true,"photos":["/images/gallery/couple_1.webp","/images/gallery/couple_2.webp","/images/gallery/couple_3.webp","/images/gallery/couple_4.webp"]}}</script>
   <script>window.__WEDDING_CONFIG__ = JSON.parse(document.getElementById('wedding-config').textContent);</script>
   <script>
   (function() {
@@ -2923,7 +2923,7 @@
     </section>
 
     <!-- SECTION 6: Photo Gallery -->
-    <section class="section gallery-section" id="gallery" aria-labelledby="galleryTitle" style="display:none;">
+    <section class="section gallery-section" id="gallery" aria-labelledby="galleryTitle">
       <div class="gallery-bg" aria-hidden="true">
         <img src="images/gallery/gallery_bg.webp" alt="" decoding="async" draggable="false">
       </div>
@@ -2937,7 +2937,7 @@
 
         <!-- Featured photo in the ornate frame -->
         <div class="gallery-featured reveal-item" id="galleryFeatured" role="button" tabindex="0" aria-label="View photo full screen">
-          <img class="gallery-featured-photo" id="galleryFeaturedPhoto" src="" alt="Moments we love" decoding="async">
+          <img class="gallery-featured-photo" id="galleryFeaturedPhoto" src="/images/gallery/couple_1.webp" alt="Moments we love" decoding="async">
           <img class="gallery-featured-art" src="/images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
           <button class="gallery-arrow gallery-arrow--prev" id="galleryPrev" type="button" aria-label="Previous photo">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -2949,10 +2949,30 @@
 
         <p class="gallery-caption" id="galleryCaption">Moments we love</p>
         <div class="gallery-dots" id="galleryDots" role="tablist" aria-label="Gallery navigation">
+          <button class="gallery-dot is-active" role="tab" aria-label="Photo 1"></button>
+          <button class="gallery-dot" role="tab" aria-label="Photo 2"></button>
+          <button class="gallery-dot" role="tab" aria-label="Photo 3"></button>
+          <button class="gallery-dot" role="tab" aria-label="Photo 4"></button>
         </div>
 
         <!-- Thumbnail strip -->
         <div class="gallery-thumbs" id="galleryThumbs" role="list" aria-label="Photo thumbnails">
+          <div class="gallery-thumb is-active" role="listitem" aria-label="Show photo 1">
+            <img class="gallery-thumb-photo" src="/images/gallery/couple_1.webp" alt="" decoding="async">
+            <img class="gallery-thumb-art" src="/images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
+          </div>
+          <div class="gallery-thumb" role="listitem" aria-label="Show photo 2">
+            <img class="gallery-thumb-photo" src="/images/gallery/couple_2.webp" alt="" decoding="async">
+            <img class="gallery-thumb-art" src="/images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
+          </div>
+          <div class="gallery-thumb" role="listitem" aria-label="Show photo 3">
+            <img class="gallery-thumb-photo" src="/images/gallery/couple_3.webp" alt="" decoding="async">
+            <img class="gallery-thumb-art" src="/images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
+          </div>
+          <div class="gallery-thumb" role="listitem" aria-label="Show photo 4">
+            <img class="gallery-thumb-photo" src="/images/gallery/couple_4.webp" alt="" decoding="async">
+            <img class="gallery-thumb-art" src="/images/gallery/gallery_outerframe.webp" alt="" aria-hidden="true" decoding="async">
+          </div>
         </div>
       </div>
 

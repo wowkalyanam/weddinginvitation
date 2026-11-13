@@ -260,14 +260,12 @@
     ];
   }
 
-  // 6 Photos list
+  // 4 Photos list
   var defaultPhotos = [
     '/images/gallery/couple_1.webp',
     '/images/gallery/couple_2.webp',
     '/images/gallery/couple_3.webp',
-    '/images/gallery/couple_4.webp',
-    '/images/gallery/demo_1.webp',
-    '/images/gallery/demo_2.webp'
+    '/images/gallery/couple_4.webp'
   ];
 
   // Try synchronous photos first (from customData or direct photo storage)
@@ -293,8 +291,8 @@
     } catch (_) {}
   }
 
-  var photos = (initialPhotos && initialPhotos.length > 0) ? initialPhotos.slice(0, 6) : defaultPhotos.slice(0, 6);
-  while (photos.length < 6) {
+  var photos = (initialPhotos && initialPhotos.length > 0) ? initialPhotos.slice(0, 4) : defaultPhotos.slice(0, 4);
+  while (photos.length < 4) {
     photos.push(defaultPhotos[photos.length] || defaultPhotos[0]);
   }
 
@@ -950,7 +948,7 @@
       if (galWall && photos && photos.length > 0) {
         galWall.innerHTML = '';
         var orients = ['hero', 'portrait', 'landscape', 'portrait', 'landscape', 'portrait'];
-        photos.slice(0, 6).forEach(function (src, idx) {
+        photos.slice(0, 4).forEach(function (src, idx) {
           var orient = orients[idx % orients.length];
           var slot = document.createElement('div');
           slot.className = 'gal-frame-slot gal-slot-' + orient;
@@ -1002,8 +1000,8 @@
 
   function applyNewPhotos(newPhotos) {
     if (!newPhotos || !newPhotos.length) return;
-    photos = newPhotos.slice(0, 6);
-    while (photos.length < 6) {
+    photos = newPhotos.slice(0, 4);
+    while (photos.length < 4) {
       photos.push(defaultPhotos[photos.length] || defaultPhotos[0]);
     }
     window.__CUSTOM_WEDDING_DATA__.photos = photos;

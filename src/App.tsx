@@ -66,9 +66,7 @@ const DEFAULT_PHOTOS = [
   '/images/gallery/couple_1.webp',
   '/images/gallery/couple_2.webp',
   '/images/gallery/couple_3.webp',
-  '/images/gallery/couple_4.webp',
-  '/images/gallery/demo_1.webp',
-  '/images/gallery/demo_2.webp'
+  '/images/gallery/couple_4.webp'
 ];
 
 const DEFAULT_EVENTS_PICHWAI: WeddingEventItem[] = [
@@ -543,15 +541,15 @@ export default function App() {
     updateFormData(templateId, { events: nextEvents });
   };
 
-  // Bulk Multi-File Upload: Pick up to 6 photos at once
+  // Bulk Multi-File Upload: Pick up to 4 photos at once
   const handleBulkPhotosUpload = async (templateId: string, files: FileList | null) => {
     if (!files || files.length === 0) return;
     setIsProcessingPhotos(true);
     setPhotoMsg('Compressing photos...');
     try {
       const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
-      const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)];
-      const count = Math.min(files.length, 6);
+      const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)].slice(0, 4);
+      const count = Math.min(files.length, 4);
       for (let i = 0; i < count; i++) {
         const file = files[i];
         if (file) {
@@ -560,12 +558,13 @@ export default function App() {
           nextPhotos[i] = dataUrl;
         }
       }
-      while (nextPhotos.length < 6) {
+      while (nextPhotos.length < 4) {
         nextPhotos.push(DEFAULT_PHOTOS[nextPhotos.length] || DEFAULT_PHOTOS[0]);
       }
-      updateFormData(templateId, { photos: nextPhotos });
-      savePhotosToStorage(templateId, nextPhotos);
-      setPhotoMsg(`✓ ${count} photos uploaded and saved!`);
+      const finalPhotos = nextPhotos.slice(0, 4);
+      updateFormData(templateId, { photos: finalPhotos });
+      savePhotosToStorage(templateId, finalPhotos);
+      setPhotoMsg(`✓ ${count} photo${count === 1 ? '' : 's'} uploaded and saved!`);
       setTimeout(() => setPhotoMsg(''), 3500);
     } catch (err) {
       console.error(err);
@@ -584,13 +583,14 @@ export default function App() {
     try {
       const dataUrl = await processImageFile(file);
       const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
-      const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)];
+      const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)].slice(0, 4);
       nextPhotos[index] = dataUrl;
-      while (nextPhotos.length < 6) {
+      while (nextPhotos.length < 4) {
         nextPhotos.push(DEFAULT_PHOTOS[nextPhotos.length] || DEFAULT_PHOTOS[0]);
       }
-      updateFormData(templateId, { photos: nextPhotos });
-      savePhotosToStorage(templateId, nextPhotos);
+      const finalPhotos = nextPhotos.slice(0, 4);
+      updateFormData(templateId, { photos: finalPhotos });
+      savePhotosToStorage(templateId, finalPhotos);
       setPhotoMsg(`✓ Photo #${index + 1} updated!`);
       setTimeout(() => setPhotoMsg(''), 3000);
     } catch (err) {
@@ -604,14 +604,14 @@ export default function App() {
 
   const handlePhotoUrlChange = (templateId: string, index: number, url: string) => {
     const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
-    const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)];
+    const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)].slice(0, 4);
     nextPhotos[index] = url;
     updateFormData(templateId, { photos: nextPhotos });
   };
 
   const handleResetPhoto = (templateId: string, index: number) => {
     const cur = templateForms[templateId] || TEMPLATES.find((t) => t.id === templateId)!.defaultData;
-    const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)];
+    const nextPhotos = [...(cur.photos || DEFAULT_PHOTOS)].slice(0, 4);
     nextPhotos[index] = DEFAULT_PHOTOS[index] || DEFAULT_PHOTOS[0];
     updateFormData(templateId, { photos: nextPhotos });
     savePhotosToStorage(templateId, nextPhotos);
@@ -620,10 +620,10 @@ export default function App() {
   };
 
   const handleResetAllPhotos = (templateId: string) => {
-    const reset = [...DEFAULT_PHOTOS];
+    const reset = [...DEFAULT_PHOTOS].slice(0, 4);
     updateFormData(templateId, { photos: reset });
     savePhotosToStorage(templateId, reset);
-    setPhotoMsg('All 6 photos reset to default');
+    setPhotoMsg('All 4 photos reset to default');
     setTimeout(() => setPhotoMsg(''), 3000);
   };
 
@@ -1358,12 +1358,12 @@ export default function App() {
                 </div>
               </div>
 
-              {/* ── SECTION 3: COUPLE PHOTO GALLERY (6 PHOTOS) ── */}
+              {/* ── SECTION 3: COUPLE PHOTO GALLERY (4 PHOTOS) ── */}
               <div className="space-y-4 bg-neutral-50/70 p-4 sm:p-5 rounded-2xl border border-neutral-200/80">
                 <div className="flex items-center justify-between border-b border-neutral-200/70 pb-2.5">
                   <div className="flex items-center gap-2 text-neutral-900 font-semibold text-sm">
                     <ImageIcon className="w-4 h-4 text-amber-600" />
-                    <span>3. Couple Photo Gallery (6 Photos)</span>
+                    <span>3. Couple Photo Gallery (4 Photos)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     {photoMsg && (
@@ -1376,7 +1376,7 @@ export default function App() {
                       type="button"
                       onClick={() => handleResetAllPhotos(activeTemplate.id)}
                       className="text-[11px] text-neutral-500 hover:text-neutral-800 underline transition-colors cursor-pointer"
-                      title="Reset all 6 photos to template defaults"
+                      title="Reset all 4 photos to template defaults"
                     >
                       Reset All
                     </button>
@@ -1388,10 +1388,10 @@ export default function App() {
                   <div className="space-y-1">
                     <div className="flex items-center gap-1.5 font-bold text-xs text-neutral-900">
                       <UploadCloud className="w-4 h-4 text-amber-700" />
-                      <span>Upload All 6 Photos at Once</span>
+                      <span>Upload All 4 Photos at Once</span>
                     </div>
                     <p className="text-[11px] text-neutral-600 leading-tight">
-                      Select up to 6 photos together from your device. They will automatically fill all 6 slots and appear on your invitation website immediately.
+                      Select up to 4 photos together from your device. They will automatically fill all 4 slots and appear on your invitation website immediately.
                     </p>
                   </div>
 
@@ -1404,7 +1404,7 @@ export default function App() {
                     ) : (
                       <>
                         <Upload className="w-3.5 h-3.5" />
-                        <span>Select 6 Photos</span>
+                        <span>Select 4 Photos</span>
                       </>
                     )}
                     <input
@@ -1425,9 +1425,9 @@ export default function App() {
                   </label>
                 </div>
 
-                {/* 6 Photo Slots Grid */}
-                <div className="grid grid-cols-2 sm:grid-cols-3 gap-3.5 sm:gap-4 pt-1">
-                  {(activeFormData.photos || DEFAULT_PHOTOS).slice(0, 6).map((photoSrc, idx) => {
+                {/* 4 Photo Slots Grid */}
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-4 pt-1">
+                  {(activeFormData.photos || DEFAULT_PHOTOS).slice(0, 4).map((photoSrc, idx) => {
                     const isCustom = !DEFAULT_PHOTOS.includes(photoSrc);
                     return (
                       <div 

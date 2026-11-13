@@ -98,11 +98,11 @@ window.__updateTemplate09Events = function(customEvents) {
 
 window.__updateTemplate09Gallery = function(photos) {
   if (!Array.isArray(photos) || !photos.length) return;
-  var orients = ['hero', 'portrait', 'landscape', 'portrait', 'landscape', 'portrait'];
-  GALLERY_PHOTOS = photos.slice(0, 6).map(function(src, i) {
+  var orients = ['hero', 'portrait', 'landscape', 'portrait'];
+  GALLERY_PHOTOS = photos.slice(0, 4).map(function(src, i) {
     return {
-      src: src,
-      caption: 'Wedding Moment ' + (i + 1),
+      src: typeof src === 'string' ? src : (src.src || ''),
+      caption: (typeof src === 'object' && src.caption) || ('Wedding Moment ' + (i + 1)),
       orient: orients[i % orients.length]
     };
   });
@@ -130,8 +130,8 @@ function hydrate(){
       });
     }
     if (window.__WEDDING_CONFIG__.gallery && Array.isArray(window.__WEDDING_CONFIG__.gallery.photos) && window.__WEDDING_CONFIG__.gallery.photos.length > 0) {
-      var orients = ["hero", "portrait", "landscape", "portrait", "landscape", "portrait"];
-      GALLERY_PHOTOS = window.__WEDDING_CONFIG__.gallery.photos.slice(0, 6).map(function(src, i) {
+      var orients = ["hero", "portrait", "landscape", "portrait"];
+      GALLERY_PHOTOS = window.__WEDDING_CONFIG__.gallery.photos.slice(0, 4).map(function(src, i) {
         return {
           src: src,
           caption: "Wedding Moment " + (i + 1),

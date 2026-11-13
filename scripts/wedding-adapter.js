@@ -22,6 +22,47 @@
     return s.length > 0 ? s : (fallback || '');
   }
 
+  function cleanVenueName(venue, address) {
+    if (!venue) return '';
+    var v = String(venue).trim();
+    if (address && address.trim()) {
+      var a = String(address).trim();
+      var escapedA = a.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      v = v.replace(new RegExp(',?\\s*' + escapedA + '$', 'i'), '').trim();
+      var aFirst = a.split(',')[0].trim();
+      if (aFirst && aFirst.length > 3) {
+        var escapedFirst = aFirst.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        v = v.replace(new RegExp(',?\\s*' + escapedFirst + '.*$', 'i'), '').trim();
+      }
+    }
+    if (v.indexOf(',') !== -1) {
+      if (/\b\d{6}\b/.test(v) || /\b(road|rd|cross|main|street|st|nagar|post|layout|opp|near|behind|floor|door|halasuru|indiranagar|koramangala|whitefield|bengaluru|bangalore)\b/i.test(v)) {
+        var parts = v.split(',');
+        v = parts[0].trim();
+      }
+    }
+    return v;
+  }
+
+  function getDirectionsUrl(venue, address, customMapUrl) {
+    var v = cleanVenueName(venue, address);
+    var a = address ? String(address).trim() : '';
+    var searchTarget = [v, a].filter(Boolean).join(', ');
+    if (!searchTarget && venue) searchTarget = String(venue).trim();
+
+    if (customMapUrl && String(customMapUrl).trim().indexOf('http') === 0) {
+      var trimmed = String(customMapUrl).trim();
+      var isGeneric = /maps\.google\.com\/\?q=(Bangalore|Bengaluru)$/i.test(trimmed) ||
+                      /maps\.google\.com\/\?q=.*(Grand(\+|\s)Ballroom|Palace(\+|\s)Grounds|Rajatha(\+|\s)Bhavan|Malleshwaram)/i.test(trimmed);
+      if (!isGeneric || !searchTarget || (searchTarget.indexOf('Ballroom') !== -1 && searchTarget.indexOf('Palace Grounds') !== -1)) {
+        return trimmed;
+      }
+    }
+
+    if (!searchTarget) searchTarget = 'Bengaluru';
+    return 'https://maps.google.com/?q=' + encodeURIComponent(searchTarget);
+  }
+
   // Open IndexedDB safely
   function openDB() {
     return new Promise(function (resolve) {
@@ -295,15 +336,18 @@
       }
       if (wc.events) {
         wc.events = events.map(function (e) {
+          var cleanV = cleanVenueName(e.venue, e.address);
+          var dirUrl = getDirectionsUrl(e.venue, e.address, e.mapUrl);
           return {
             id: e.id,
             name: e.name,
             date: e.date,
             time: e.time,
-            venue: e.venue + (e.address ? ', ' + e.address : ''),
+            venue: cleanV,
+            address: e.address || '',
             desc: e.desc,
-            mapsLink: e.mapUrl,
-            map: e.mapUrl
+            mapsLink: dirUrl,
+            map: dirUrl
           };
         });
       }
@@ -804,11 +848,27 @@
     });
 
     // 1. Try native template09 event update hook
-    if (typeof window.__updateTemplate09Events === 'function' && events && events.length > 0) {
-      window.__updateTemplate09Events(events);
+    var cleanEvents = (events || []).map(function(ev) {
+      var vClean = cleanVenueName(ev.venue, ev.address);
+      var dirUrl = getDirectionsUrl(ev.venue, ev.address, ev.mapUrl);
+      return {
+        id: ev.id,
+        name: ev.name,
+        date: ev.date,
+        time: ev.time,
+        venue: vClean,
+        address: ev.address || '',
+        desc: ev.desc || '',
+        mapUrl: dirUrl,
+        map: dirUrl
+      };
+    });
+
+    if (typeof window.__updateTemplate09Events === 'function' && cleanEvents && cleanEvents.length > 0) {
+      window.__updateTemplate09Events(cleanEvents);
     } else {
       var evtStops = document.getElementById('evtStops');
-      if (evtStops && events && events.length > 0) {
+      if (evtStops && cleanEvents && cleanEvents.length > 0) {
         evtStops.innerHTML = '';
 
         var icons = [
@@ -831,14 +891,14 @@
           return '/templates/template09/assets/event/' + (icons[idx % icons.length] || 'pn-evt-ico-reception-x-v01.webp');
         }
 
-        var mapPinSvg = `<svg width="11" height="14" viewBox="0 0 11 14" fill="none"
-           xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:4px">
+        var mapPinSvg = `<svg width="12" height="15" viewBox="0 0 11 14" fill="none"
+           xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="display:inline-block;vertical-align:middle;margin-right:5px;flex-shrink:0;">
         <path d="M5.5 0C2.46 0 0 2.46 0 5.5c0 4.12 5.5 8.5 5.5 8.5S11 9.62 11 5.5C11 2.46 8.54 0 5.5 0Z"
-              fill="currentColor" opacity=".72"/>
-        <circle cx="5.5" cy="5.5" r="2" fill="#fff" opacity=".88"/>
+              fill="currentColor" opacity=".85"/>
+        <circle cx="5.5" cy="5.5" r="2" fill="#fff" opacity=".95"/>
       </svg>`;
 
-        events.forEach(function (ev, idx) {
+        cleanEvents.forEach(function (ev, idx) {
           var isLeft = idx % 2 === 0;
           var p = isLeft ? 'farman-left' : 'farman-right';
           var u = document.createElement('article');
@@ -847,10 +907,11 @@
           u.setAttribute('data-event', ev.id);
           u.setAttribute('data-farman-index', String(idx));
 
-          var mapHtml = ev.mapUrl ? `
-            <a class="farman-map" href="${ev.mapUrl}" target="_blank" rel="noopener noreferrer" aria-label="Open ${ev.venue} on Google Maps" style="opacity:1!important;pointer-events:auto!important;">
-               ${mapPinSvg}Open in Maps
-            </a>` : '';
+          var dirUrl = ev.mapUrl || getDirectionsUrl(ev.venue, ev.address, '');
+          var mapHtml = `
+            <a class="farman-map farman-directions-btn" href="${dirUrl}" target="_blank" rel="noopener noreferrer" aria-label="Get directions to ${ev.venue} on Google Maps" style="opacity:1!important;pointer-events:auto!important;">
+               ${mapPinSvg}<span>Get Directions</span>
+            </a>`;
 
           u.innerHTML = `
             <div class="farman-rolled-wrap" aria-hidden="true" style="opacity:0;display:none;">
@@ -869,7 +930,7 @@
                     <span class="farman-dot">·</span>
                     <span class="farman-time">${ev.time}</span>
                   </p>
-                  <p class="farman-venue" style="opacity:1!important;">${ev.venue}${ev.address ? ', ' + ev.address : ''}</p>
+                  <p class="farman-venue" style="opacity:1!important;">${ev.venue}</p>
                   ${ev.desc ? `<p class="farman-note" style="opacity:1!important;">${ev.desc}</p>` : ''}
                   ${mapHtml}
                 </div>

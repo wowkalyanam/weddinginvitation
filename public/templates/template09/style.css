@@ -15,3 +15,46 @@
   margin: 0 !important;
   padding: 0 !important;
 }
+
+
+/* Wow Kalyanam Farman Get Directions Button */
+.farman-map,
+.farman-directions-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  margin: 10px auto 0 !important;
+  padding: 6px 16px !important;
+  border-radius: 999px !important;
+  background: rgba(216, 169, 87, 0.16) !important;
+  border: 1px solid rgba(216, 169, 87, 0.55) !important;
+  color: #77283a !important;
+  font-family: var(--display, 'Cormorant Garamond', Georgia, serif) !important;
+  font-style: normal !important;
+  font-size: clamp(0.78rem, 1.1vw, 0.92rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.04em !important;
+  text-decoration: none !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  opacity: 1 !important;
+  box-shadow: 0 2px 6px rgba(62, 43, 34, 0.08) !important;
+  transition: all 0.22s ease !important;
+  z-index: 5 !important;
+}
+
+.farman-map:hover,
+.farman-directions-btn:hover {
+  background: rgba(216, 169, 87, 0.32) !important;
+  border-color: rgba(216, 169, 87, 0.9) !important;
+  color: #531725 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 10px rgba(62, 43, 34, 0.15) !important;
+}
+
+.farman-map svg,
+.farman-directions-btn svg {
+  color: #77283a !important;
+  flex-shrink: 0 !important;
+}

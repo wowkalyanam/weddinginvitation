@@ -99,6 +99,7 @@
     if (path.indexOf('template10') !== -1) return 'champagne-luxury';
     if (path.indexOf('kasavu') !== -1) return 'kasavu-kerala';
     if (path.indexOf('meenaya') !== -1) return 'meenaya-temple-baroque';
+    if (path.indexOf('deepthi-murali') !== -1 || path.indexOf('deepthi') !== -1) return 'deepthi-murali-pichwai';
     if (path.indexOf('template2') !== -1) return 'pichwai-palace';
     return 'pichwai-palace';
   }
@@ -209,17 +210,19 @@
   var rawEvents = Array.isArray(customData.ev) ? customData.ev : null;
   var firstEvt = (rawEvents && rawEvents.length > 0) ? rawEvents[0] : null;
 
-  // Normalize data structure — template2 defaults to Dharani & Manu
+  // Normalize data structure — template2 defaults to Dharani & Manu, deepthi-murali defaults to Deepthi & Murali
   var isT2 = currentTemplateId === 'pichwai-palace';
+  var isDeepthiPichwai = currentTemplateId === 'deepthi-murali-pichwai';
+
   var defB = isT2 ? 'Dharani' : 'Deepthi';
   var defG = isT2 ? 'Manu' : 'Murali';
   var defBP = isT2 ? 'Smt. Jalajakshi V. and Ram Murthy N.' : 'Shri. S. Ravi & Smt. R. Jyothilakshmi';
   var defGP = isT2 ? 'Smt. Narasamma K.S. and Lakshmikanth S.K.' : 'Shri. K. Muralidharan & Smt. M. Geetha';
-  var defDate = isT2 ? '19 November 2026' : '';
-  var defTime = isT2 ? '07:00 PM' : '07:00 PM';
-  var defV = isT2 ? 'BWSSB Rajatha Bhavan' : 'The Grand Ballroom & Palace Grounds';
-  var defA = isT2 ? '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012' : (customData.v ? '' : 'Bengaluru, Karnataka');
-  var defMap = isT2 
+  var defDate = isT2 ? '19 November 2026' : (isDeepthiPichwai ? '25 December 2026' : '');
+  var defTime = '07:00 PM';
+  var defV = (isT2 || isDeepthiPichwai) ? 'BWSSB Rajatha Bhavan' : 'The Grand Ballroom & Palace Grounds';
+  var defA = (isT2 || isDeepthiPichwai) ? '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012' : (customData.v ? '' : 'Bengaluru, Karnataka');
+  var defMap = (isT2 || isDeepthiPichwai)
     ? 'https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D'
     : 'https://maps.google.com/?q=Bangalore';
 
@@ -267,6 +270,29 @@
         venue: '',
         address: '',
         mapUrl: '',
+        desc: 'Sacred thali tying and auspicious wedding rituals in presence of family and elders.'
+      }
+    ];
+  } else if (isDeepthiPichwai) {
+    events = [
+      {
+        id: 'reception',
+        name: 'Reception',
+        date: 'Friday, 25th December 2026',
+        time: '7:00 PM',
+        venue: 'BWSSB Rajatha Bhavan',
+        address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
+        mapUrl: 'https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D',
+        desc: 'An evening of celebration, musical feast, and dinner.'
+      },
+      {
+        id: 'muhurtham',
+        name: 'Muhurtham',
+        date: 'Saturday, 26th December 2026',
+        time: 'Between 9:15 AM - 10:15 AM',
+        venue: 'Prasanna Lakshmi Venkateshwara Temple',
+        address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
+        mapUrl: 'https://maps.google.com/?q=Prasanna+Lakshmi+Venkateshwara+Temple+Malleshwaram',
         desc: 'Sacred thali tying and auspicious wedding rituals in presence of family and elders.'
       }
     ];
@@ -530,7 +556,7 @@
     if (t2VAddr && venueAddress) t2VAddr.textContent = venueAddress;
 
     // 5. Template-Specific Dynamic Events & Photos Handlers
-    if (currentTemplateId === 'pichwai-palace') {
+    if (currentTemplateId === 'pichwai-palace' || currentTemplateId === 'deepthi-murali-pichwai') {
       applyTemplate2EventsAndGallery();
     } else if (currentTemplateId === 'champagne-luxury') {
       applyTemplate10EventsAndGallery();
@@ -546,6 +572,179 @@
     initCountdownTimer();
   }
 
+  // Universal multi-format date parser
+  function parseWeddingDateToTimestamp(dateStr, timeStr) {
+    if (!dateStr || typeof dateStr !== 'string') return null;
+    var raw = dateStr.trim();
+    if (!raw) return null;
+
+    var cleaned = raw.replace(/^(monday|tuesday|wednesday|thursday|friday|saturday|sunday)[,\s]+/i, '').trim()
+                     .replace(/(\d+)(st|nd|rd|th)\b/gi, '$1').trim();
+
+    var defaultHours = 19;
+    var defaultMins = 0;
+
+    var effectiveTime = (timeStr && typeof timeStr === 'string' && timeStr.trim()) ? timeStr.trim() : '';
+    if (!effectiveTime) {
+      var embeddedTimeMatch = cleaned.match(/(\d{1,2}):(\d{2})(?:\s*([ap]m))?/i);
+      if (embeddedTimeMatch) effectiveTime = embeddedTimeMatch[0];
+    }
+
+    if (effectiveTime) {
+      var timeMatch = effectiveTime.match(/(\d{1,2}):(\d{2})(?:\s*([ap]m))?/i);
+      if (timeMatch) {
+        var hrs = parseInt(timeMatch[1], 10);
+        var mins = parseInt(timeMatch[2], 10);
+        var ampm = (timeMatch[3] || '').toUpperCase();
+        if (ampm === 'PM' && hrs < 12) hrs += 12;
+        if (ampm === 'AM' && hrs === 12) hrs = 0;
+        defaultHours = hrs;
+        defaultMins = mins;
+      }
+    }
+
+    // 1. ISO YYYY-MM-DD or YYYY/MM/DD
+    var isoMatch = cleaned.match(/^(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})/);
+    if (isoMatch) {
+      var dt = new Date(parseInt(isoMatch[1], 10), parseInt(isoMatch[2], 10) - 1, parseInt(isoMatch[3], 10), defaultHours, defaultMins, 0);
+      if (!isNaN(dt.getTime())) return dt.getTime();
+    }
+
+    // 2. DD Month YYYY
+    var dmyMatch = cleaned.match(/^(\d{1,2})[\s\-]+([A-Za-z]+)[\s\-]+(\d{4})/);
+    if (dmyMatch) {
+      var mNames = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+      var mIdx = mNames.findIndex(function(mn){ return dmyMatch[2].toLowerCase().indexOf(mn) === 0; });
+      if (mIdx !== -1) {
+        var dt2 = new Date(parseInt(dmyMatch[3], 10), mIdx, parseInt(dmyMatch[1], 10), defaultHours, defaultMins, 0);
+        if (!isNaN(dt2.getTime())) return dt2.getTime();
+      }
+    }
+
+    // 3. Month DD, YYYY
+    var mdyMatch = cleaned.match(/^([A-Za-z]+)[\s\-]+(\d{1,2})[,\s\-]+(\d{4})/);
+    if (mdyMatch) {
+      var mNames2 = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
+      var mIdx2 = mNames2.findIndex(function(mn){ return mdyMatch[1].toLowerCase().indexOf(mn) === 0; });
+      if (mIdx2 !== -1) {
+        var dt3 = new Date(parseInt(mdyMatch[3], 10), mIdx2, parseInt(mdyMatch[2], 10), defaultHours, defaultMins, 0);
+        if (!isNaN(dt3.getTime())) return dt3.getTime();
+      }
+    }
+
+    // 4. DD-MM-YYYY or DD/MM/YYYY
+    var numMatch = cleaned.match(/^(\d{1,2})[-/.](\d{1,2})[-/.](\d{4})/);
+    if (numMatch) {
+      var p1 = parseInt(numMatch[1], 10);
+      var p2 = parseInt(numMatch[2], 10);
+      var pYear = parseInt(numMatch[3], 10);
+      var day3 = p1;
+      var month3 = p2 - 1;
+      if (p1 <= 12 && p2 > 12) {
+        day3 = p2;
+        month3 = p1 - 1;
+      }
+      var dt4 = new Date(pYear, month3, day3, defaultHours, defaultMins, 0);
+      if (!isNaN(dt4.getTime())) return dt4.getTime();
+    }
+
+    // 5. Fallback native parse
+    try {
+      var parsedNative = Date.parse(cleaned);
+      if (!isNaN(parsedNative)) {
+        var dObj = new Date(parsedNative);
+        dObj.setHours(defaultHours, defaultMins, 0, 0);
+        return dObj.getTime();
+      }
+    } catch (_) {}
+
+    return null;
+  }
+
+  function resolveCountdownTarget(weddingDateStr, eventsList, preferredTime) {
+    var now = Date.now();
+    var candidates = [];
+
+    if (weddingDateStr) {
+      var ts = parseWeddingDateToTimestamp(weddingDateStr, preferredTime);
+      if (ts) candidates.push(ts);
+    }
+
+    if (Array.isArray(eventsList)) {
+      eventsList.forEach(function (e) {
+        var d = e.date || e.d;
+        var t = e.time || e.t || preferredTime;
+        if (d) {
+          var ts2 = parseWeddingDateToTimestamp(d, t);
+          if (ts2) candidates.push(ts2);
+        }
+      });
+    }
+
+    // Filter future candidates
+    var futureCandidates = candidates.filter(function (ts) { return ts > now; });
+    if (futureCandidates.length > 0) {
+      futureCandidates.sort(function (a, b) { return a - b; });
+      return futureCandidates[0];
+    }
+
+    // If candidate dates exist but were in the past (e.g. demo template date or past year entered),
+    // advance year into the future so countdown actively ticks
+    for (var i = 0; i < candidates.length; i++) {
+      var dObj = new Date(candidates[i]);
+      while (dObj.getTime() <= now) {
+        dObj.setFullYear(dObj.getFullYear() + 1);
+      }
+      if (dObj.getTime() > now) {
+        return dObj.getTime();
+      }
+    }
+
+    // Default future target (+30 days at 19:00:00) when creating a new form or if no date is set
+    var defaultFuture = new Date();
+    defaultFuture.setDate(defaultFuture.getDate() + 30);
+    defaultFuture.setHours(19, 0, 0, 0);
+    return defaultFuture.getTime();
+  }
+
+  function splitAddressParts(addressStr, venueName) {
+    var raw = safeStr(addressStr, '');
+    if (!raw) {
+      return {
+        street: safeStr(venueName, 'The Grand Ballroom'),
+        city: 'Bengaluru, Karnataka'
+      };
+    }
+
+    var parts = raw.split(',').map(function (p) { return p.trim(); }).filter(Boolean);
+    if (parts.length === 1) {
+      return {
+        street: parts[0],
+        city: 'Bengaluru, Karnataka'
+      };
+    }
+
+    var splitIdx = -1;
+    for (var i = 1; i < parts.length; i++) {
+      if (/\b(bengaluru|bangalore|karnataka|chennai|hyderabad|mumbai|delhi|kerala|india|\d{6})\b/i.test(parts[i])) {
+        splitIdx = i;
+        break;
+      }
+    }
+
+    if (splitIdx === -1) {
+      splitIdx = Math.max(1, Math.floor(parts.length / 2));
+    }
+
+    var street = parts.slice(0, splitIdx).join(', ');
+    var city = parts.slice(splitIdx).join(', ');
+
+    return {
+      street: street,
+      city: city
+    };
+  }
+
   function initCountdownTimer() {
     var cdDays = document.getElementById('cdDays');
     if (!cdDays) return;
@@ -553,22 +752,14 @@
     var cdMins = document.getElementById('cdMins');
     var cdSecs = document.getElementById('cdSecs');
 
-    function parseTarget() {
-      try {
-        var raw = weddingDate || '19 November 2026';
-        var match = String(raw).match(/(\d{1,2})\s+([A-Za-z]+)\s+(\d{4})/);
-        if (match) {
-          var mNames = ['jan','feb','mar','apr','may','jun','jul','aug','sep','oct','nov','dec'];
-          var mIdx = mNames.findIndex(function(m){ return match[2].toLowerCase().indexOf(m) === 0; });
-          if (mIdx !== -1) {
-            return new Date(parseInt(match[3], 10), mIdx, parseInt(match[1], 10), 19, 0, 0).getTime();
-          }
-        }
-      } catch (_) {}
-      return new Date(2026, 10, 19, 19, 0, 0).getTime();
+    var target = resolveCountdownTarget(weddingDate, events, weddingTime);
+
+    // If Template 2 provides its own ticker hook, delegate to it to prevent dual interval fight
+    if (typeof window.__updateTemplate2Countdown === 'function') {
+      window.__updateTemplate2Countdown(target);
+      return;
     }
 
-    var target = parseTarget();
     var pad = function(n) { return (n < 10 ? '0' : '') + Math.floor(n < 0 ? 0 : n); };
 
     function update() {
@@ -583,10 +774,11 @@
       if (cdMins) cdMins.textContent = pad(m);
       if (cdSecs) cdSecs.textContent = pad(s);
     }
-    update();
-    if (!window.__wowCdInterval) {
-      window.__wowCdInterval = setInterval(update, 1000);
+    if (window.__wowCdInterval) {
+      clearInterval(window.__wowCdInterval);
     }
+    update();
+    window.__wowCdInterval = setInterval(update, 1000);
   }
 
   // ── TEMPLATE 2 (Royal Pichwai Palace) ──
@@ -627,12 +819,12 @@
         article.setAttribute('aria-label', (idx + 1) + ' of ' + events.length + ': ' + ev.name);
 
         var isMuhurtham = (ev.name || '').toLowerCase().indexOf('muhurtham') !== -1;
-        var noteHtml = isMuhurtham ? '<p class="event-note">(Dhanus Lagna)</p>' : '';
-        var venueHtml = (!isMuhurtham && ev.venue && ev.venue.trim().length > 0)
+        var noteHtml = (isMuhurtham && !ev.desc) ? '<p class="event-note">(Dhanus Lagna)</p>' : '';
+        var venueHtml = (ev.venue && ev.venue.trim().length > 0)
           ? `<p class="event-venue">${ev.venue}${ev.address ? '<br>' + ev.address : ''}</p>`
           : '';
-        var mapBtnHtml = (!isMuhurtham && ev.mapUrl) ? `
-          <a href="${ev.mapUrl}" target="_blank" rel="noopener" class="event-map-btn" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:7px 16px;background:linear-gradient(135deg,#d4af37,#b8860b);color:#1b1406;border-radius:24px;font-size:11px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,0.18);letter-spacing:0.5px;text-transform:uppercase;transition:transform 0.2s ease;">
+        var mapBtnHtml = (ev.mapUrl || (ev.venue && ev.venue.trim().length > 0)) ? `
+          <a href="${ev.mapUrl || getDirectionsUrl(ev.venue, ev.address, '')}" target="_blank" rel="noopener noreferrer" class="event-map-btn" style="display:inline-flex;align-items:center;gap:6px;margin-top:12px;padding:7px 16px;background:linear-gradient(135deg,#d4af37,#b8860b);color:#1b1406;border-radius:24px;font-size:11px;font-weight:700;text-decoration:none;box-shadow:0 4px 12px rgba(0,0,0,0.18);letter-spacing:0.5px;text-transform:uppercase;transition:transform 0.2s ease;">
             <svg width="12" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
             <span>Get Directions</span>
           </a>` : '';
@@ -659,6 +851,9 @@
 
         eventsList.appendChild(article);
       });
+
+      // Synchronize dedicated venue interfaces for all functions
+      applyTemplate2Venues();
     }
 
     var galSec = document.getElementById('gallery');
@@ -696,6 +891,197 @@
           thumb.innerHTML = '<img class="gallery-thumb-photo" src="' + src + '" alt="Thumbnail ' + (i + 1) + '" decoding="async" loading="lazy">';
           thumbsContainer.appendChild(thumb);
         });
+      }
+    }
+  }
+
+  function applyTemplate2Venues() {
+    var venueSec = document.getElementById('venue');
+    if (!venueSec) return;
+
+    // Clean up any dynamic venue sections from previous runs
+    document.querySelectorAll('.venue-section--dynamic').forEach(function(el) {
+      el.remove();
+    });
+
+    // Gather distinct venue entries from events
+    var venueList = [];
+    if (Array.isArray(events) && events.length > 0) {
+      events.forEach(function (ev, idx) {
+        var vName = safeStr(ev.venue, '').trim();
+        var vAddr = safeStr(ev.address, '').trim();
+        var vMap = safeStr(ev.mapUrl, '').trim();
+        if (vName || vAddr || vMap) {
+          venueList.push({
+            idx: idx,
+            name: safeStr(ev.name, 'Function ' + (idx + 1)),
+            venue: vName || venueName,
+            address: vAddr || venueAddress,
+            mapUrl: getDirectionsUrl(vName || venueName, vAddr || venueAddress, vMap)
+          });
+        }
+      });
+    }
+
+    if (venueList.length === 0) {
+      venueList = [{
+        idx: 0,
+        name: 'Wedding Ceremony & Reception',
+        venue: venueName,
+        address: venueAddress,
+        mapUrl: defaultMapUrl
+      }];
+    }
+
+    var isMultiVenue = venueList.length >= 2;
+
+    function renderVenueCardHtml(v, index, total) {
+      var addrParts = splitAddressParts(v.address, v.venue);
+      var streetCaps = (addrParts.street || '').toUpperCase().replace(/,\s*/g, ' · ');
+      var cityScript = addrParts.city || 'Bengaluru, Karnataka';
+      var dirUrl = v.mapUrl || getDirectionsUrl(v.venue, v.address, '');
+
+      return `
+        <a class="venue-map-card" href="${dirUrl}" target="_blank" rel="noopener noreferrer" role="button" aria-label="Open Google Maps directions to ${v.venue}">
+          <img src="images/venue-map.jpg" alt="Map view of ${v.venue}" class="venue-map-img" width="768" height="768" loading="lazy" decoding="async" draggable="false">
+          
+          <div class="map-pin-badge" aria-hidden="true">
+            <div class="map-pin-pulse"></div>
+            <div class="map-pin-icon">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+              </svg>
+            </div>
+            <span class="map-pin-label">${v.venue.toUpperCase()}</span>
+          </div>
+
+          <div class="map-card-vignette" aria-hidden="true"></div>
+
+          <figcaption class="map-card-caption">
+            <small>${streetCaps}</small>
+            <strong class="map-card-script">${cityScript}</strong>
+          </figcaption>
+        </a>
+
+        <div class="venue-address-block">
+          <p class="venue-addr-street">${addrParts.street}</p>
+          <p class="venue-addr-city">${addrParts.city}</p>
+        </div>
+
+        <a class="venue-directions-btn" href="${dirUrl}" target="_blank" rel="noopener noreferrer">
+          Get directions <b>↗</b>
+        </a>
+      `;
+    }
+
+    function buildPillsHtml(activeIdx) {
+      if (!isMultiVenue) return '';
+      var pills = venueList.map(function (v, i) {
+        var targetId = i === 0 ? 'venue' : ('venue-' + (i + 1));
+        var cls = 'venue-pill' + (i === activeIdx ? ' is-active' : '');
+        return `<a href="#${targetId}" class="${cls}" data-venue-target="${targetId}">${i + 1}. ${v.name} Venue</a>`;
+      }).join('');
+      return `<div class="venue-pills">${pills}</div>`;
+    }
+
+    // 1. Update Primary Venue Section (#venue)
+    var v1 = venueList[0];
+    var v1Eyebrow = venueSec.querySelector('.events-eyebrow') || document.getElementById('venueEyebrow');
+    if (v1Eyebrow) {
+      v1Eyebrow.textContent = isMultiVenue ? ('Location & Directions · ' + v1.name) : 'Location & Directions';
+    }
+    var v1Title = document.getElementById('venueTitle');
+    if (v1Title) {
+      v1Title.textContent = isMultiVenue ? (v1.name + ' Venue') : 'The Venue';
+    }
+
+    var v1PillContainer = venueSec.querySelector('.venue-pills-container');
+    if (!v1PillContainer) {
+      v1PillContainer = document.createElement('div');
+      v1PillContainer.className = 'venue-pills-container';
+      var header1 = venueSec.querySelector('.events-header');
+      if (header1) header1.appendChild(v1PillContainer);
+    }
+    v1PillContainer.innerHTML = buildPillsHtml(0);
+
+    var v1Card = document.getElementById('venueCard');
+    if (v1Card) {
+      v1Card.innerHTML = renderVenueCardHtml(v1, 0, venueList.length);
+    }
+
+    // 2. If multiple venues, create second (and further) full-screen dedicated venue sections
+    var lastVenueEl = venueSec;
+    for (var i = 1; i < venueList.length; i++) {
+      var vi = venueList[i];
+      var secId = 'venue-' + (i + 1);
+
+      var newSec = document.createElement('section');
+      newSec.className = 'section venue-section venue-section--dynamic reveal-item is-in';
+      newSec.id = secId;
+      newSec.setAttribute('aria-labelledby', 'venueTitle-' + (i + 1));
+
+      newSec.innerHTML = `
+        <div class="events-decor" aria-hidden="true">
+          <img class="evt-decor evt-decor--jhoomer evt-decor--jhoomer-l" src="images/events/event_3.webp" alt="" decoding="async" loading="lazy" draggable="false">
+          <img class="evt-decor evt-decor--jhoomer evt-decor--jhoomer-r" src="images/events/event_3.webp" alt="" decoding="async" loading="lazy" draggable="false">
+          <img class="evt-decor evt-decor--chandelier evt-decor--chandelier-1" src="images/events/event_1.webp" alt="" decoding="async" loading="lazy" draggable="false">
+          <img class="evt-decor evt-decor--chandelier evt-decor--chandelier-2" src="images/events/event_1.webp" alt="" decoding="async" loading="lazy" draggable="false">
+          <img class="evt-decor evt-decor--nazar evt-decor--nazar-1" src="images/events/event_6.webp" alt="" decoding="async" loading="lazy" draggable="false">
+          <img class="evt-decor evt-decor--nazar evt-decor--nazar-2" src="images/events/event_6.webp" alt="" decoding="async" loading="lazy" draggable="false">
+          <img class="evt-decor evt-decor--peacock" src="images/events/event_4.webp" alt="" decoding="async" loading="lazy" draggable="false">
+          <img class="evt-decor evt-decor--camel"   src="images/events/event_2.webp" alt="" decoding="async" loading="lazy" draggable="false">
+          <img class="evt-decor evt-decor--horse"   src="images/events/event_5.webp" alt="" decoding="async" loading="lazy" draggable="false">
+        </div>
+
+        <div class="events-header">
+          <p class="events-eyebrow">Location &amp; Directions · ${vi.name}</p>
+          <h2 class="events-title" id="venueTitle-${i + 1}">${vi.name} Venue</h2>
+          <img class="events-title-rule" src="images/events/border_4.webp" alt="" aria-hidden="true" decoding="async" draggable="false">
+          <div class="venue-pills-container">${buildPillsHtml(i)}</div>
+        </div>
+
+        <div class="venue-card-wrapper venue-map-wrapper reveal-item is-in" id="venueCard-${i + 1}">
+          ${renderVenueCardHtml(vi, i, venueList.length)}
+        </div>
+      `;
+
+      lastVenueEl.parentNode.insertBefore(newSec, lastVenueEl.nextSibling);
+      lastVenueEl = newSec;
+    }
+
+    // 3. Smooth scroll handling for all pills
+    document.querySelectorAll('.venue-pill').forEach(function (pill) {
+      pill.addEventListener('click', function (e) {
+        e.preventDefault();
+        var targetId = this.getAttribute('data-venue-target') || (this.getAttribute('href') || '').replace('#', '');
+        var targetEl = document.getElementById(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // 4. Update Navigation Menu in navPanel
+    var navList = document.querySelector('.nav-menu');
+    if (navList) {
+      document.querySelectorAll('.nav-menu .dynamic-nav-venue').forEach(function (el) { el.remove(); });
+      var baseVenueLink = navList.querySelector('a[href="#venue"]');
+      if (baseVenueLink) {
+        var baseLi = baseVenueLink.closest('li');
+        if (isMultiVenue && baseLi) {
+          baseVenueLink.querySelector('.nav-link-label').textContent = venueList[0].name + ' Venue';
+          var refLi = baseLi;
+          for (var j = 1; j < venueList.length; j++) {
+            var newLi = document.createElement('li');
+            newLi.className = 'dynamic-nav-venue';
+            newLi.setAttribute('role', 'none');
+            newLi.innerHTML = `<a class="nav-link" href="#venue-${j + 1}" role="menuitem"><span class="nav-link-label">${venueList[j].name} Venue</span></a>`;
+            refLi.parentNode.insertBefore(newLi, refLi.nextSibling);
+            refLi = newLi;
+          }
+        } else if (!isMultiVenue && baseVenueLink) {
+          baseVenueLink.querySelector('.nav-link-label').textContent = 'Venue';
+        }
       }
     }
   }

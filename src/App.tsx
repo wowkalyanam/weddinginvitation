@@ -168,6 +168,49 @@ const TEMPLATES: TemplateItem[] = [
     },
   },
   {
+    id: 'deepthi-murali-pichwai',
+    title: 'Royal Pichwai Palace — Deepthi & Murali',
+    subtitle: 'Dual Venue Maps · Elephant Bell Intro · 3D Fan Events',
+    badge: 'Dual Venue',
+    image: '/images/cards/pichwai-cover.webp',
+    demoUrl: '/deepthi-murali.html',
+    defaultData: {
+      bride: 'Deepthi',
+      groom: 'Murali',
+      brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
+      groomParents: 'Shri. K. Muralidharan & Smt. M. Geetha',
+      date: '25 December 2026',
+      time: '07:00 PM',
+      functionName: 'Reception & Muhurtham',
+      venue: 'BWSSB Rajatha Bhavan',
+      address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
+      mapUrl: 'https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka 560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D',
+      events: [
+        {
+          id: 'reception',
+          name: 'Reception',
+          date: '25 December 2026',
+          time: '07:00 PM',
+          venue: 'BWSSB Rajatha Bhavan',
+          address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
+          mapUrl: 'https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka 560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D',
+          desc: 'An evening of celebration, musical feast, and dinner.'
+        },
+        {
+          id: 'muhurtham',
+          name: 'Muhurtham',
+          date: '26 December 2026',
+          time: 'Between 9:15 AM - 10:15 AM',
+          venue: 'Prasanna Lakshmi Venkateshwara Temple',
+          address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
+          mapUrl: 'https://maps.google.com/?q=Prasanna+Lakshmi+Venkateshwara+Temple+Malleshwaram',
+          desc: 'Sacred thali tying and auspicious wedding rituals in presence of family and elders.'
+        }
+      ],
+      photos: []
+    },
+  },
+  {
     id: 'kasavu-kerala',
     title: 'Kerala Kasavu Backwaters',
     subtitle: "God's Own Country · 3-Layer Parallax · Nilavilakku Ceremony",
@@ -383,12 +426,16 @@ export function generateInviteLink(formId: string, templateId: string, data: Tem
   if (data.groom) params.set('g', data.groom.trim());
   if (data.brideParents) params.set('bp', data.brideParents.trim());
   if (data.groomParents) params.set('gp', data.groomParents.trim());
-  const firstEvt = (data.events && data.events.length > 0) ? data.events[0] : null;
-  const effectiveDate = (data.date && data.date.trim()) || (firstEvt && firstEvt.date && firstEvt.date.trim()) || '';
-  const effectiveTime = (data.time && data.time.trim()) || (firstEvt && firstEvt.time && firstEvt.time.trim()) || '';
-  const effectiveVenue = (data.venue && data.venue.trim()) || (firstEvt && firstEvt.venue && firstEvt.venue.trim()) || '';
-  const effectiveAddress = (data.address && data.address.trim()) || (firstEvt && firstEvt.address && firstEvt.address.trim()) || '';
-  const effectiveMapUrl = (data.mapUrl && data.mapUrl.trim()) || (firstEvt && firstEvt.mapUrl && firstEvt.mapUrl.trim()) || '';
+  const anyEvtWithDate = (data.events || []).find((e) => e.date && e.date.trim());
+  const effectiveDate = (data.date && data.date.trim()) || (anyEvtWithDate && anyEvtWithDate.date.trim()) || '';
+  const anyEvtWithTime = (data.events || []).find((e) => e.time && e.time.trim());
+  const effectiveTime = (data.time && data.time.trim()) || (anyEvtWithTime && anyEvtWithTime.time.trim()) || '';
+  const anyEvtWithVenue = (data.events || []).find((e) => e.venue && e.venue.trim());
+  const effectiveVenue = (data.venue && data.venue.trim()) || (anyEvtWithVenue && anyEvtWithVenue.venue.trim()) || '';
+  const anyEvtWithAddr = (data.events || []).find((e) => e.address && e.address.trim());
+  const effectiveAddress = (data.address && data.address.trim()) || (anyEvtWithAddr && anyEvtWithAddr.address && anyEvtWithAddr.address.trim()) || '';
+  const anyEvtWithMap = (data.events || []).find((e) => e.mapUrl && e.mapUrl.trim());
+  const effectiveMapUrl = (data.mapUrl && data.mapUrl.trim()) || (anyEvtWithMap && anyEvtWithMap.mapUrl.trim()) || '';
 
   if (effectiveDate) params.set('d', effectiveDate);
   if (effectiveTime) params.set('t', effectiveTime);
@@ -754,6 +801,8 @@ export default function App() {
       if (updates.address !== undefined) extraUpdates.address = updates.address;
       if (updates.time) extraUpdates.time = updates.time;
       if (updates.mapUrl) extraUpdates.mapUrl = updates.mapUrl;
+    } else if (!activeFormData.date && updates.date) {
+      extraUpdates.date = updates.date;
     }
     updateActiveFormData(extraUpdates);
   };
@@ -1160,7 +1209,7 @@ export default function App() {
                     : 'bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300'
                 }`}
               >
-                All (5)
+                All ({TEMPLATES.length})
               </button>
               {TEMPLATES.map((t) => (
                 <button
@@ -1172,7 +1221,7 @@ export default function App() {
                       : 'bg-white text-neutral-600 border border-neutral-200 hover:border-neutral-300'
                   }`}
                 >
-                  {t.title.split(' ')[0]}
+                  {t.id === 'deepthi-murali-pichwai' ? 'Deepthi & Murali' : (t.id === 'pichwai-palace' ? 'Pichwai (Dharani)' : t.title.split(' ')[0])}
                 </button>
               ))}
             </div>
@@ -1467,7 +1516,7 @@ export default function App() {
                               const val = e.target.value;
                               updateEvent(evt.id, { date: val });
                               const lower = (evt.name || '').toLowerCase();
-                              if (idx === 0 || lower.includes('reception')) {
+                              if (idx === 0 || lower.includes('reception') || !activeFormData.date) {
                                 updateActiveFormData({ date: val });
                               }
                             }}

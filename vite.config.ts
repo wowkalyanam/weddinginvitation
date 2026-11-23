@@ -25,6 +25,7 @@ export default defineConfig({
         meenaya2: path.resolve(__dirname, 'meenaya2.html'),
         template13: path.resolve(__dirname, 'template13.html'),
         template09: path.resolve(__dirname, 'template09.html'),
+        deepthiMurali: path.resolve(__dirname, 'deepthi-murali.html'),
       },
     },
   },

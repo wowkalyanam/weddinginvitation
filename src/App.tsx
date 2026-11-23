@@ -383,12 +383,18 @@ export function generateInviteLink(formId: string, templateId: string, data: Tem
   if (data.groom) params.set('g', data.groom.trim());
   if (data.brideParents) params.set('bp', data.brideParents.trim());
   if (data.groomParents) params.set('gp', data.groomParents.trim());
-  const effectiveDate = (data.date && data.date.trim()) || (data.events && data.events[0] && data.events[0].date && data.events[0].date.trim()) || '';
+  const firstEvt = (data.events && data.events.length > 0) ? data.events[0] : null;
+  const effectiveDate = (data.date && data.date.trim()) || (firstEvt && firstEvt.date && firstEvt.date.trim()) || '';
+  const effectiveTime = (data.time && data.time.trim()) || (firstEvt && firstEvt.time && firstEvt.time.trim()) || '';
+  const effectiveVenue = (data.venue && data.venue.trim()) || (firstEvt && firstEvt.venue && firstEvt.venue.trim()) || '';
+  const effectiveAddress = (data.address && data.address.trim()) || (firstEvt && firstEvt.address && firstEvt.address.trim()) || '';
+  const effectiveMapUrl = (data.mapUrl && data.mapUrl.trim()) || (firstEvt && firstEvt.mapUrl && firstEvt.mapUrl.trim()) || '';
+
   if (effectiveDate) params.set('d', effectiveDate);
-  if (data.time && data.time.trim()) params.set('t', data.time.trim());
-  if (data.venue && data.venue.trim()) params.set('v', data.venue.trim());
-  if (data.address && data.address.trim()) params.set('a', data.address.trim());
-  if (data.mapUrl && data.mapUrl.trim()) params.set('m', data.mapUrl.trim());
+  if (effectiveTime) params.set('t', effectiveTime);
+  if (effectiveVenue) params.set('v', effectiveVenue);
+  if (effectiveAddress) params.set('a', effectiveAddress);
+  if (effectiveMapUrl) params.set('m', effectiveMapUrl);
 
   // Clean web URLs for photos
   const webPhotos = (data.photos || []).filter((p) => !p.startsWith('data:'));
@@ -399,10 +405,10 @@ export function generateInviteLink(formId: string, templateId: string, data: Tem
     bp: data.brideParents,
     gp: data.groomParents,
     d: effectiveDate,
-    t: data.time,
-    v: data.venue,
-    a: data.address,
-    m: data.mapUrl,
+    t: effectiveTime,
+    v: effectiveVenue,
+    a: effectiveAddress,
+    m: effectiveMapUrl,
     ev: (data.events || []).map((e) => ({
       id: e.id,
       n: e.name,
@@ -1389,89 +1395,6 @@ export default function App() {
                       className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
                     />
                     <p className="text-[11px] text-neutral-500 mt-1">Appears on the ceremonial invitation card</p>
-                  </div>
-                </div>
-
-                {/* Main Venue & Ceremony Timing */}
-                <div className="pt-2 border-t border-neutral-200/70 space-y-3">
-                  <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-800 uppercase tracking-wider">
-                    <MapPin className="w-3.5 h-3.5 text-amber-600" />
-                    <span>Main Venue &amp; Ceremony Timing</span>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
-                        Main Venue Name
-                      </label>
-                      <input
-                        type="text"
-                        value={activeFormData.venue}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          const nextEvts = [...(activeFormData.events || [])];
-                          if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], venue: val };
-                          updateActiveFormData({ venue: val, events: nextEvts });
-                        }}
-                        placeholder="e.g. The Grand Palace"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
-                        Ceremony / Reception Time
-                      </label>
-                      <input
-                        type="text"
-                        value={activeFormData.time}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          const nextEvts = [...(activeFormData.events || [])];
-                          if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], time: val };
-                          updateActiveFormData({ time: val, events: nextEvts });
-                        }}
-                        placeholder="e.g. 07:00 PM"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
-                      Venue City / Address
-                    </label>
-                    <input
-                      type="text"
-                      value={activeFormData.address}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        const nextEvts = [...(activeFormData.events || [])];
-                        if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], address: val };
-                        updateActiveFormData({ address: val, events: nextEvts });
-                      }}
-                      placeholder="e.g. Palace Grounds, Bengaluru"
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1 flex items-center gap-1">
-                      <MapPin className="w-3 h-3 text-amber-600" />
-                      <span>Main Venue Google Maps Link</span>
-                    </label>
-                    <input
-                      type="text"
-                      value={activeFormData.mapUrl}
-                      onChange={(e) => {
-                        const val = e.target.value;
-                        const nextEvts = [...(activeFormData.events || [])];
-                        if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], mapUrl: val };
-                        updateActiveFormData({ mapUrl: val, events: nextEvts });
-                      }}
-                      placeholder="e.g. https://maps.google.com/?q=..."
-                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-xs font-mono bg-white"
-                    />
                   </div>
                 </div>
               </div>

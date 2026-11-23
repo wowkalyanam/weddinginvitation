@@ -383,7 +383,8 @@ export function generateInviteLink(formId: string, templateId: string, data: Tem
   if (data.groom) params.set('g', data.groom.trim());
   if (data.brideParents) params.set('bp', data.brideParents.trim());
   if (data.groomParents) params.set('gp', data.groomParents.trim());
-  if (data.date && data.date.trim()) params.set('d', data.date.trim());
+  const effectiveDate = (data.date && data.date.trim()) || (data.events && data.events[0] && data.events[0].date && data.events[0].date.trim()) || '';
+  if (effectiveDate) params.set('d', effectiveDate);
   if (data.time && data.time.trim()) params.set('t', data.time.trim());
   if (data.venue && data.venue.trim()) params.set('v', data.venue.trim());
   if (data.address && data.address.trim()) params.set('a', data.address.trim());
@@ -397,7 +398,7 @@ export function generateInviteLink(formId: string, templateId: string, data: Tem
     g: data.groom,
     bp: data.brideParents,
     gp: data.groomParents,
-    d: data.date,
+    d: effectiveDate,
     t: data.time,
     v: data.venue,
     a: data.address,
@@ -1035,7 +1036,7 @@ export default function App() {
                         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-1 text-xs text-neutral-500">
                           <span className="flex items-center gap-1">
                             <Calendar className="w-3 h-3 text-neutral-400" />
-                            <span>{form.data.date ? form.data.date : 'No date set'}</span>
+                            <span>{form.data.date || form.data.events?.[0]?.date || 'No date set'}</span>
                           </span>
                           <span className="text-neutral-300">•</span>
                           <span>{form.data.events?.length || 0} event{(form.data.events?.length || 0) === 1 ? '' : 's'}</span>
@@ -1391,50 +1392,11 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* Primary Wedding Date & Main Venue */}
+                {/* Main Venue & Ceremony Timing */}
                 <div className="pt-2 border-t border-neutral-200/70 space-y-3">
                   <div className="flex items-center gap-1.5 text-xs font-bold text-neutral-800 uppercase tracking-wider">
-                    <Calendar className="w-3.5 h-3.5 text-amber-600" />
-                    <span>Primary Wedding Date &amp; Main Venue</span>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
-                        Primary Wedding Date (User Entered Only)
-                      </label>
-                      <input
-                        type="text"
-                        value={activeFormData.date}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          const nextEvts = [...(activeFormData.events || [])];
-                          if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], date: val };
-                          updateActiveFormData({ date: val, events: nextEvts });
-                        }}
-                        placeholder="e.g. 06 December 2026 (or leave empty)"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
-                      />
-                      <p className="text-[10px] text-neutral-500 mt-1">If left empty, no old or default date will be shown.</p>
-                    </div>
-
-                    <div>
-                      <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
-                        Ceremony Time
-                      </label>
-                      <input
-                        type="text"
-                        value={activeFormData.time}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          const nextEvts = [...(activeFormData.events || [])];
-                          if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], time: val };
-                          updateActiveFormData({ time: val, events: nextEvts });
-                        }}
-                        placeholder="e.g. 07:00 PM"
-                        className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
-                      />
-                    </div>
+                    <MapPin className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Main Venue &amp; Ceremony Timing</span>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1458,21 +1420,39 @@ export default function App() {
 
                     <div>
                       <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
-                        Venue City / Address
+                        Ceremony / Reception Time
                       </label>
                       <input
                         type="text"
-                        value={activeFormData.address}
+                        value={activeFormData.time}
                         onChange={(e) => {
                           const val = e.target.value;
                           const nextEvts = [...(activeFormData.events || [])];
-                          if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], address: val };
-                          updateActiveFormData({ address: val, events: nextEvts });
+                          if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], time: val };
+                          updateActiveFormData({ time: val, events: nextEvts });
                         }}
-                        placeholder="e.g. Palace Grounds, Bengaluru"
+                        placeholder="e.g. 07:00 PM"
                         className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
                       />
                     </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-semibold text-neutral-700 uppercase tracking-wider mb-1">
+                      Venue City / Address
+                    </label>
+                    <input
+                      type="text"
+                      value={activeFormData.address}
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        const nextEvts = [...(activeFormData.events || [])];
+                        if (nextEvts[0]) nextEvts[0] = { ...nextEvts[0], address: val };
+                        updateActiveFormData({ address: val, events: nextEvts });
+                      }}
+                      placeholder="e.g. Palace Grounds, Bengaluru"
+                      className="w-full px-3.5 py-2.5 rounded-xl border border-neutral-300 focus:outline-none focus:ring-2 focus:ring-black text-sm bg-white font-medium"
+                    />
                   </div>
 
                   <div>

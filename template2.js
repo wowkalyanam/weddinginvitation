@@ -47,20 +47,6 @@ function initApp() {
       if (sForm) customCfg = JSON.parse(sForm);
     } catch (_) {}
   }
-  if (!customCfg && !fid && !rawCfg && !urlParams.get('b') && typeof window !== 'undefined') {
-    try {
-      const saved = localStorage.getItem('wow_custom_wedding_pichwai-palace');
-      if (saved) {
-        const pSaved = JSON.parse(saved);
-        if (pSaved.bride === 'Deepthi' && pSaved.groom === 'Murali') {
-          localStorage.removeItem('wow_custom_wedding_pichwai-palace');
-        } else {
-          customCfg = pSaved;
-        }
-      }
-    } catch (_) {}
-  }
-
   const paramBride = (customCfg && (customCfg.b || customCfg.bride)) || urlParams.get('b') || urlParams.get('bride');
   const paramGroom = (customCfg && (customCfg.g || customCfg.groom)) || urlParams.get('g') || urlParams.get('groom');
   const paramDate = (customCfg && (customCfg.d || customCfg.date)) || urlParams.get('d') || urlParams.get('date');

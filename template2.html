@@ -41,19 +41,6 @@
         if (sForm) cfg = JSON.parse(sForm);
       } catch (_) {}
     }
-    if (!cfg && !fid && !rawCfg && !getQueryParam('b') && typeof window !== 'undefined') {
-      try {
-        var saved = localStorage.getItem('wow_custom_wedding_pichwai-palace');
-        if (saved) {
-          var pSaved = JSON.parse(saved);
-          if (pSaved.bride === 'Deepthi' && pSaved.groom === 'Murali') {
-            localStorage.removeItem('wow_custom_wedding_pichwai-palace');
-          } else {
-            cfg = pSaved;
-          }
-        }
-      } catch (_) {}
-    }
     var b = (cfg && (cfg.b || cfg.bride)) || getQueryParam('b') || getQueryParam('bride') || 'Dharani';
     var g = (cfg && (cfg.g || cfg.groom)) || getQueryParam('g') || getQueryParam('groom') || 'Manu';
     document.title = b + ' & ' + g + ' — Wedding Invitation';

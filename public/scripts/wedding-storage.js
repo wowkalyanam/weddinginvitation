@@ -50,13 +50,13 @@
       // 1. Save to sessionStorage
       try {
         sessionStorage.setItem('wow_photos_' + templateId, JSON.stringify(photos));
-        sessionStorage.setItem('wow_photos_latest', JSON.stringify(photos));
+        sessionStorage.removeItem('wow_photos_latest');
       } catch (_) {}
 
       // 2. Save to localStorage if possible
       try {
         localStorage.setItem('wow_photos_' + templateId, JSON.stringify(photos));
-        localStorage.setItem('wow_photos_latest', JSON.stringify(photos));
+        localStorage.removeItem('wow_photos_latest');
       } catch (_) {}
 
       // 3. Save to IndexedDB (unlimited storage quota)
@@ -66,7 +66,6 @@
           var tx = db.transaction(STORE_NAME, 'readwrite');
           var store = tx.objectStore(STORE_NAME);
           store.put(photos, 'template_' + templateId);
-          store.put(photos, 'latest');
           tx.oncomplete = function () {
             resolve(true);
           };
@@ -84,7 +83,7 @@
     return new Promise(function (resolve) {
       // 1. Check sessionStorage
       try {
-        var s = sessionStorage.getItem('wow_photos_' + templateId) || sessionStorage.getItem('wow_photos_latest');
+        var s = sessionStorage.getItem('wow_photos_' + templateId);
         if (s) {
           var parsed = JSON.parse(s);
           if (Array.isArray(parsed) && parsed.length > 0) {
@@ -95,7 +94,7 @@
 
       // 2. Check localStorage
       try {
-        var l = localStorage.getItem('wow_photos_' + templateId) || localStorage.getItem('wow_photos_latest');
+        var l = localStorage.getItem('wow_photos_' + templateId);
         if (l) {
           var parsedL = JSON.parse(l);
           if (Array.isArray(parsedL) && parsedL.length > 0) {
@@ -115,14 +114,16 @@
             if (getReq.result && Array.isArray(getReq.result) && getReq.result.length > 0) {
               resolve(getReq.result);
             } else {
-              var getLatest = store.get('latest');
-              getLatest.onsuccess = function () {
-                resolve(getLatest.result || null);
-              };
-              getLatest.onerror = function () {
-                resolve(null);
-              };
+              resolve(null);
             }
+          };
+          getReq.onerror = function () {
+            resolve(null);
+          };
+        } catch (_) {
+          resolve(null);
+        }
+      });
           };
           getReq.onerror = function () {
             resolve(null);

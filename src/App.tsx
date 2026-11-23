@@ -503,6 +503,21 @@ export default function App() {
   const [photoMsg, setPhotoMsg] = useState<string>('');
   const [saveSuccessMsg, setSaveSuccessMsg] = useState<string>('');
 
+  // Proactively clear any legacy global storage keys to ensure 100% template & form isolation
+  useEffect(() => {
+    try {
+      sessionStorage.removeItem('wow_active_custom_wedding');
+      sessionStorage.removeItem('wow_photos_latest');
+      localStorage.removeItem('wow_active_custom_wedding');
+      localStorage.removeItem('wow_photos_latest');
+      localStorage.removeItem('wow_custom_wedding_pichwai-palace');
+      localStorage.removeItem('wow_custom_wedding_pichwai-lotus-courtyard');
+      localStorage.removeItem('wow_custom_wedding_champagne-luxury');
+      localStorage.removeItem('wow_custom_wedding_kasavu-kerala');
+      localStorage.removeItem('wow_custom_wedding_meenaya-temple-baroque');
+    } catch (_) {}
+  }, []);
+
   const handlePasswordSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (passwordInput.trim() === 'WOW@775') {
@@ -592,10 +607,10 @@ export default function App() {
     });
   };
 
-  // 1. Create a brand new form (blank dates, fresh ID)
+  // 1. Create a brand new form (blank dates, fresh ID, 100% isolated)
   const handleCreateNewForm = (preferredTemplateId?: string) => {
-    const tId = preferredTemplateId || 'pichwai-lotus-courtyard';
-    const template = TEMPLATES.find((t) => t.id === tId) || TEMPLATES[4];
+    const tId = preferredTemplateId || 'pichwai-palace';
+    const template = TEMPLATES.find((t) => t.id === tId) || TEMPLATES[0];
     const newId = 'inv_' + Date.now() + '_' + Math.random().toString(36).substring(2, 6);
 
     const freshData: TemplateFormData = {
@@ -604,24 +619,20 @@ export default function App() {
       brideParents: '',
       groomParents: '',
       date: '', // NO CUSTOM DATE! User enters it
-      time: '07:00 PM',
-      functionName: 'Wedding Ceremony & Reception',
+      time: template.defaultData.time || '07:00 PM',
+      functionName: template.defaultData.functionName || 'Wedding Ceremony & Reception',
       venue: '',
       address: '',
       mapUrl: '',
-      events: [
-        {
-          id: 'evt-1',
-          name: 'Wedding Ceremony & Reception',
-          date: '', // NO CUSTOM DATE
-          time: '07:00 PM',
-          venue: '',
-          address: '',
-          mapUrl: '',
-          desc: 'An evening of celebration, musical feast, and dinner.'
-        }
-      ],
-      photos: [...DEFAULT_PHOTOS]
+      events: (template.defaultData.events || []).map((e, idx) => ({
+        ...e,
+        id: 'evt-' + Date.now() + '-' + idx,
+        date: '', // NO CUSTOM DATE
+        venue: '',
+        address: '',
+        mapUrl: ''
+      })),
+      photos: [] // ZERO default photos! User enters photos
     };
 
     setActiveModalFormId(newId);
@@ -629,6 +640,15 @@ export default function App() {
     setActiveFormData(freshData);
     saveFormChanges(newId, tId, freshData);
     setSaveSuccessMsg('New blank form created! Fill in your wedding details.');
+    setTimeout(() => setSaveSuccessMsg(''), 3000);
+  };
+
+  // Switch template design for the active form only
+  const handleSwitchTemplateForActiveForm = (newTemplateId: string) => {
+    if (!activeModalFormId) return;
+    setActiveFormTemplateId(newTemplateId);
+    saveFormChanges(activeModalFormId, newTemplateId, activeFormData);
+    setSaveSuccessMsg(`✓ Switched to ${TEMPLATES.find(t => t.id === newTemplateId)?.title}`);
     setTimeout(() => setSaveSuccessMsg(''), 3000);
   };
 
@@ -1281,6 +1301,31 @@ export default function App() {
             {/* Modal Body */}
             <div className="p-5 sm:p-7 space-y-7">
               
+              {/* ── TEMPLATE DESIGN SELECTION FOR THIS ISOLATED FORM ── */}
+              <div className="bg-amber-50/70 p-4 sm:p-5 rounded-2xl border border-amber-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3.5 shadow-sm">
+                <div>
+                  <div className="flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-amber-900">
+                    <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                    <span>Invitation Template Design</span>
+                  </div>
+                  <p className="text-[11px] text-amber-800/80 mt-0.5">
+                    Select design for this form. Changing design only alters this invitation copy; other templates and forms stay 100% untouched.
+                  </p>
+                </div>
+
+                <select
+                  value={activeFormTemplateId}
+                  onChange={(e) => handleSwitchTemplateForActiveForm(e.target.value)}
+                  className="bg-white border border-amber-300 text-neutral-800 text-xs font-semibold px-3 py-2.5 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 cursor-pointer shadow-sm sm:w-64"
+                >
+                  {TEMPLATES.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               {/* ── SECTION 1: COUPLE & PARENTS' NAMES ── */}
               <div className="space-y-4 bg-neutral-50/70 p-4 sm:p-5 rounded-2xl border border-neutral-200/80">
                 <div className="flex items-center gap-2 text-neutral-900 font-semibold text-sm border-b border-neutral-200/70 pb-2.5">

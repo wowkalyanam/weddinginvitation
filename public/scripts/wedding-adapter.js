@@ -188,47 +188,18 @@
       if (paramMap) custom.m = paramMap;
     }
 
-    // 4. CRITICAL: ONLY IF NO fid, NO cfg, AND NO URL params (bare template preview)
-    if (!custom && !fid && !cfgParam && !paramBride) {
-      try {
-        var localStr = localStorage.getItem('wow_custom_wedding_' + currentTemplateId);
-        if (localStr) {
-          var parsed = JSON.parse(localStr);
-          if (currentTemplateId === 'pichwai-palace' && parsed.bride === 'Deepthi' && parsed.groom === 'Murali') {
-            try { localStorage.removeItem('wow_custom_wedding_' + currentTemplateId); } catch (_) {}
-            parsed = null;
-          }
-          if (parsed) {
-          custom = {
-            b: parsed.bride,
-            g: parsed.groom,
-            bp: parsed.brideParents,
-            gp: parsed.groomParents,
-            d: parsed.date || '',
-            t: parsed.time,
-            v: parsed.venue,
-            a: parsed.address,
-            m: parsed.mapUrl,
-            ev: parsed.events ? parsed.events.map(function(e) {
-              return {
-                id: e.id,
-                n: e.name,
-                d: e.date || '',
-                t: e.time,
-                v: e.venue,
-                a: e.address,
-                m: e.mapUrl,
-                s: e.desc
-              };
-            }) : null,
-            ph: parsed.photos
-          };
-        }
-        }
-      } catch (err) {
-        console.warn('LocalStorage wedding data read error', err);
+    // 4. If no URL params and no fid/cfg, keep custom null for pure pristine template demo
+    try {
+      if (typeof localStorage !== 'undefined') {
+        localStorage.removeItem('wow_active_custom_wedding');
+        localStorage.removeItem('wow_photos_latest');
+        localStorage.removeItem('wow_custom_wedding_' + currentTemplateId);
       }
-    }
+      if (typeof sessionStorage !== 'undefined') {
+        sessionStorage.removeItem('wow_active_custom_wedding');
+        sessionStorage.removeItem('wow_photos_latest');
+      }
+    } catch (_) {}
 
     return custom;
   }
@@ -345,7 +316,7 @@
 
   if (!initialPhotos && !currentFid) {
     try {
-      var syncS = sessionStorage.getItem('wow_photos_' + currentTemplateId) || sessionStorage.getItem('wow_photos_latest');
+      var syncS = sessionStorage.getItem('wow_photos_' + currentTemplateId);
       if (syncS) {
         var parsedS = JSON.parse(syncS);
         if (Array.isArray(parsedS) && parsedS.length > 0) initialPhotos = parsedS;
@@ -355,7 +326,7 @@
 
   if (!initialPhotos && !currentFid) {
     try {
-      var syncL = localStorage.getItem('wow_photos_' + currentTemplateId) || localStorage.getItem('wow_photos_latest');
+      var syncL = localStorage.getItem('wow_photos_' + currentTemplateId);
       if (syncL) {
         var parsedL = JSON.parse(syncL);
         if (Array.isArray(parsedL) && parsedL.length > 0) initialPhotos = parsedL;

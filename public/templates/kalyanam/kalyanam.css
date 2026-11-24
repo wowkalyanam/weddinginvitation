@@ -93,3 +93,13 @@
   transform: none !important;
   object-position: 50% 12% !important;
 }
+
+.km-hero__name {
+  perspective: 900px;
+}
+
+.km-hero__char {
+  display: inline-block;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+}

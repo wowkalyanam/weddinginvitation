@@ -126,7 +126,7 @@
         </video>
       </div>
       <div class="km-hero__scrim"></div>
-      <div class="km-hero__content km-container">
+      <div class="km-hero__content km-container" id="heroContent" style="opacity: 0; visibility: hidden;">
         <p class="km-hero__invocation km-font-serif">|| Shree Ganeshay Namah ||</p>
         <h1 class="km-hero__name km-hero__groom km-font-script" id="heroGroomName">
           <span class="km-hero__char">V</span><span class="km-hero__char">i</span><span class="km-hero__char">j</span><span class="km-hero__char">a</span><span class="km-hero__char">y</span>
@@ -581,6 +581,47 @@
       var openBtn = document.getElementById('kmOpenBtn');
       var isOpening = false;
 
+      function playHeroAnimation() {
+        var heroContent = document.getElementById('heroContent');
+        if (!heroContent) return;
+        heroContent.style.visibility = 'visible';
+        heroContent.style.opacity = '1';
+
+        if (typeof gsap === 'undefined') return;
+
+        var heroTl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        
+        heroTl.fromTo('.km-hero__invocation',
+          { y: 14, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, delay: 0.05 }
+        )
+        .fromTo('.km-hero__groom .km-hero__char',
+          { y: 35, opacity: 0, rotateX: -30, scale: 0.82, filter: 'blur(6px)' },
+          { y: 0, opacity: 1, rotateX: 0, scale: 1, filter: 'blur(0px)', stagger: 0.04, duration: 0.65, ease: 'back.out(1.5)' },
+          '-=0.25'
+        )
+        .fromTo('.km-hero__amp',
+          { scale: 0, opacity: 0, rotate: -20 },
+          { scale: 1, opacity: 1, rotate: 0, duration: 0.4, ease: 'back.out(2)' },
+          '-=0.35'
+        )
+        .fromTo('.km-hero__bride .km-hero__char',
+          { y: 35, opacity: 0, rotateX: -30, scale: 0.82, filter: 'blur(6px)' },
+          { y: 0, opacity: 1, rotateX: 0, scale: 1, filter: 'blur(0px)', stagger: 0.04, duration: 0.65, ease: 'back.out(1.5)' },
+          '-=0.25'
+        )
+        .fromTo('.km-hero__date',
+          { y: 10, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
+          '-=0.3'
+        )
+        .fromTo('.km-hero__venue',
+          { y: 10, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
+          '-=0.25'
+        );
+      }
+
       function openInvitation() {
         if (isOpening) return;
         isOpening = true;
@@ -600,17 +641,6 @@
             onComplete: function () {
               if (entryEl) entryEl.style.display = 'none';
               document.body.style.overflow = '';
-              // Trigger hero animations
-              gsap.from('.km-hero__invocation', { opacity: 0, y: -8, duration: 0.6, ease: 'power2.out' });
-              gsap.from('.km-hero__groom .km-hero__char, .km-hero__amp, .km-hero__bride .km-hero__char', {
-                opacity: 0,
-                y: 18,
-                stagger: 0.05,
-                duration: 0.85,
-                ease: 'back.out(1.6)'
-              }, '-=0.15');
-              gsap.from('.km-hero__date', { y: 10, opacity: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
-              gsap.from('.km-hero__venue', { opacity: 0, duration: 0.6, ease: 'power2.out' }, '-=0.1');
             }
           });
 
@@ -620,11 +650,19 @@
             .to('#kmEntryBloom', { opacity: 1, scale: 1.6, duration: 0.55, ease: 'power2.out' }, '-=0.2')
             .to('#kmEntryCard', { scale: 1.12, opacity: 0, duration: 0.95, ease: 'power2.inOut' }, '-=0.35')
             .to('#kmEntryBloom', { opacity: 0, duration: 0.5, ease: 'power2.out' }, '-=0.6')
-            .to('#kmEntryVeil', { opacity: 0, duration: 0.55, ease: 'power1.out' }, '-=0.55');
+            .to('#kmEntryVeil', { 
+              opacity: 0, 
+              duration: 0.6, 
+              ease: 'power1.out',
+              onStart: function() {
+                playHeroAnimation();
+              }
+            }, '-=0.55');
         } else {
           // Fallback if GSAP is unavailable
           if (entryEl) entryEl.style.display = 'none';
           document.body.style.overflow = '';
+          playHeroAnimation();
         }
       }
 

@@ -1250,9 +1250,11 @@
     var cGroomParents = document.getElementById('coupleGroomParents');
     var cBrideName = document.getElementById('coupleBrideName');
     var cBrideParents = document.getElementById('coupleBrideParents');
-    if (cGroomName) cGroomName.textContent = groom;
+    var hasCustomGroom = !!customData.g;
+    var hasCustomBride = !!customData.b;
+    if (cGroomName) cGroomName.textContent = hasCustomGroom ? groom : ((cfg.couple && cfg.couple.groomFull) || groom);
     if (cGroomParents) cGroomParents.textContent = groomParents;
-    if (cBrideName) cBrideName.textContent = bride;
+    if (cBrideName) cBrideName.textContent = hasCustomBride ? bride : ((cfg.couple && cfg.couple.brideFull) || bride);
     if (cBrideParents) cBrideParents.textContent = brideParents;
 
     // 4. Update Events Journey

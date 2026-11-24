@@ -766,6 +766,29 @@ button:active, a:active, .km-rsvp__choice:active {
   transform: translate3d(0, 0, 0) !important;
 }
 
+/* Ensure Footer Greeting & Credit are strictly centered horizontally */
+.km-footer__greeting,
+.km-footer__credit {
+  position: absolute !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: min(84%, 480px) !important;
+  text-align: center !important;
+  margin-inline: auto !important;
+}
+
+.km-footer__greeting.km-smooth-reveal,
+.km-footer__credit.km-smooth-reveal {
+  opacity: 0;
+  transform: translate3d(-50%, 26px, 0) !important;
+}
+
+.km-footer__greeting.km-smooth-reveal.is-in-view,
+.km-footer__credit.km-smooth-reveal.is-in-view {
+  opacity: 1 !important;
+  transform: translate3d(-50%, 0, 0) !important;
+}
+
 /* Smooth Image Transitions */
 img {
   image-rendering: auto;

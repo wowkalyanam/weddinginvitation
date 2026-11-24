@@ -423,12 +423,12 @@
     <footer class="km-footer">
       <div class="km-footer__card">
         <img alt="" aria-hidden="true" class="km-footer__art" width="951" height="1576" decoding="async" loading="eager" src="/templates/kalyanam/assets/footer-card.jpg"/>
-        <div class="km-footer__greeting">
+        <div class="km-footer__greeting" style="position:absolute!important;left:50%!important;transform:translateX(-50%)!important;text-align:center!important;width:min(84%,480px)!important;margin-inline:auto!important;">
           <p class="km-footer__greet-lead km-font-serif">We await your gracious presence</p>
           <p class="km-footer__greet-main km-font-script">and your blessings</p>
           <p class="km-footer__greet-mark km-font-serif" style="font-family:'Noto Serif Kannada','Noto Serif Telugu',serif;">ಶುಭಮಸ್ತು</p>
         </div>
-        <a class="km-footer__credit" href="https://www.wowkalyanam.com/" rel="noopener" target="_blank">
+        <a class="km-footer__credit" href="https://www.wowkalyanam.com/" rel="noopener" target="_blank" style="position:absolute!important;left:50%!important;transform:translateX(-50%)!important;text-align:center!important;width:min(84%,480px)!important;margin-inline:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;">
           <span class="km-footer__credit-lead">This invitation was crafted on <span class="km-footer__credit-brand">Wow Kalyanam</span></span>
           <span class="km-footer__credit-cta">Craft your royal digital invitation</span>
         </a>
@@ -968,7 +968,7 @@
       // 9. Smooth Scroll-Triggered Section Reveals
       function initSmoothScrollReveals() {
         var targets = document.querySelectorAll(
-          '.km-couple__card, .km-countdown__stage, .km-gallery__heading, .km-gallery__sub, .km-gallery__cell, .km-rsvp__heading, .km-rsvp__sub, .km-rsvp__slip, .km-footer__greeting, .km-footer__credit'
+          '.km-couple__card, .km-countdown__stage, .km-gallery__heading, .km-gallery__sub, .km-gallery__cell, .km-rsvp__heading, .km-rsvp__sub, .km-rsvp__slip, .km-footer__card'
         );
         if (!targets.length) return;
 

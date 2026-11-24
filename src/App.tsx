@@ -102,43 +102,23 @@ const DEFAULT_EVENTS_PICHWAI: WeddingEventItem[] = [
 const DEFAULT_EVENTS_KALYANAM: WeddingEventItem[] = [
   {
     id: 'evt-1',
-    name: 'Mehendi',
-    date: '24th February 2026',
-    time: '5:00 PM onwards',
-    venue: 'ITC Mementos',
-    address: 'Udaipur, Rajasthan, India',
-    mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
-    desc: 'An evening of henna, melodious music, and joyous celebrations.'
+    name: 'Muhurtham',
+    date: 'Sunday, 6th December 2026',
+    time: '09:00 AM to 10:30 AM',
+    venue: 'Shri Prasanna Lakshmi Venkateshwara Temple',
+    address: '103, Old Madras Rd, Halasuru, Dodakattappa, Bengaluru - 560008, Karnataka',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=Shri+Prasanna+Lakshmi+Venkateshwara+Temple,+103,+Old+Madras+Rd,+Halasuru,+Bengaluru',
+    desc: 'Sacred wedding rituals, Mangalya Dharana, and traditional vows.'
   },
   {
     id: 'evt-2',
-    name: 'Haldi & Sangeet',
-    date: '25th February 2026',
-    time: '10:48 AM',
-    venue: 'ITC Mementos',
-    address: 'Udaipur, Rajasthan, India',
-    mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
-    desc: 'Auspicious turmeric ceremony filled with love, laughter, and family dance.'
-  },
-  {
-    id: 'evt-3',
-    name: 'Telugu Wedding',
-    date: '26th February 2026',
-    time: '10:00 AM onwards',
-    venue: 'ITC Mementos',
-    address: 'Udaipur, Rajasthan, India',
-    mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
-    desc: 'Sacred Srinivasa Kalyanam rituals, Jeelakarra Bellam, and traditional vows.'
-  },
-  {
-    id: 'evt-4',
-    name: 'Kodava Ceremony & Reception',
-    date: '26th February 2026',
-    time: '6:30 PM onwards',
-    venue: 'ITC Mementos',
-    address: 'Udaipur, Rajasthan, India',
-    mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
-    desc: 'Grand royal reception, blessings, musical feast, and celebratory dinner.'
+    name: 'Reception',
+    date: 'Sunday, 6th December 2026',
+    time: '07:00 PM onwards',
+    venue: 'Shri Prasanna Lakshmi Venkateshwara Temple',
+    address: '103, Old Madras Rd, Halasuru, Dodakattappa, Bengaluru - 560008, Karnataka',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=Shri+Prasanna+Lakshmi+Venkateshwara+Temple,+103,+Old+Madras+Rd,+Halasuru,+Bengaluru',
+    desc: 'Join us for an evening of blessings, musical feast, and celebratory dinner.'
   }
 ];
 
@@ -261,16 +241,16 @@ const TEMPLATES: TemplateItem[] = [
     image: '/templates/kalyanam/assets/entry-card.jpg',
     demoUrl: '/kalyanam.html',
     defaultData: {
-      bride: 'Rashmika',
-      groom: 'Vijay',
-      brideParents: 'Madan Mandanna & Suman Mandanna',
-      groomParents: 'Deverakonda Govardhan Rao & Deverakonda Madhavi',
-      date: '26 October 2026',
-      time: '10:00 AM',
-      functionName: 'Telugu Wedding & Reception',
-      venue: 'ITC Mementos',
-      address: 'Udaipur, Rajasthan, India',
-      mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
+      bride: 'Deepthi',
+      groom: 'Murali',
+      brideParents: 'Shri. S. Ravi & Smt. R. Jyothilakshmi',
+      groomParents: 'Smt. P. Rathi & Sri. S. Ganesan',
+      date: '6 December 2026',
+      time: '09:00 AM',
+      functionName: 'Muhurtham & Reception',
+      venue: 'Shri Prasanna Lakshmi Venkateshwara Temple',
+      address: '103, Old Madras Rd, Halasuru, Bengaluru - 560008, Karnataka',
+      mapUrl: 'https://www.google.com/maps/search/?api=1&query=Shri+Prasanna+Lakshmi+Venkateshwara+Temple,+103,+Old+Madras+Rd,+Halasuru,+Bengaluru',
       events: DEFAULT_EVENTS_KALYANAM,
       photos: []
     },

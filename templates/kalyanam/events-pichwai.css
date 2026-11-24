@@ -1,0 +1,784 @@
+/* ==========================================================================
+   Kalyanam Mandapam — Royal Farman Scrolls on Temple Parchment Background
+   ========================================================================== */
+
+/* 1. Section Container & Kalyanam Kolam Background */
+.km-events {
+  position: relative !important;
+  background: #fbebb3 !important;
+  --km-frame-w: clamp(12px, 4vw, 24px);
+  padding: calc(var(--km-frame-w) + 1.2rem) calc(var(--km-frame-w) + 0.4rem) calc(var(--km-frame-w) + 1.4rem) !important;
+  overflow: hidden !important;
+  color: var(--km-ink, #2b1608) !important;
+}
+
+.km-events__kolam {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background-image: url(/templates/kalyanam/assets/kolam-tile.png);
+  background-repeat: repeat;
+  background-size: clamp(92px, 24vw, 120px);
+  opacity: 0.45;
+  pointer-events: none;
+}
+
+/* 2. Compact Section Header (No Extra Dead Space) */
+.km-events__header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  max-width: 540px;
+  margin: 0 auto clamp(16px, 3.5vw, 24px);
+  padding: 0 10px;
+}
+
+.km-events__eyebrow {
+  font-family: var(--km-font-marcellus, 'Marcellus', serif);
+  font-size: clamp(0.7rem, 2.2vw, 0.82rem);
+  font-weight: 600;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--km-maroon, #9a1b41);
+  margin: 0 0 6px;
+  opacity: 0.92;
+}
+
+.km-events__heading {
+  font-family: var(--km-font-great-vibes, 'Great Vibes', cursive);
+  font-size: clamp(2.4rem, 8.5vw, 3.5rem);
+  color: var(--km-maroon-deep, #711433);
+  line-height: 1.08;
+  margin: 0 0 6px;
+  text-shadow: 0 1px 4px rgba(201, 147, 47, 0.18);
+}
+
+.km-events__sub {
+  font-family: var(--km-font-cormorant, 'Cormorant Garamond', Georgia, serif);
+  font-size: clamp(0.92rem, 3.2vw, 1.06rem);
+  color: var(--km-ink, #2b1608);
+  opacity: 0.82;
+  margin: 0 auto clamp(10px, 2.5vw, 16px);
+  max-width: 36ch;
+  line-height: 1.45;
+}
+
+.km-events__divider {
+  display: block;
+  width: clamp(75px, 20vw, 120px);
+  height: auto;
+  margin: 0 auto;
+  pointer-events: none;
+  opacity: 0.85;
+  filter: drop-shadow(0 1px 4px rgba(201, 147, 47, 0.2));
+}
+
+/* 3. Journey Container */
+.evt-journey {
+  position: relative;
+  z-index: 2;
+  max-width: 440px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.evt-stops {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  padding: 0;
+}
+
+/* 4. Farman Stop & Rolled / Unrolling Animation */
+.farman-stop {
+  position: relative;
+  width: min(100%, 420px);
+  margin: 0 auto;
+  align-self: center;
+}
+
+/* Rolled Scroll (Initial appearance before unrolling) */
+.farman-rolled-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 114%;
+  z-index: 4;
+  pointer-events: none;
+  transform: translate(-50%, -50%) translateY(24px);
+  opacity: 0;
+  transform-origin: center center;
+  transition: opacity 0.32s cubic-bezier(0.16, 1, 0.3, 1), transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.farman-stop.is-entering .farman-rolled-wrap {
+  opacity: 1;
+  transform: translate(-50%, -50%) translateY(0);
+  animation: farmanRolledFloat 3.6s ease-in-out 0.5s infinite;
+}
+
+@keyframes farmanRolledFloat {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-7px); }
+}
+
+.farman-stop.is-unrolling .farman-rolled-wrap,
+.farman-stop.is-open .farman-rolled-wrap {
+  opacity: 0;
+  animation: none;
+  transform: translate(-50%, -50%) scaleY(0.12) translateY(8px);
+  transition: opacity 0.45s ease 0ms, transform 0.55s cubic-bezier(0.4, 0, 0.6, 1) 0ms;
+  pointer-events: none;
+}
+
+.farman-rolled-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 12px 24px rgba(43, 22, 8, 0.22));
+}
+
+/* Open Wrap (Unrolling from top to bottom) */
+.farman-open-wrap {
+  position: relative;
+  width: 100%;
+  clip-path: inset(0 0 100% 0 round 2px);
+  -webkit-clip-path: inset(0 0 100% 0 round 2px);
+  transition: clip-path 0.88s cubic-bezier(0.4, 0, 0.2, 1) 60ms, -webkit-clip-path 0.88s cubic-bezier(0.4, 0, 0.2, 1) 60ms;
+  will-change: clip-path, -webkit-clip-path;
+  transform: translateZ(0);
+  filter: drop-shadow(0 14px 32px rgba(43, 22, 8, 0.16)) drop-shadow(0 4px 10px rgba(43, 22, 8, 0.1));
+}
+
+.farman-stop.is-unrolling .farman-open-wrap {
+  clip-path: inset(0 0 0% 0 round 2px);
+  -webkit-clip-path: inset(0 0 0% 0 round 2px);
+}
+
+.farman-stop.is-open .farman-open-wrap {
+  clip-path: inset(0 0 0% 0 round 2px) !important;
+  -webkit-clip-path: inset(0 0 0% 0 round 2px) !important;
+  transition: none;
+}
+
+.farman-parchment-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Content inside Farman */
+.farman-content {
+  position: absolute;
+  inset: 6.5% 8% 8.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 4%;
+  padding-bottom: 3%;
+  text-align: center;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease 0.2s;
+}
+
+.farman-stop.is-unrolling .farman-content,
+.farman-stop.is-open .farman-content {
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.ev-fit {
+  width: 100%;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  transform-origin: center center;
+}
+
+/* Entrance Animations for Internal Elements */
+.farman-motif,
+.farman-name,
+.farman-rule,
+.farman-datetime,
+.farman-venue,
+.farman-note,
+.farman-map {
+  opacity: 0;
+}
+
+@keyframes farmanMotifIn {
+  0% { opacity: 0; transform: scale(0.82) translateY(8px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+@keyframes farmanTextIn {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes farmanMotifFloat {
+  0%, 100% { filter: drop-shadow(0 4px 12px rgba(154, 27, 65, 0.18)); }
+  50% { filter: drop-shadow(0 7px 18px rgba(154, 27, 65, 0.26)) drop-shadow(0 0 16px rgba(201, 147, 47, 0.25)); }
+}
+
+.farman-stop.is-unrolling .farman-motif,
+.farman-stop.is-open .farman-motif {
+  animation: farmanMotifIn 0.5s cubic-bezier(0.4, 0, 0.2, 1) 0.25s both, farmanMotifFloat 3.8s ease-in-out 0.9s infinite;
+}
+
+.farman-stop.is-unrolling .farman-name,
+.farman-stop.is-open .farman-name {
+  animation: farmanTextIn 0.42s cubic-bezier(0.4, 0, 0.2, 1) 0.36s both;
+}
+
+.farman-stop.is-unrolling .farman-rule,
+.farman-stop.is-open .farman-rule {
+  animation: farmanTextIn 0.38s cubic-bezier(0.4, 0, 0.2, 1) 0.46s both;
+}
+
+.farman-stop.is-unrolling .farman-datetime,
+.farman-stop.is-open .farman-datetime {
+  animation: farmanTextIn 0.38s cubic-bezier(0.4, 0, 0.2, 1) 0.54s both;
+}
+
+.farman-stop.is-unrolling .farman-venue,
+.farman-stop.is-open .farman-venue {
+  animation: farmanTextIn 0.36s cubic-bezier(0.4, 0, 0.2, 1) 0.62s both;
+}
+
+.farman-stop.is-unrolling .farman-note,
+.farman-stop.is-open .farman-note {
+  animation: farmanTextIn 0.34s cubic-bezier(0.4, 0, 0.2, 1) 0.7s both;
+}
+
+.farman-stop.is-unrolling .farman-map,
+.farman-stop.is-open .farman-map {
+  animation: farmanTextIn 0.32s cubic-bezier(0.4, 0, 0.2, 1) 0.78s both;
+}
+
+/* 5. Farman Card Typography & Visual Details */
+.farman-motif {
+  width: clamp(52px, 14vw, 70px) !important;
+  height: clamp(52px, 14vw, 70px) !important;
+  object-fit: contain !important;
+  flex-shrink: 0 !important;
+  margin-top: 0 !important;
+  margin-bottom: 4px !important;
+}
+
+.farman-name {
+  font-family: var(--km-font-great-vibes, 'Great Vibes', cursive) !important;
+  font-size: clamp(2.4rem, 7.8vw, 3.4rem) !important;
+  font-weight: 400 !important;
+  color: #711433 !important;
+  line-height: 1.15 !important;
+  margin: 2px 0 4px !important;
+  letter-spacing: 0.02em !important;
+  overflow-wrap: break-word !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+}
+
+.farman-rule {
+  width: clamp(48px, 14vw, 68px) !important;
+  height: 1.5px !important;
+  flex-shrink: 0 !important;
+  margin: 8px auto 12px !important;
+  background: #c5a059 !important;
+  opacity: 0.85 !important;
+  border: 0 !important;
+}
+
+.farman-datetime {
+  font-family: var(--km-font-cinzel, 'Cinzel', serif) !important;
+  font-size: clamp(0.86rem, 2.7vw, 1.02rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.16em !important;
+  text-transform: uppercase !important;
+  color: #841738 !important;
+  margin: 0 0 10px !important;
+  line-height: 1.5 !important;
+}
+
+.farman-date {
+  display: block !important;
+  margin-bottom: 3px !important;
+}
+
+.farman-dot {
+  display: none !important;
+}
+
+.farman-time {
+  display: block !important;
+  font-size: 0.95em !important;
+  letter-spacing: 0.14em !important;
+}
+
+.farman-venue {
+  font-family: var(--km-font-cormorant, 'Cormorant Garamond', Georgia, serif) !important;
+  font-style: italic !important;
+  font-size: clamp(1.15rem, 3.5vw, 1.4rem) !important;
+  font-weight: 600 !important;
+  color: #2b1608 !important;
+  opacity: 0.95 !important;
+  margin: 0 0 6px !important;
+  line-height: 1.35 !important;
+  max-width: 92% !important;
+}
+
+.farman-note {
+  font-family: var(--km-font-cormorant, 'Cormorant Garamond', Georgia, serif) !important;
+  font-style: italic !important;
+  font-size: clamp(0.92rem, 2.7vw, 1.08rem) !important;
+  font-weight: 400 !important;
+  color: #4a2e1b !important;
+  opacity: 0.88 !important;
+  max-width: 92% !important;
+  margin: 0 auto 16px !important;
+  line-height: 1.45 !important;
+  white-space: normal !important;
+}
+
+/* 6. Get Directions Button */
+.farman-map,
+.farman-directions-btn {
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin: 4px auto 0 !important;
+  padding: 7px 22px !important;
+  border-radius: 999px !important;
+  background: #fdf6e6 !important;
+  border: 1.2px solid #c9932f !important;
+  color: #711433 !important;
+  font-family: var(--km-font-cormorant, 'Cormorant Garamond', Georgia, serif) !important;
+  font-style: normal !important;
+  font-size: clamp(0.9rem, 2.7vw, 1.02rem) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.05em !important;
+  text-decoration: none !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  box-shadow: 0 3px 10px rgba(43, 22, 8, 0.1) !important;
+  transition: all 0.22s ease !important;
+  z-index: 5 !important;
+}
+
+.farman-map:hover,
+.farman-directions-btn:hover {
+  background: #faecd0 !important;
+  border-color: #a8761d !important;
+  color: #531725 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 5px 14px rgba(43, 22, 8, 0.15) !important;
+}
+  border-color: rgba(201, 147, 47, 0.9) !important;
+  color: #531725 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 4px 10px rgba(43, 22, 8, 0.14) !important;
+}
+
+.farman-map svg,
+.farman-directions-btn svg {
+  color: #711433 !important;
+  flex-shrink: 0 !important;
+}
+
+/* 7. Lotus Divider between scrolls */
+.farman-inter,
+.farman-inter--lotus {
+  align-self: center !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  opacity: 1 !important;
+  padding: clamp(14px, 3.2vw, 22px) 0 !important;
+  width: 100% !important;
+}
+
+.farman-inter--lotus img {
+  display: block !important;
+  width: clamp(75px, 20vw, 115px) !important;
+  height: auto !important;
+  margin: 0 auto !important;
+  opacity: 0.88 !important;
+  filter: drop-shadow(0 2px 6px rgba(201, 147, 47, 0.25)) !important;
+}
+
+/* 8. Golden Dust Rising Sparkles */
+.farman-dust-layer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.farman-dust-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(201, 147, 47, 0.9), rgba(201, 147, 47, 0) 70%);
+  animation: farmanDustRise var(--dur, 3.5s) ease-out var(--del, 0s) infinite;
+  opacity: 0;
+}
+
+@keyframes farmanDustRise {
+  0% { opacity: 0; transform: translateY(0) translate(0) scale(1); }
+  25% { opacity: 0.75; }
+  80% { opacity: 0.35; }
+  100% { opacity: 0; transform: translateY(-36px) translate(var(--dx, 6px)) scale(0.5); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .farman-rolled-wrap { display: none !important; }
+  .farman-open-wrap { clip-path: inset(0 0 0% 0 round 2px) !important; transition: none !important; }
+  .farman-content, .farman-motif, .farman-name, .farman-rule, .farman-datetime, .farman-venue, .farman-note, .farman-map {
+    opacity: 1 !important;
+    visibility: visible !important;
+    animation: none !important;
+  }
+}
+
+/* =================================================== */
+/* 9. Gallery: Elevated Header & Parasol Scroll-Down   */
+/* =================================================== */
+.km-hero__venue {
+  display: none !important;
+}
+.km-gallery {
+  position: relative !important;
+  background: #fbebb3 !important;
+  padding-top: 0 !important;
+}
+
+.km-gallery .km-container {
+  padding-top: clamp(74px, 20vw, 92px) !important; /* lifts "Before the Vows" higher above */
+  margin-bottom: clamp(12px, 3vw, 20px) !important;
+  position: relative !important;
+  z-index: 5 !important;
+}
+
+.km-gallery__heading {
+  font-size: clamp(2.2rem, 9vw, 3.2rem) !important;
+  line-height: 1.15 !important;
+  margin: 0 0 0.3rem !important;
+}
+
+.km-gallery__sub {
+  font-size: clamp(0.85rem, 3.2vw, 1rem) !important;
+  margin: 0 auto clamp(0.5rem, 2vw, 1rem) !important;
+  max-width: 34ch !important;
+}
+
+.km-gallery__parasol {
+  position: absolute !important;
+  top: clamp(18px, 5.5vw, 36px) !important; /* begins high up beside the garland and behind "the Vows" */
+  right: clamp(2px, 1.5vw, 16px) !important;
+  width: clamp(170px, 48vw, 280px) !important;
+  max-width: none !important;
+  height: auto !important;
+  z-index: 2 !important;
+  opacity: 0.42 !important; /* lighter & delicate so text stays crisp and readable */
+  filter: brightness(1.05) !important;
+  pointer-events: none !important;
+  will-change: transform;
+}
+
+/* Entry screen venue / city removal */
+.km-entry__city,
+#entryCity {
+  display: none !important;
+}
+
+/* ============================================================ */
+/* ENTRY SCREEN EXACT MATCH TO ORIGINAL TEMPLATE (IMAGE 1)       */
+/* ============================================================ */
+.km-entry__content,
+.km-legacy-entry-align .km-entry__content {
+  position: absolute !important;
+  top: clamp(80px, 14.8cqh, 135px) !important;
+  bottom: 48.2% !important; /* Anchors the button right above the gopuram roof */
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: min(84%, 450px) !important;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0 !important;
+  text-align: center !important;
+  pointer-events: none !important;
+  z-index: 2 !important;
+}
+
+/* "THE WEDDING OF" */
+.km-entry__label {
+  font-family: var(--km-font-cinzel), 'Cinzel', serif !important;
+  font-size: clamp(10.5px, 3.1cqw, 14px) !important;
+  letter-spacing: 0.36em !important;
+  text-indent: 0.36em !important;
+  text-transform: uppercase !important;
+  color: var(--km-maroon) !important;
+  margin: 0 0 0.45em !important;
+  opacity: 0.9 !important;
+  font-weight: 600 !important;
+}
+
+/* Couple Names - Large & Majestic in Great Vibes script */
+.km-entry__names {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 0 !important;
+  font-family: var(--km-font-script), 'Great Vibes', cursive !important;
+  font-size: clamp(38px, 12.8cqw, 62px) !important;
+  line-height: 1.08 !important;
+  color: var(--km-maroon-deep) !important;
+  margin: 0 !important;
+  font-weight: 400 !important;
+}
+
+.km-entry__groom-name,
+.km-entry__bride-name {
+  display: block !important;
+  white-space: nowrap !important;
+}
+
+/* Ampersand & with delicate gold accent lines */
+.km-entry__amp {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 0.55em !important;
+  width: 100% !important;
+  margin: 0.08em 0 !important;
+  font-family: var(--km-font-cormorant), 'Cormorant Garamond', Georgia, serif !important;
+  font-style: italic !important;
+  font-size: 0.44em !important;
+  line-height: 1 !important;
+  color: #3f4a26 !important; /* olive green matching Image 1 */
+}
+
+.km-entry__amp:before,
+.km-entry__amp:after {
+  content: "" !important;
+  height: 1px !important;
+  width: 2.2em !important;
+  background: linear-gradient(90deg, rgba(201,147,47,0), rgba(201,147,47,0.85)) !important;
+}
+
+.km-entry__amp:after {
+  transform: scaleX(-1) !important;
+}
+
+/* Date - Cormorant Garamond Serif matching Image 1 */
+.km-entry__group.km-entry__meta {
+  margin-top: clamp(14px, 2.6cqh, 24px) !important;
+  gap: 0 !important;
+}
+
+.km-entry__date {
+  font-family: var(--km-font-cormorant), 'Cormorant Garamond', Georgia, serif !important;
+  font-size: clamp(14px, 4cqw, 19px) !important;
+  letter-spacing: 0.22em !important;
+  text-indent: 0.22em !important;
+  text-transform: uppercase !important;
+  color: var(--km-maroon) !important; /* #9a1b41 */
+  font-weight: 600 !important;
+  margin: 0 !important;
+  opacity: 1 !important;
+}
+
+/* Button Container pinned right above the gopuram */
+.km-entry__content > .km-entry__group:last-child {
+  margin-top: auto !important;
+  width: 100% !important;
+}
+
+.km-entry__cta {
+  pointer-events: auto !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: var(--km-maroon-deep) !important;
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: transparent !important;
+  border-radius: 999px !important;
+  box-shadow: 0 10px 24px rgba(43,22,8,0.28) !important;
+  transition: background 0.22s ease, transform 0.22s ease !important;
+}
+
+.km-entry__cta-inner {
+  display: block !important;
+  margin: 3px !important;
+  padding: 0.95rem 2.2rem !important;
+  font-family: var(--km-font-cinzel), 'Cinzel', serif !important;
+  font-size: clamp(10px, 3cqw, 13px) !important;
+  letter-spacing: 0.26em !important;
+  text-indent: 0.26em !important;
+  text-transform: uppercase !important;
+  color: #fbeeb8 !important;
+  box-shadow: inset 0 0 0 1px rgba(201,147,47,0.85) !important;
+  border-radius: 999px !important;
+}
+
+/* ============================================================ */
+/* GALLERY GRID IMAGE FITTING & FRAMING                         */
+/* ============================================================ */
+.km-gallery__cell {
+  position: relative !important;
+  overflow: hidden !important;
+  display: block !important;
+}
+
+.km-gallery__img {
+  position: absolute !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: 50% 35% !important;
+  display: block !important;
+  top: 0 !important;
+  left: 0 !important;
+  transform: none !important;
+}
+
+.km-gallery__cell--feature .km-gallery__img {
+  object-position: 50% 40% !important;
+}
+
+/* ============================================================ */
+/* COUPLE PORTRAIT FRAMING & ALIGNMENT                          */
+/* ============================================================ */
+#coupleBridePhoto {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transform: scale(1.08) translate(4%, 14%) !important;
+  transform-origin: 50% 50% !important;
+}
+
+#coupleGroomPhoto {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  transform: scale(1.24) translate(8%, -14%) !important;
+  transform-origin: 50% 50% !important;
+}
+
+.km-couple__parents {
+  white-space: nowrap !important;
+  max-width: 100% !important;
+  font-size: clamp(0.74rem, 3.4vw, 0.95rem) !important;
+}
+
+/* ============================================================ */
+/* SMOOTH TEMPLATE SCROLLING, GPU ACCELERATION & REVEALS        */
+/* ============================================================ */
+html {
+  scroll-behavior: smooth !important;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: none;
+}
+
+/* Lenis Integration */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+/* GPU Hardware Acceleration on key animated blocks */
+.km-hero,
+.km-hero__bg,
+.km-couple,
+.km-couple__card,
+.km-countdown,
+.km-countdown__stage,
+.km-events,
+.farman-stop,
+.km-gallery,
+.km-gallery__grid,
+.km-gallery__cell,
+.km-rsvp,
+.km-rsvp__slip,
+.km-footer,
+.km-footer__card {
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Smooth Button & Link Interaction */
+button, a, .km-entry__cta, .km-rsvp__choice, .km-bell, .farman-btn {
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s ease, background 0.28s ease, opacity 0.28s ease !important;
+}
+
+button:active, a:active, .km-rsvp__choice:active {
+  transform: scale(0.97) !important;
+}
+
+/* Smooth Section Reveal Animations */
+.km-smooth-reveal {
+  opacity: 0;
+  transform: translate3d(0, 26px, 0);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  will-change: opacity, transform;
+}
+
+.km-smooth-reveal.is-in-view {
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
+}
+
+/* Smooth Image Transitions */
+img {
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Gallery Parasol smooth floating */
+.km-gallery__parasol {
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+
+
+

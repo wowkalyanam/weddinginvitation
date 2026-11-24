@@ -99,6 +99,49 @@ const DEFAULT_EVENTS_PICHWAI: WeddingEventItem[] = [
   }
 ];
 
+const DEFAULT_EVENTS_KALYANAM: WeddingEventItem[] = [
+  {
+    id: 'evt-1',
+    name: 'Mehendi',
+    date: '24th February 2026',
+    time: '5:00 PM onwards',
+    venue: 'ITC Mementos',
+    address: 'Udaipur, Rajasthan, India',
+    mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
+    desc: 'An evening of henna, melodious music, and joyous celebrations.'
+  },
+  {
+    id: 'evt-2',
+    name: 'Haldi & Sangeet',
+    date: '25th February 2026',
+    time: '10:48 AM',
+    venue: 'ITC Mementos',
+    address: 'Udaipur, Rajasthan, India',
+    mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
+    desc: 'Auspicious turmeric ceremony filled with love, laughter, and family dance.'
+  },
+  {
+    id: 'evt-3',
+    name: 'Telugu Wedding',
+    date: '26th February 2026',
+    time: '10:00 AM onwards',
+    venue: 'ITC Mementos',
+    address: 'Udaipur, Rajasthan, India',
+    mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
+    desc: 'Sacred Srinivasa Kalyanam rituals, Jeelakarra Bellam, and traditional vows.'
+  },
+  {
+    id: 'evt-4',
+    name: 'Kodava Ceremony & Reception',
+    date: '26th February 2026',
+    time: '6:30 PM onwards',
+    venue: 'ITC Mementos',
+    address: 'Udaipur, Rajasthan, India',
+    mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
+    desc: 'Grand royal reception, blessings, musical feast, and celebratory dinner.'
+  }
+];
+
 const DEFAULT_EVENTS_KASAVU: WeddingEventItem[] = [
   {
     id: 'evt-1',
@@ -207,6 +250,28 @@ const TEMPLATES: TemplateItem[] = [
           desc: 'Sacred thali tying and auspicious wedding rituals in presence of family and elders.'
         }
       ],
+      photos: []
+    },
+  },
+  {
+    id: 'kalyanam-mandapam',
+    title: 'Kalyana Mandapam Temple',
+    subtitle: 'Srinivasa Kalyanam · Gopuram Mandapam · Sacred Agni & Nadaswaram',
+    badge: 'New Temple Theme',
+    image: '/templates/kalyanam/assets/entry-card.jpg',
+    demoUrl: '/kalyanam.html',
+    defaultData: {
+      bride: 'Rashmika',
+      groom: 'Vijay',
+      brideParents: 'Madan Mandanna & Suman Mandanna',
+      groomParents: 'Deverakonda Govardhan Rao & Deverakonda Madhavi',
+      date: '26 October 2026',
+      time: '10:00 AM',
+      functionName: 'Telugu Wedding & Reception',
+      venue: 'ITC Mementos',
+      address: 'Udaipur, Rajasthan, India',
+      mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
+      events: DEFAULT_EVENTS_KALYANAM,
       photos: []
     },
   },
@@ -568,6 +633,7 @@ export default function App() {
       localStorage.removeItem('wow_custom_wedding_pichwai-lotus-courtyard');
       localStorage.removeItem('wow_custom_wedding_champagne-luxury');
       localStorage.removeItem('wow_custom_wedding_kasavu-kerala');
+      localStorage.removeItem('wow_custom_wedding_kalyanam-mandapam');
       localStorage.removeItem('wow_custom_wedding_meenaya-temple-baroque');
     } catch (_) {}
   }, []);

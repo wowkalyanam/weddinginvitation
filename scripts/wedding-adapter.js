@@ -97,6 +97,7 @@
     var path = window.location.pathname.toLowerCase();
     if (path.indexOf('template09') !== -1) return 'pichwai-lotus-courtyard';
     if (path.indexOf('template10') !== -1) return 'champagne-luxury';
+    if (path.indexOf('kalyanam') !== -1) return 'kalyanam-mandapam';
     if (path.indexOf('kasavu') !== -1) return 'kasavu-kerala';
     if (path.indexOf('meenaya') !== -1) return 'meenaya-temple-baroque';
     if (path.indexOf('deepthi-murali') !== -1 || path.indexOf('deepthi') !== -1) return 'deepthi-murali-pichwai';
@@ -213,18 +214,19 @@
   // Normalize data structure — template2 defaults to Dharani & Manu, deepthi-murali defaults to Deepthi & Murali
   var isT2 = currentTemplateId === 'pichwai-palace';
   var isDeepthiPichwai = currentTemplateId === 'deepthi-murali-pichwai';
+  var isKalyanam = currentTemplateId === 'kalyanam-mandapam';
 
-  var defB = isT2 ? 'Dharani' : 'Deepthi';
-  var defG = isT2 ? 'Manu' : 'Murali';
-  var defBP = isT2 ? 'Smt. Jalajakshi V. and Ram Murthy N.' : 'Shri. S. Ravi & Smt. R. Jyothilakshmi';
-  var defGP = isT2 ? 'Smt. Narasamma K.S. and Lakshmikanth S.K.' : 'Shri. K. Muralidharan & Smt. M. Geetha';
-  var defDate = isT2 ? '19 November 2026' : (isDeepthiPichwai ? '25 December 2026' : '');
-  var defTime = '07:00 PM';
-  var defV = (isT2 || isDeepthiPichwai) ? 'BWSSB Rajatha Bhavan' : 'The Grand Ballroom & Palace Grounds';
-  var defA = (isT2 || isDeepthiPichwai) ? '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012' : (customData.v ? '' : 'Bengaluru, Karnataka');
+  var defB = isT2 ? 'Dharani' : (isKalyanam ? 'Rashmika' : 'Deepthi');
+  var defG = isT2 ? 'Manu' : (isKalyanam ? 'Vijay' : 'Murali');
+  var defBP = isT2 ? 'Smt. Jalajakshi V. and Ram Murthy N.' : (isKalyanam ? 'Madan Mandanna & Suman Mandanna' : 'Shri. S. Ravi & Smt. R. Jyothilakshmi');
+  var defGP = isT2 ? 'Smt. Narasamma K.S. and Lakshmikanth S.K.' : (isKalyanam ? 'Deverakonda Govardhan Rao & Deverakonda Madhavi' : 'Shri. K. Muralidharan & Smt. M. Geetha');
+  var defDate = isT2 ? '19 November 2026' : (isKalyanam ? '26 October 2026' : (isDeepthiPichwai ? '25 December 2026' : ''));
+  var defTime = isKalyanam ? '10:00 AM' : '07:00 PM';
+  var defV = (isT2 || isDeepthiPichwai) ? 'BWSSB Rajatha Bhavan' : (isKalyanam ? 'ITC Mementos' : 'The Grand Ballroom & Palace Grounds');
+  var defA = (isT2 || isDeepthiPichwai) ? '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012' : (isKalyanam ? 'Udaipur, Rajasthan, India' : (customData.v ? '' : 'Bengaluru, Karnataka'));
   var defMap = (isT2 || isDeepthiPichwai)
     ? 'https://www.google.com/maps/dir//BWSSB+Rajatha+Bhavana,+8th,+19th+Cross+Rd,+Malleshwaram,+Bengaluru,+Karnataka+560012/@13.0279053,77.6405023,14z/data=!4m8!4m7!1m0!1m5!1m1!1s0x3bae3d7fe2c5046b:0x7dc2af7faf8d611b!2m2!1d77.562176!2d13.0116862?entry=ttu&g_ep=EgoyMDI2MTExMC4wIKXMDSoASAFQAw%3D%3D'
-    : 'https://maps.google.com/?q=Bangalore';
+    : (isKalyanam ? 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA' : 'https://maps.google.com/?q=Bangalore');
 
   var bride = safeStr(customData.b, defB);
   var groom = safeStr(customData.g, defG);
@@ -294,6 +296,49 @@
         address: '8th, 19th Cross Rd, Malleshwaram, Bengaluru, Karnataka 560012',
         mapUrl: 'https://maps.google.com/?q=Prasanna+Lakshmi+Venkateshwara+Temple+Malleshwaram',
         desc: 'Sacred thali tying and auspicious wedding rituals in presence of family and elders.'
+      }
+    ];
+  } else if (isKalyanam) {
+    events = (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.events) || [
+      {
+        id: 'mehendi',
+        name: 'Mehendi',
+        date: '24th February 2026',
+        time: '5:00 PM onwards',
+        venue: 'ITC Mementos',
+        address: 'Udaipur, Rajasthan, India',
+        mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
+        desc: 'An evening of henna, melodious music, and joyous celebrations.'
+      },
+      {
+        id: 'haldi',
+        name: 'Haldi & Sangeet',
+        date: '25th February 2026',
+        time: '10:48 AM',
+        venue: 'ITC Mementos',
+        address: 'Udaipur, Rajasthan, India',
+        mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
+        desc: 'Auspicious turmeric ceremony filled with love, laughter, and family dance.'
+      },
+      {
+        id: 'telugu-wedding',
+        name: 'Telugu Wedding',
+        date: '26th February 2026',
+        time: '10:00 AM onwards',
+        venue: 'ITC Mementos',
+        address: 'Udaipur, Rajasthan, India',
+        mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
+        desc: 'Sacred Srinivasa Kalyanam rituals, Jeelakarra Bellam, and traditional vows.'
+      },
+      {
+        id: 'kodava-ceremony',
+        name: 'Kodava Ceremony & Reception',
+        date: '26th February 2026',
+        time: '6:30 PM onwards',
+        venue: 'ITC Mementos',
+        address: 'Udaipur, Rajasthan, India',
+        mapUrl: 'https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA',
+        desc: 'Grand royal reception, blessings, musical feast, and celebratory dinner.'
       }
     ];
   } else {
@@ -560,12 +605,16 @@
       applyTemplate2EventsAndGallery();
     } else if (currentTemplateId === 'champagne-luxury') {
       applyTemplate10EventsAndGallery();
+    } else if (currentTemplateId === 'kalyanam-mandapam') {
+      applyKalyanamEventsAndGallery();
     } else if (currentTemplateId === 'kasavu-kerala') {
       applyKasavuEventsAndGallery();
     } else if (currentTemplateId === 'meenaya-temple-baroque') {
       applyMeenayaEventsAndGallery();
     } else if (currentTemplateId === 'pichwai-lotus-courtyard') {
       applyTemplate09EventsAndGallery();
+    } else if (currentTemplateId === 'kalyanam-mandapam') {
+      applyKalyanamEventsAndGallery();
     }
 
     // 6. Universal Countdown Timer Handler (Template 2, 10, 13)
@@ -1165,7 +1214,148 @@
   }
 
   // ── TEMPLATE KASAVU (Kerala Kasavu Backwaters) ──
-  function applyKasavuEventsAndGallery() {
+  
+  // ── TEMPLATE KALYANAM MANDAPAM (Tirupati / Srinivasa Kalyanam Mandapam) ──
+  function applyKalyanamEventsAndGallery() {
+    // 1. Update Entry Screen
+    var eGroom = document.getElementById('entryGroom');
+    var eBride = document.getElementById('entryBride');
+    var eDate = document.getElementById('entryDate');
+    var eCity = document.getElementById('entryCity');
+    if (eGroom) eGroom.textContent = groom;
+    if (eBride) eBride.textContent = bride;
+    if (eDate) eDate.textContent = weddingDate;
+    if (eCity) eCity.textContent = [venueName, venueAddress].filter(Boolean).join(', ');
+
+    // 2. Update Hero Procession
+    var hGroom = document.getElementById('heroGroomName');
+    var hBride = document.getElementById('heroBrideName');
+    var hDate = document.getElementById('heroDate');
+    var hVenue = document.getElementById('heroVenue');
+    if (hGroom) {
+      hGroom.innerHTML = groom.split('').map(function(c) {
+        return '<span class="km-hero__char">' + c + '</span>';
+      }).join('');
+    }
+    if (hBride) {
+      hBride.innerHTML = bride.split('').map(function(c) {
+        return '<span class="km-hero__char">' + c + '</span>';
+      }).join('');
+    }
+    if (hDate) hDate.textContent = weddingDate;
+    if (hVenue) hVenue.textContent = [venueName, venueAddress].filter(Boolean).join(', ');
+
+    // 3. Update Couple Section
+    var cGroomName = document.getElementById('coupleGroomName');
+    var cGroomParents = document.getElementById('coupleGroomParents');
+    var cBrideName = document.getElementById('coupleBrideName');
+    var cBrideParents = document.getElementById('coupleBrideParents');
+    if (cGroomName) cGroomName.textContent = groom;
+    if (cGroomParents) cGroomParents.textContent = groomParents;
+    if (cBrideName) cBrideName.textContent = bride;
+    if (cBrideParents) cBrideParents.textContent = brideParents;
+
+    // 4. Update Events Journey
+    var evStage = document.getElementById('eventsStage');
+    if (evStage && events && events.length > 0) {
+      // Keep SVG background path
+      var svgEl = evStage.querySelector('svg.km-events__svg');
+      var svgHtml = svgEl ? svgEl.outerHTML : '';
+      
+      var kalyanamIcons = [
+        '/templates/kalyanam/assets/events/mehendi.png',
+        '/templates/kalyanam/assets/events/haldi-bowl.png',
+        '/templates/kalyanam/assets/events/saptapadi.png',
+        '/templates/kalyanam/assets/events/nadaswaram.png'
+      ];
+
+      function getKalyanamIcon(name, idx) {
+        var lower = (name || '').toLowerCase();
+        if (lower.indexOf('haldi') !== -1) return '/templates/kalyanam/assets/events/haldi-bowl.png';
+        if (lower.indexOf('mehendi') !== -1) return '/templates/kalyanam/assets/events/mehendi.png';
+        if (lower.indexOf('muhurtham') !== -1 || lower.indexOf('kalyanam') !== -1 || lower.indexOf('wedding') !== -1 || lower.indexOf('shaadi') !== -1) {
+          return '/templates/kalyanam/assets/events/saptapadi.png';
+        }
+        if (lower.indexOf('reception') !== -1 || lower.indexOf('sangeet') !== -1 || lower.indexOf('ceremony') !== -1) {
+          return '/templates/kalyanam/assets/events/nadaswaram.png';
+        }
+        return kalyanamIcons[idx % kalyanamIcons.length] || kalyanamIcons[0];
+      }
+
+      var totalEv = events.length;
+      var stopsHtml = events.map(function(ev, idx) {
+        var isLeft = idx % 2 === 0;
+        var topPercent = totalEv <= 1 ? 50 : 20 + (idx * (72 / (totalEv - 1)));
+        var iconSrc = getKalyanamIcon(ev.name, idx);
+        var mapLink = getDirectionsUrl(ev.venue, ev.address, ev.mapUrl);
+        var sideClass = isLeft ? 'km-events__stop--left' : 'km-events__stop--right';
+        var medLeft = isLeft ? '29.5%' : '70.5%';
+
+        return '<div class="km-events__stop ' + sideClass + '" style="top:' + topPercent + '%">' +
+          '<div aria-hidden="true" class="km-events__medallion" style="left:' + medLeft + '">' +
+            '<img alt="" class="km-events__medallion-art" decoding="async" loading="lazy" src="' + iconSrc + '"/>' +
+          '</div>' +
+          '<div class="km-events__card">' +
+            '<div class="km-events__card-head">' +
+              '<h3 class="km-events__name km-font-heading">' + ev.name + '</h3>' +
+            '</div>' +
+            '<p class="km-events__when km-font-serif">' +
+              '<span class="km-events__when-date">' + (ev.date || weddingDate) + '</span>' +
+              (ev.time ? '<span aria-hidden="true" class="km-events__when-sep"> · </span><span class="km-events__when-time">' + ev.time + '</span>' : '') +
+            '</p>' +
+            '<p class="km-events__venue km-font-serif">' + cleanVenueName(ev.venue || venueName, ev.address || venueAddress) + '</p>' +
+            '<a class="km-events__map km-font-label" href="' + mapLink + '" target="_blank" rel="noopener noreferrer">' +
+              '<svg aria-hidden="true" class="lucide lucide-map-pin" fill="none" height="9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="9"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>' +
+              'View Map' +
+            '</a>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      evStage.innerHTML = svgHtml + stopsHtml;
+    }
+
+    // 5. Update Calendar Links
+    var gCal = document.getElementById('btnGoogleCalendar');
+    var aCal = document.getElementById('btnAppleCalendar');
+    if (gCal) {
+      gCal.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' +
+        encodeURIComponent('Wedding of ' + groom + ' & ' + bride) +
+        '&dates=20261026T043000Z/20261026T093000Z&location=' +
+        encodeURIComponent(fullVenue) +
+        '&details=' + encodeURIComponent('Join us in celebrating the sacred union of ' + groom + ' & ' + bride + '.');
+      if (aCal) aCal.href = gCal.href;
+    }
+
+    // 6. Update Photos if user uploaded custom photos
+    var photos = [];
+    try {
+      var sPhotos = sessionStorage.getItem('wow_photos_' + currentTemplateId) || localStorage.getItem('wow_photos_' + currentTemplateId);
+      if (sPhotos) photos = JSON.parse(sPhotos);
+    } catch (_) {}
+
+    if (photos && photos.length > 0) {
+      var cGPhoto = document.getElementById('coupleGroomPhoto');
+      var cBPhoto = document.getElementById('coupleBridePhoto');
+      if (cGPhoto && photos[0]) cGPhoto.src = photos[0];
+      if (cBPhoto && photos[1]) cBPhoto.src = photos[1];
+
+      var galGrid = document.getElementById('galleryGrid');
+      if (galGrid) {
+        window.kmPhotos = photos;
+        galGrid.innerHTML = photos.map(function(src, i) {
+          var isFeat = i === 0 ? ' km-gallery__cell--feature' : '';
+          var col = i % 2;
+          return '<button aria-label="Open photo ' + (i + 1) + '" class="km-gallery__cell' + isFeat + ' is-revealed" data-col="' + col + '" type="button" onclick="openGalleryLightbox(' + i + ')">' +
+            '<img alt="" class="km-gallery__img" decoding="async" loading="lazy" src="' + src + '"/>' +
+            '<span aria-hidden="true" class="km-gallery__frame"></span>' +
+          '</button>';
+        }).join('');
+      }
+    }
+  }
+
+function applyKasavuEventsAndGallery() {
     var evStage = document.getElementById('evStage');
     if (evStage && events && events.length > 0) {
       evStage.innerHTML = '';

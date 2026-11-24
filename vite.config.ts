@@ -26,6 +26,7 @@ export default defineConfig({
         template13: path.resolve(__dirname, 'template13.html'),
         template09: path.resolve(__dirname, 'template09.html'),
         deepthiMurali: path.resolve(__dirname, 'deepthi-murali.html'),
+        kalyanam: path.resolve(__dirname, 'kalyanam.html'),
       },
     },
   },

@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>Vijay &amp; Rashmika — Kalyana Mandapam Temple Wedding Invitation</title>
+  
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  
+  <meta property="og:title" content="Vijay &amp; Rashmika — Kalyana Mandapam Temple Wedding Invitation" />
+  <meta property="og:description" content="Join us in celebrating the sacred wedding of Vijay Deverakonda &amp; Rashmika Mandanna at ITC Mementos, Udaipur." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://weddinginvitation.wowkalyanam.workers.dev/kalyanam.html" />
+  <meta property="og:image" content="/templates/kalyanam/assets/entry-card.jpg" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Great+Vibes&family=Marcellus&family=Noto+Serif+Devanagari:wght@400;600;700&family=Noto+Serif+Telugu:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/templates/kalyanam/kalyanam.css">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  
+  <script type="application/json" id="wedding-config">
+  {
+    "couple": {
+      "groom": "Vijay",
+      "groomFull": "Vijay Deverakonda",
+      "groomParents": "Deverakonda Govardhan Rao & Deverakonda Madhavi",
+      "groomPhoto": "/templates/kalyanam/assets/groom.jpg",
+      "bride": "Rashmika",
+      "brideFull": "Rashmika Mandanna",
+      "brideParents": "Madan Mandanna & Suman Mandanna",
+      "bridePhoto": "/templates/kalyanam/assets/bride.jpg",
+      "date": "2026-10-26",
+      "dateDisplay": "Monday, October 26, 2026",
+      "time": "10:00 AM",
+      "venue": "ITC Mementos",
+      "address": "Udaipur, Rajasthan, India",
+      "mapUrl": "https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA",
+      "whatsapp": ""
+    },
+    "events": [
+      {
+        "id": "mehendi",
+        "name": "Mehendi",
+        "date": "24th February 2026",
+        "time": "5:00 PM onwards",
+        "venue": "ITC Mementos, Udaipur",
+        "mapUrl": "https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA",
+        "icon": "/templates/kalyanam/assets/events/mehendi.png"
+      },
+      {
+        "id": "haldi",
+        "name": "Haldi & Sangeet",
+        "date": "25th February 2026",
+        "time": "10:48 AM",
+        "venue": "ITC Mementos, Udaipur",
+        "mapUrl": "https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA",
+        "icon": "/templates/kalyanam/assets/events/haldi-bowl.png"
+      },
+      {
+        "id": "telugu-wedding",
+        "name": "Telugu Wedding",
+        "date": "26th February 2026",
+        "time": "10:00 AM onwards",
+        "venue": "ITC Mementos, Udaipur",
+        "mapUrl": "https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA",
+        "icon": "/templates/kalyanam/assets/events/saptapadi.png"
+      },
+      {
+        "id": "kodava-ceremony",
+        "name": "Kodava Ceremony",
+        "date": "26th February 2026 — Evening",
+        "time": "6:30 PM onwards",
+        "venue": "ITC Mementos, Udaipur",
+        "mapUrl": "https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA",
+        "icon": "/templates/kalyanam/assets/events/nadaswaram.png"
+      }
+    ],
+    "gallery": [
+      "/templates/kalyanam/assets/gallery_1.jpg",
+      "/templates/kalyanam/assets/gallery_2.jpg",
+      "/templates/kalyanam/assets/gallery_3.jpg",
+      "/templates/kalyanam/assets/gallery_4.jpg",
+      "/templates/kalyanam/assets/gallery_5.jpg",
+      "/templates/kalyanam/assets/gallery_6.jpg",
+      "/templates/kalyanam/assets/gallery_7.jpg",
+      "/templates/kalyanam/assets/gallery_8.jpg",
+      "/templates/kalyanam/assets/gallery_9.jpg",
+      "/templates/kalyanam/assets/gallery_10.jpg"
+    ]
+  }
+  </script>
+  <script>
+    window.__WEDDING_CONFIG__ = JSON.parse(document.getElementById('wedding-config').textContent);
+  </script>
+</head>
+<body style="margin:0;padding:0;background:#fbeeb8;color:#2b1608;overflow-x:hidden;">
+
+  <!-- Kalyana Mandapam Main Container -->
+  <div class="kalyana-mandapam km-legacy-entry-align">
+
+    <!-- BGM Audio Player -->
+    <audio id="kmAudio" preload="auto" loop src="/templates/kalyanam/assets/kalyanam-bgm.mp3"></audio>
+
+    <!-- Floating Audio Bell Button -->
+    <button aria-label="Toggle background music" aria-pressed="false" class="km-bell" id="kmBell" type="button">
+      <span class="km-bell__disc">
+        <img alt="" aria-hidden="true" class="km-bell__icon" id="kmBellIcon" src="/templates/kalyanam/assets/km-audio-off.png"/>
+      </span>
+    </button>
+
+    <!-- ============================================== -->
+    <!-- SECTION 1: HERO PROCESSION                     -->
+    <!-- ============================================== -->
+    <section class="km-hero km-section" id="heroSection">
+      <div class="km-hero__video" style="position:absolute;inset:0">
+        <video aria-hidden="true" autoplay loop muted playsinline preload="auto" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none" webkit-playsinline="true">
+          <source src="/templates/kalyanam/assets/hero-procession-bg-v2.mp4" type="video/mp4"/>
+        </video>
+      </div>
+      <div class="km-hero__scrim"></div>
+      <div class="km-hero__content km-container">
+        <p class="km-hero__invocation km-font-serif">|| Shree Ganeshay Namah ||</p>
+        <h1 class="km-hero__name km-hero__groom km-font-script" id="heroGroomName">
+          <span class="km-hero__char">V</span><span class="km-hero__char">i</span><span class="km-hero__char">j</span><span class="km-hero__char">a</span><span class="km-hero__char">y</span>
+        </h1>
+        <p class="km-hero__amp km-font-script">&amp;</p>
+        <h1 class="km-hero__name km-hero__bride km-font-script" id="heroBrideName">
+          <span class="km-hero__char">R</span><span class="km-hero__char">a</span><span class="km-hero__char">s</span><span class="km-hero__char">h</span><span class="km-hero__char">m</span><span class="km-hero__char">i</span><span class="km-hero__char">k</span><span class="km-hero__char">a</span>
+        </h1>
+        <p class="km-hero__date km-font-heading" id="heroDate">Monday, October 26, 2026</p>
+        <p class="km-hero__venue"><span class="km-hero__venue-at km-font-serif">at</span> <span class="km-font-label" id="heroVenue">ITC Mementos, Udaipur, Rajasthan, India</span></p>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 2: THE COUPLE                          -->
+    <!-- ============================================== -->
+    <section class="km-couple km-section" id="coupleSection">
+      <div aria-hidden="true" class="km-frame">
+        <div class="km-frame-rail km-frame-rail--top"></div>
+        <div class="km-frame-rail km-frame-rail--bottom"></div>
+        <div class="km-frame-rail km-frame-rail--left"></div>
+        <div class="km-frame-rail km-frame-rail--right"></div>
+        <div class="km-frame-corner km-frame-corner--tl"></div>
+        <div class="km-frame-corner km-frame-corner--tr"></div>
+        <div class="km-frame-corner km-frame-corner--bl"></div>
+        <div class="km-frame-corner km-frame-corner--br"></div>
+      </div>
+      <img alt="" aria-hidden="true" class="km-couple__scenery km-couple__scenery--top" decoding="async" loading="lazy" src="/templates/kalyanam/assets/temple-scenery.png"/>
+      <img alt="" aria-hidden="true" class="km-couple__scenery km-couple__scenery--bottom" decoding="async" loading="lazy" src="/templates/kalyanam/assets/temple-scenery.png"/>
+      <svg aria-hidden="true" class="km-couple__bird km-couple__bird--1" viewBox="0 0 20 7"><path d="M1 5.5 Q 5.5 1, 10 5 Q 14.5 1, 19 5.5" fill="none" stroke="#c9ad77" stroke-linecap="round" stroke-width="1.4"></path></svg>
+      <svg aria-hidden="true" class="km-couple__bird km-couple__bird--2" viewBox="0 0 20 7"><path d="M1 5.5 Q 5.5 1, 10 5 Q 14.5 1, 19 5.5" fill="none" stroke="#c9ad77" stroke-linecap="round" stroke-width="1.4"></path></svg>
+      <svg aria-hidden="true" class="km-couple__bird km-couple__bird--3" viewBox="0 0 20 7"><path d="M1 5.5 Q 5.5 1, 10 5 Q 14.5 1, 19 5.5" fill="none" stroke="#c9ad77" stroke-linecap="round" stroke-width="1.4"></path></svg>
+      
+      <div class="km-container km-couple__inner">
+        <h2 class="km-couple__heading km-font-heading">The Couple</h2>
+        <p class="km-couple__sub km-font-serif">Two families, many blessings, one timeless celebration.</p>
+        
+        <!-- Groom Card -->
+        <div class="km-couple__unit">
+          <div class="km-couple__card">
+            <div aria-hidden="true" class="km-couple__halo"></div>
+            <div class="km-couple__photo-window">
+              <img alt="Vijay Deverakonda" class="km-couple__photo km-couple__photo--groom" id="coupleGroomPhoto" decoding="async" loading="lazy" src="/templates/kalyanam/assets/groom.jpg"/>
+            </div>
+            <img alt="" aria-hidden="true" class="km-couple__ornament" decoding="async" loading="lazy" src="/templates/kalyanam/assets/peacock-arch.webp"/>
+          </div>
+          <div class="km-couple__meta">
+            <h3 class="km-couple__name km-font-script" id="coupleGroomName">Vijay Deverakonda</h3>
+            <p class="km-couple__parent-label km-font-label">Son of</p>
+            <p class="km-couple__parents km-font-serif" id="coupleGroomParents">Deverakonda Govardhan Rao &amp; Deverakonda Madhavi</p>
+          </div>
+        </div>
+        
+        <!-- Gold Divider & Bride Card -->
+        <div class="km-couple__unit">
+          <img alt="" aria-hidden="true" class="km-couple__divider" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gold-divider.webp"/>
+          <div class="km-couple__card km-couple__card--mirror">
+            <div aria-hidden="true" class="km-couple__halo"></div>
+            <div class="km-couple__photo-window">
+              <img alt="Rashmika Mandanna" class="km-couple__photo km-couple__photo--bride" id="coupleBridePhoto" decoding="async" loading="lazy" src="/templates/kalyanam/assets/bride.jpg"/>
+            </div>
+            <img alt="" aria-hidden="true" class="km-couple__ornament" decoding="async" loading="lazy" src="/templates/kalyanam/assets/peacock-arch.webp"/>
+          </div>
+          <div class="km-couple__meta">
+            <h3 class="km-couple__name km-font-script" id="coupleBrideName">Rashmika Mandanna</h3>
+            <p class="km-couple__parent-label km-font-label">Daughter of</p>
+            <p class="km-couple__parents km-font-serif" id="coupleBrideParents">Madan Mandanna &amp; Suman Mandanna</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 3: COUNTDOWN                           -->
+    <!-- ============================================== -->
+    <section class="km-countdown">
+      <div class="km-countdown__stage">
+        <img alt="" aria-hidden="true" class="km-countdown__panel" decoding="async" loading="lazy" src="/templates/kalyanam/assets/countdown-wall.webp"/>
+        <div class="km-countdown__unit" style="left:16.17%;width:11.5%;top:52%;height:24%">
+          <span class="km-countdown__value km-countdown__value--days" id="cdDays">00</span>
+        </div>
+        <div class="km-countdown__unit" style="left:34.68%;width:11.5%;top:52%;height:24%">
+          <span class="km-countdown__value km-countdown__value--hours" id="cdHours">00</span>
+        </div>
+        <div class="km-countdown__unit" style="left:53.19%;width:11.5%;top:52%;height:24%">
+          <span class="km-countdown__value km-countdown__value--minutes" id="cdMinutes">00</span>
+        </div>
+        <div class="km-countdown__unit" style="left:71.19%;width:11.5%;top:52%;height:24%">
+          <span class="km-countdown__value km-countdown__value--seconds" id="cdSeconds">00</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 4: WEDDING JOURNEY (EVENTS)            -->
+    <!-- ============================================== -->
+    <section class="km-events km-section" id="eventsSection">
+      <div aria-hidden="true" class="km-events__kolam"></div>
+      <div aria-hidden="true" class="km-frame">
+        <div class="km-frame-rail km-frame-rail--top"></div>
+        <div class="km-frame-rail km-frame-rail--bottom"></div>
+        <div class="km-frame-rail km-frame-rail--left"></div>
+        <div class="km-frame-rail km-frame-rail--right"></div>
+        <div class="km-frame-corner km-frame-corner--tl"></div>
+        <div class="km-frame-corner km-frame-corner--tr"></div>
+        <div class="km-frame-corner km-frame-corner--bl"></div>
+        <div class="km-frame-corner km-frame-corner--br"></div>
+      </div>
+      <div class="km-container">
+        <h2 class="km-events__heading km-font-script">The Wedding Journey</h2>
+        <p class="km-events__sub km-font-serif">Walk with us, function to function, to the sacred hour.</p>
+      </div>
+      <div class="km-events__stage" id="eventsStage" style="aspect-ratio:400 / 1083">
+        <svg aria-hidden="true" class="km-events__svg" preserveaspectratio="none" viewBox="0 0 400 1083">
+          <path class="km-events__path" d="M 200 52 C 200 144.5, 118 144.5, 118 237 C 118 362, 282 362, 282 487 C 282 612, 118 612, 118 737 C 118 862, 282 862, 282 987 C 282 1035, 200 1035, 200 1083" fill="none" stroke="none"></path>
+        </svg>
+
+        <!-- Event 1 (Left): Mehendi -->
+        <div class="km-events__stop km-events__stop--left" style="top:21.88365650969529%">
+          <div aria-hidden="true" class="km-events__medallion" style="left:29.5%">
+            <img alt="" class="km-events__medallion-art" decoding="async" loading="lazy" src="/templates/kalyanam/assets/events/mehendi.png"/>
+          </div>
+          <div class="km-events__card">
+            <div class="km-events__card-head">
+              <h3 class="km-events__name km-font-heading">Mehendi</h3>
+            </div>
+            <p class="km-events__when km-font-serif">
+              <span class="km-events__when-date">24th February 2026</span>
+              <span aria-hidden="true" class="km-events__when-sep"> · </span>
+              <span class="km-events__when-time">5:00 PM onwards</span>
+            </p>
+            <p class="km-events__venue km-font-serif">ITC Mementos, Udaipur</p>
+            <a class="km-events__map km-font-label" href="https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA" rel="noopener noreferrer" target="_blank">
+              <svg aria-hidden="true" class="lucide lucide-map-pin" fill="none" height="9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="9"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              View Map
+            </a>
+          </div>
+        </div>
+
+        <!-- Event 2 (Right): Haldi & Sangeet -->
+        <div class="km-events__stop km-events__stop--right" style="top:44.96768236380424%">
+          <div aria-hidden="true" class="km-events__medallion" style="left:70.5%">
+            <img alt="" class="km-events__medallion-art" decoding="async" loading="lazy" src="/templates/kalyanam/assets/events/haldi-bowl.png"/>
+          </div>
+          <div class="km-events__card">
+            <div class="km-events__card-head">
+              <h3 class="km-events__name km-font-heading">Haldi &amp; Sangeet</h3>
+            </div>
+            <p class="km-events__when km-font-serif">
+              <span class="km-events__when-date">25th February 2026</span>
+              <span aria-hidden="true" class="km-events__when-sep"> · </span>
+              <span class="km-events__when-time">10:48 AM</span>
+            </p>
+            <p class="km-events__venue km-font-serif">ITC Mementos, Udaipur</p>
+            <a class="km-events__map km-font-label" href="https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA" rel="noopener noreferrer" target="_blank">
+              <svg aria-hidden="true" class="lucide lucide-map-pin" fill="none" height="9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="9"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              View Map
+            </a>
+          </div>
+        </div>
+
+        <!-- Event 3 (Left): Telugu Wedding -->
+        <div class="km-events__stop km-events__stop--left" style="top:68.05170821791322%">
+          <div aria-hidden="true" class="km-events__medallion" style="left:29.5%">
+            <img alt="" class="km-events__medallion-art" decoding="async" loading="lazy" src="/templates/kalyanam/assets/events/saptapadi.png"/>
+          </div>
+          <div class="km-events__card">
+            <div class="km-events__card-head">
+              <h3 class="km-events__name km-font-heading">Telugu Wedding</h3>
+            </div>
+            <p class="km-events__when km-font-serif">
+              <span class="km-events__when-date">26th February 2026</span>
+              <span aria-hidden="true" class="km-events__when-sep"> · </span>
+              <span class="km-events__when-time">10:00 AM onwards</span>
+            </p>
+            <p class="km-events__venue km-font-serif">ITC Mementos, Udaipur</p>
+            <a class="km-events__map km-font-label" href="https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA" rel="noopener noreferrer" target="_blank">
+              <svg aria-hidden="true" class="lucide lucide-map-pin" fill="none" height="9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="9"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              View Map
+            </a>
+          </div>
+        </div>
+
+        <!-- Event 4 (Right): Kodava Ceremony -->
+        <div class="km-events__stop km-events__stop--right" style="top:91.13573407202216%">
+          <div aria-hidden="true" class="km-events__medallion" style="left:70.5%">
+            <img alt="" class="km-events__medallion-art" decoding="async" loading="lazy" src="/templates/kalyanam/assets/events/nadaswaram.png"/>
+          </div>
+          <div class="km-events__card">
+            <div class="km-events__card-head">
+              <h3 class="km-events__name km-font-heading">Kodava Ceremony</h3>
+            </div>
+            <p class="km-events__when km-font-serif">
+              <span class="km-events__when-date">26th February 2026 — Evening</span>
+              <span aria-hidden="true" class="km-events__when-sep"> · </span>
+              <span class="km-events__when-time">6:30 PM onwards</span>
+            </p>
+            <p class="km-events__venue km-font-serif">ITC Mementos, Udaipur</p>
+            <a class="km-events__map km-font-label" href="https://maps.app.goo.gl/XaQmk5ifYLZmsPuAA" rel="noopener noreferrer" target="_blank">
+              <svg aria-hidden="true" class="lucide lucide-map-pin" fill="none" height="9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="9"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              View Map
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 5: GALLERY                             -->
+    <!-- ============================================== -->
+    <section class="km-gallery km-section" id="gallerySection">
+      <div aria-hidden="true" class="km-gallery__toranam"></div>
+      <div class="km-container">
+        <h2 class="km-gallery__heading km-font-script">Before the Vows</h2>
+        <p class="km-gallery__sub km-font-serif">Little moments from the years that brought us here.</p>
+      </div>
+      <div aria-hidden="true" class="km-gallery__weave"></div>
+      <div aria-hidden="true" class="km-gallery__motes">
+        <span class="km-gallery__mote"></span>
+        <span class="km-gallery__mote"></span>
+        <span class="km-gallery__mote"></span>
+        <span class="km-gallery__mote"></span>
+        <span class="km-gallery__mote"></span>
+        <span class="km-gallery__mote"></span>
+      </div>
+      <img alt="" aria-hidden="true" class="km-gallery__parasol" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gallery-parasol.png"/>
+      
+      <div class="km-gallery__stage">
+        <div class="km-gallery__grid" id="galleryGrid">
+          <button aria-label="Open photo 1" class="km-gallery__cell km-gallery__cell--feature is-revealed" data-col="0" type="button" onclick="openGalleryLightbox(0)">
+            <img alt="" class="km-gallery__img" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gallery_1.jpg"/>
+            <span aria-hidden="true" class="km-gallery__frame"></span>
+          </button>
+          <button aria-label="Open photo 2" class="km-gallery__cell is-revealed" data-col="1" type="button" onclick="openGalleryLightbox(1)">
+            <img alt="" class="km-gallery__img" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gallery_2.jpg"/>
+            <span aria-hidden="true" class="km-gallery__frame"></span>
+          </button>
+          <button aria-label="Open photo 3" class="km-gallery__cell is-revealed" data-col="0" type="button" onclick="openGalleryLightbox(2)">
+            <img alt="" class="km-gallery__img" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gallery_3.jpg"/>
+            <span aria-hidden="true" class="km-gallery__frame"></span>
+          </button>
+          <button aria-label="Open photo 4" class="km-gallery__cell is-revealed" data-col="1" type="button" onclick="openGalleryLightbox(3)">
+            <img alt="" class="km-gallery__img" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gallery_4.jpg"/>
+            <span aria-hidden="true" class="km-gallery__frame"></span>
+          </button>
+          <button aria-label="Open photo 5" class="km-gallery__cell is-revealed" data-col="0" type="button" onclick="openGalleryLightbox(4)">
+            <img alt="" class="km-gallery__img" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gallery_5.jpg"/>
+            <span aria-hidden="true" class="km-gallery__frame"></span>
+          </button>
+          <button aria-label="Open photo 6" class="km-gallery__cell is-revealed" data-col="1" type="button" onclick="openGalleryLightbox(5)">
+            <img alt="" class="km-gallery__img" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gallery_6.jpg"/>
+            <span aria-hidden="true" class="km-gallery__frame"></span>
+          </button>
+          <button aria-label="Open photo 7" class="km-gallery__cell is-revealed" data-col="0" type="button" onclick="openGalleryLightbox(6)">
+            <img alt="" class="km-gallery__img" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gallery_7.jpg"/>
+            <span aria-hidden="true" class="km-gallery__frame"></span>
+          </button>
+          <button aria-label="Open photo 8" class="km-gallery__cell is-revealed" data-col="1" type="button" onclick="openGalleryLightbox(7)">
+            <img alt="" class="km-gallery__img" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gallery_8.jpg"/>
+            <span aria-hidden="true" class="km-gallery__frame"></span>
+          </button>
+          <button aria-label="Open photo 9" class="km-gallery__cell is-revealed" data-col="0" type="button" onclick="openGalleryLightbox(8)">
+            <img alt="" class="km-gallery__img" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gallery_9.jpg"/>
+            <span aria-hidden="true" class="km-gallery__frame"></span>
+          </button>
+          <button aria-label="Open photo 10" class="km-gallery__cell is-revealed" data-col="1" type="button" onclick="openGalleryLightbox(9)">
+            <img alt="" class="km-gallery__img" decoding="async" loading="lazy" src="/templates/kalyanam/assets/gallery_10.jpg"/>
+            <span aria-hidden="true" class="km-gallery__frame"></span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 6: RSVP & CALENDAR                     -->
+    <!-- ============================================== -->
+    <section aria-label="RSVP" class="km-rsvp km-section" id="rsvpSection">
+      <div aria-hidden="true" class="km-rsvp__silk"></div>
+      <div aria-hidden="true" class="km-frame">
+        <div class="km-frame-rail km-frame-rail--top"></div>
+        <div class="km-frame-rail km-frame-rail--bottom"></div>
+        <div class="km-frame-rail km-frame-rail--left"></div>
+        <div class="km-frame-rail km-frame-rail--right"></div>
+        <div class="km-frame-corner km-frame-corner--tl"></div>
+        <div class="km-frame-corner km-frame-corner--tr"></div>
+        <div class="km-frame-corner km-frame-corner--bl"></div>
+        <div class="km-frame-corner km-frame-corner--br"></div>
+      </div>
+      <div class="km-container">
+        <h2 class="km-rsvp__heading km-font-script">Bless Us With Your Presence</h2>
+        <p class="km-rsvp__sub km-font-serif">Let us know if you can join us, so we may keep a place for you.</p>
+        <div class="km-rsvp__slip">
+          <form id="rsvpForm" novalidate>
+            <div aria-label="Will you join us?" class="km-rsvp__choices" role="group">
+              <button aria-pressed="false" class="km-rsvp__choice" type="button" id="rsvpChoiceYes">
+                <svg aria-hidden="true" class="km-rsvp__marker" viewBox="0 0 16 16"><path d="M8 1 L15 8 L8 15 L1 8 Z" fill="none" stroke="var(--km-gold)" stroke-width="1.2"></path></svg>
+                <span>With joy, we will be there</span>
+              </button>
+              <button aria-pressed="false" class="km-rsvp__choice" type="button" id="rsvpChoiceNo">
+                <svg aria-hidden="true" class="km-rsvp__marker" viewBox="0 0 16 16"><path d="M8 1 L15 8 L8 15 L1 8 Z" fill="none" stroke="var(--km-gold)" stroke-width="1.2"></path></svg>
+                <span>With regret, we cannot</span>
+              </button>
+            </div>
+            <div class="km-rsvp__reveal" id="rsvpReveal" style="display:none;margin-top:1.2rem;">
+              <div class="km-rsvp__row" style="margin-bottom:0.8rem;text-align:left;">
+                <label class="km-rsvp__tag km-font-label" for="km-rsvp-name" style="display:block;margin-bottom:0.4rem;color:var(--km-maroon);">Your Full Name</label>
+                <input id="km-rsvp-name" class="km-rsvp__input" type="text" placeholder="e.g. Ramesh &amp; Family" autocomplete="name" required style="width:100%;padding:0.75rem 1rem;border-radius:8px;border:1px solid rgba(201,147,47,0.5);background:#fff9eb;font-family:inherit;font-size:1rem;color:var(--km-ink);outline:none;box-sizing:border-box;"/>
+              </div>
+              <div class="km-rsvp__row" style="margin-bottom:1.1rem;text-align:left;">
+                <label class="km-rsvp__tag km-font-label" for="km-rsvp-phone" style="display:block;margin-bottom:0.4rem;color:var(--km-maroon);">Phone / WhatsApp</label>
+                <input id="km-rsvp-phone" class="km-rsvp__input" type="tel" placeholder="e.g. +91 98765 43210" style="width:100%;padding:0.75rem 1rem;border-radius:8px;border:1px solid rgba(201,147,47,0.5);background:#fff9eb;font-family:inherit;font-size:1rem;color:var(--km-ink);outline:none;box-sizing:border-box;"/>
+              </div>
+              <button class="km-rsvp__submit km-font-label" type="submit" id="rsvpSubmitBtn" style="width:100%;padding:0.95rem;border-radius:999px;border:none;background:var(--km-maroon-deep);color:#fbeeb8;font-size:0.85rem;letter-spacing:0.18em;text-transform:uppercase;cursor:pointer;box-shadow:0 6px 18px rgba(43,22,8,0.22);font-weight:600;">Confirm via WhatsApp</button>
+            </div>
+          </form>
+
+          <!-- Calendar Links -->
+          <div style="margin-top:2.2rem;text-align:center;">
+            <p class="km-font-label" style="margin-bottom:0.85rem;color:var(--km-maroon);font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;">Save The Date</p>
+            <div style="display:flex;gap:0.75rem;justify-content:center;flex-wrap:wrap;">
+              <a id="btnGoogleCalendar" href="#" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.65rem 1.2rem;border-radius:999px;border:1px solid rgba(201,147,47,0.7);background:rgba(251,238,184,0.75);color:var(--km-maroon-deep);font-size:0.78rem;font-family:var(--km-font-marcellus);text-decoration:none;letter-spacing:0.06em;font-weight:600;">
+                📅 Google Calendar
+              </a>
+              <a id="btnAppleCalendar" href="#" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:0.45rem;padding:0.65rem 1.2rem;border-radius:999px;border:1px solid rgba(201,147,47,0.7);background:rgba(251,238,184,0.75);color:var(--km-maroon-deep);font-size:0.78rem;font-family:var(--km-font-marcellus);text-decoration:none;letter-spacing:0.06em;font-weight:600;">
+                 Apple Calendar
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 7: WEDDING VIDEO WALL                  -->
+    <!-- ============================================== -->
+    <section aria-label="Wedding video" class="km-video km-section" id="videoSection">
+      <div class="km-video__wall">
+        <img alt="" aria-hidden="true" class="km-video__wall-img" decoding="async" loading="lazy" src="/templates/kalyanam/assets/video-wall.jpg"/>
+        <div class="km-video__opening">
+          <iframe allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen class="km-video__media" loading="lazy" src="https://www.youtube.com/embed/xJKwD24GJtw?rel=0&amp;modestbranding=1" title="A Special Glimpse"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================== -->
+    <!-- SECTION 8: FOOTER                              -->
+    <!-- ============================================== -->
+    <footer class="km-footer">
+      <div class="km-footer__card">
+        <img alt="" aria-hidden="true" class="km-footer__art" decoding="async" loading="lazy" src="/templates/kalyanam/assets/footer-card.jpg"/>
+        <div class="km-footer__greeting">
+          <p class="km-footer__greet-lead km-font-serif">We await your gracious presence</p>
+          <p class="km-footer__greet-main km-font-script">and your blessings</p>
+          <p class="km-footer__greet-mark km-font-serif">శుభమస్తు</p>
+        </div>
+        <a class="km-footer__credit" href="https://weddinginvitation.wowkalyanam.workers.dev" rel="noopener" target="_blank">
+          <span class="km-footer__credit-lead">This invitation was crafted on <span class="km-footer__credit-brand">Wow Kalyanam</span></span>
+          <span class="km-footer__credit-cta">Craft your royal digital invitation</span>
+        </a>
+      </div>
+    </footer>
+
+    <!-- ============================================== -->
+    <!-- ENTRY COVER / ENVELOPE MODAL                   -->
+    <!-- ============================================== -->
+    <div class="km-entry" id="kmEntry">
+      <div class="km-entry__veil" id="kmEntryVeil">
+        <div class="km-entry__card" id="kmEntryCard">
+          <img alt="" aria-hidden="true" class="km-entry__art" decoding="async" fetchpriority="high" src="/templates/kalyanam/assets/entry-card.jpg"/>
+          <div aria-hidden="true" class="km-entry__bloom" id="kmEntryBloom"></div>
+          <img alt="" aria-hidden="true" class="km-entry__mandala" decoding="async" src="/templates/kalyanam/assets/mandala-gold.webp"/>
+          <div class="km-entry__content">
+            <div class="km-entry__group">
+              <p class="km-entry__label km-font-label">The Wedding Of</p>
+              <h1 class="km-entry__names km-font-script" id="entryNames">
+                <span class="km-entry__groom-name" id="entryGroom">Vijay</span>
+                <span aria-hidden="true" class="km-entry__amp km-font-serif">&amp;</span>
+                <span class="km-entry__bride-name" id="entryBride">Rashmika</span>
+              </h1>
+            </div>
+            <div class="km-entry__group km-entry__meta">
+              <p class="km-entry__date km-font-label" id="entryDate">26 October 2026</p>
+              <p class="km-entry__city km-font-label" id="entryCity">ITC Mementos, Udaipur, Rajasthan, India</p>
+            </div>
+            <div class="km-entry__group">
+              <button class="km-entry__cta km-font-label" type="button" id="kmOpenBtn">
+                <span class="km-entry__cta-inner">Open Invitation</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- /kalyana-mandapam -->
+
+  <!-- ============================================== -->
+  <!-- LIGHTBOX MODAL                                 -->
+  <!-- ============================================== -->
+  <div id="kmLightbox" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(20,12,6,0.96);align-items:center;justify-content:center;padding:1rem;">
+    <button id="kmLbClose" type="button" aria-label="Close" style="position:absolute;top:1.2rem;right:1.2rem;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(201,147,47,0.7);color:#fbeeb8;font-size:1.4rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10001;">✕</button>
+    <button id="kmLbPrev" type="button" aria-label="Previous photo" style="position:absolute;left:1rem;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(201,147,47,0.7);color:#fbeeb8;font-size:1.6rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10001;">‹</button>
+    <img id="kmLbImg" src="" alt="Gallery Photo" style="max-width:92vw;max-height:86vh;object-fit:contain;border-radius:8px;box-shadow:0 12px 36px rgba(0,0,0,0.6);z-index:10000;"/>
+    <button id="kmLbNext" type="button" aria-label="Next photo" style="position:absolute;right:1rem;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.15);border:1px solid rgba(201,147,47,0.7);color:#fbeeb8;font-size:1.6rem;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:10001;">›</button>
+  </div>
+
+  <!-- Interactive Logic & Controller -->
+  <script>
+    (function () {
+      // 1. Initial State: Lock scroll while entry card is open
+      document.body.style.overflow = 'hidden';
+
+      var audioEl = document.getElementById('kmAudio');
+      var bellBtn = document.getElementById('kmBell');
+      var bellIcon = document.getElementById('kmBellIcon');
+      var isPlaying = false;
+
+      function updateAudioUI(playing) {
+        isPlaying = playing;
+        if (bellBtn) {
+          bellBtn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+          if (playing) {
+            bellBtn.classList.add('km-bell--playing');
+            if (bellIcon) bellIcon.src = '/templates/kalyanam/assets/km-audio-on.png';
+          } else {
+            bellBtn.classList.remove('km-bell--playing');
+            if (bellIcon) bellIcon.src = '/templates/kalyanam/assets/km-audio-off.png';
+          }
+        }
+      }
+
+      function toggleAudio() {
+        if (!audioEl) return;
+        if (audioEl.paused) {
+          audioEl.play().then(function() {
+            updateAudioUI(true);
+          }).catch(function(e) {
+            console.warn('Audio play error:', e);
+          });
+        } else {
+          audioEl.pause();
+          updateAudioUI(false);
+        }
+      }
+
+      if (bellBtn) {
+        bellBtn.addEventListener('click', toggleAudio);
+      }
+
+      // 2. Open Invitation Animation (Exact GSAP match)
+      var entryEl = document.getElementById('kmEntry');
+      var openBtn = document.getElementById('kmOpenBtn');
+      var isOpening = false;
+
+      function openInvitation() {
+        if (isOpening) return;
+        isOpening = true;
+
+        // Try playing BGM
+        if (audioEl) {
+          audioEl.play().then(function() {
+            updateAudioUI(true);
+          }).catch(function() {});
+        }
+
+        if (entryEl) entryEl.classList.add('km-entry--closing');
+
+        if (typeof gsap !== 'undefined') {
+          var tl = gsap.timeline({
+            defaults: { ease: 'power2.inOut' },
+            onComplete: function () {
+              if (entryEl) entryEl.style.display = 'none';
+              document.body.style.overflow = '';
+              // Trigger hero animations
+              gsap.from('.km-hero__invocation', { opacity: 0, y: -8, duration: 0.6, ease: 'power2.out' });
+              gsap.from('.km-hero__groom .km-hero__char, .km-hero__amp, .km-hero__bride .km-hero__char', {
+                opacity: 0,
+                y: 18,
+                stagger: 0.05,
+                duration: 0.85,
+                ease: 'back.out(1.6)'
+              }, '-=0.15');
+              gsap.from('.km-hero__date', { y: 10, opacity: 0, duration: 0.5, ease: 'power2.out' }, '-=0.2');
+              gsap.from('.km-hero__venue', { opacity: 0, duration: 0.6, ease: 'power2.out' }, '-=0.1');
+            }
+          });
+
+          tl.to('.km-entry__cta', { y: 10, opacity: 0, duration: 0.28, ease: 'power2.in' })
+            .to('.km-entry__names', { y: -18, opacity: 0, duration: 0.4, ease: 'power2.in' }, '-=0.16')
+            .to('.km-entry__label, .km-entry__meta', { y: -14, opacity: 0, duration: 0.34, ease: 'power2.in' }, '<0.04')
+            .to('#kmEntryBloom', { opacity: 1, scale: 1.6, duration: 0.55, ease: 'power2.out' }, '-=0.2')
+            .to('#kmEntryCard', { scale: 1.12, opacity: 0, duration: 0.95, ease: 'power2.inOut' }, '-=0.35')
+            .to('#kmEntryBloom', { opacity: 0, duration: 0.5, ease: 'power2.out' }, '-=0.6')
+            .to('#kmEntryVeil', { opacity: 0, duration: 0.55, ease: 'power1.out' }, '-=0.55');
+        } else {
+          // Fallback if GSAP is unavailable
+          if (entryEl) entryEl.style.display = 'none';
+          document.body.style.overflow = '';
+        }
+      }
+
+      if (openBtn) openBtn.addEventListener('click', openInvitation);
+      if (entryEl) {
+        entryEl.addEventListener('click', function(e) {
+          if (!isOpening) openInvitation();
+        });
+      }
+
+      // 3. Live Countdown Timer is managed universally by wedding-adapter.js
+
+      // 4. RSVP Form & Choice Handlers
+      var choiceYes = document.getElementById('rsvpChoiceYes');
+      var choiceNo = document.getElementById('rsvpChoiceNo');
+      var rsvpReveal = document.getElementById('rsvpReveal');
+      var rsvpForm = document.getElementById('rsvpForm');
+      var attendance = null;
+
+      function setAttendance(att) {
+        attendance = att;
+        if (choiceYes) {
+          choiceYes.classList.toggle('is-on', att === 'yes');
+          choiceYes.setAttribute('aria-pressed', att === 'yes' ? 'true' : 'false');
+        }
+        if (choiceNo) {
+          choiceNo.classList.toggle('is-on', att === 'no');
+          choiceNo.setAttribute('aria-pressed', att === 'no' ? 'true' : 'false');
+        }
+        if (rsvpReveal) {
+          rsvpReveal.style.display = 'block';
+          if (typeof gsap !== 'undefined') {
+            gsap.fromTo(rsvpReveal, { opacity: 0, y: -10 }, { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out' });
+          }
+        }
+      }
+
+      if (choiceYes) choiceYes.addEventListener('click', function() { setAttendance('yes'); });
+      if (choiceNo) choiceNo.addEventListener('click', function() { setAttendance('no'); });
+
+      if (rsvpForm) {
+        rsvpForm.addEventListener('submit', function(e) {
+          e.preventDefault();
+          var name = (document.getElementById('km-rsvp-name') || {}).value || 'Guest';
+          var guests = (document.getElementById('km-rsvp-guests') || {}).value || '2';
+          var phone = (document.getElementById('km-rsvp-phone') || {}).value || '';
+          
+          var brideName = (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.bride) || 'Rashmika';
+          var groomName = (window.__WEDDING_CONFIG__ && window.__WEDDING_CONFIG__.couple && window.__WEDDING_CONFIG__.couple.groom) || 'Vijay';
+          
+          var msg = attendance === 'yes'
+            ? 'Namaskaram! We (' + name + ', ' + guests + ' guest(s)) will be joyfully attending the wedding of ' + groomName + ' & ' + brideName + '. Congratulations!'
+            : 'Namaskaram! Sending our warmest blessings and love to ' + groomName + ' & ' + brideName + ' on their wedding. Regretfully we cannot attend in person. Warm regards, ' + name + '.';
+          
+          var whatsappUrl = 'https://wa.me/?text=' + encodeURIComponent(msg);
+          window.open(whatsappUrl, '_blank');
+        });
+      }
+
+      // 5. Calendar Links Setup
+      var gCal = document.getElementById('btnGoogleCalendar');
+      var aCal = document.getElementById('btnAppleCalendar');
+      if (gCal) {
+        gCal.href = 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + 
+          encodeURIComponent('Wedding of Vijay & Rashmika') + 
+          '&dates=20261026T043000Z/20261026T093000Z&location=' + 
+          encodeURIComponent('ITC Mementos, Udaipur, Rajasthan, India') + 
+          '&details=' + encodeURIComponent('Join us in celebrating the sacred union of Vijay & Rashmika.');
+      }
+      if (aCal) {
+        aCal.href = gCal ? gCal.href : '#';
+      }
+
+      // 6. Gallery Lightbox Modal
+      window.kmPhotos = [
+        "/templates/kalyanam/assets/gallery_1.jpg",
+        "/templates/kalyanam/assets/gallery_2.jpg",
+        "/templates/kalyanam/assets/gallery_3.jpg",
+        "/templates/kalyanam/assets/gallery_4.jpg",
+        "/templates/kalyanam/assets/gallery_5.jpg",
+        "/templates/kalyanam/assets/gallery_6.jpg",
+        "/templates/kalyanam/assets/gallery_7.jpg",
+        "/templates/kalyanam/assets/gallery_8.jpg",
+        "/templates/kalyanam/assets/gallery_9.jpg",
+        "/templates/kalyanam/assets/gallery_10.jpg"
+      ];
+      var curPhotoIdx = 0;
+      var lbEl = document.getElementById('kmLightbox');
+      var lbImg = document.getElementById('kmLbImg');
+
+      window.openGalleryLightbox = function(idx) {
+        curPhotoIdx = idx;
+        if (lbImg) lbImg.src = window.kmPhotos[curPhotoIdx] || window.kmPhotos[0];
+        if (lbEl) lbEl.style.display = 'flex';
+      };
+
+      window.closeGalleryLightbox = function() {
+        if (lbEl) lbEl.style.display = 'none';
+      };
+
+      var lbClose = document.getElementById('kmLbClose');
+      var lbPrev = document.getElementById('kmLbPrev');
+      var lbNext = document.getElementById('kmLbNext');
+
+      if (lbClose) lbClose.addEventListener('click', window.closeGalleryLightbox);
+      if (lbEl) {
+        lbEl.addEventListener('click', function(e) {
+          if (e.target === lbEl) window.closeGalleryLightbox();
+        });
+      }
+      if (lbPrev) {
+        lbPrev.addEventListener('click', function(e) {
+          e.stopPropagation();
+          curPhotoIdx = (curPhotoIdx - 1 + window.kmPhotos.length) % window.kmPhotos.length;
+          if (lbImg) lbImg.src = window.kmPhotos[curPhotoIdx];
+        });
+      }
+      if (lbNext) {
+        lbNext.addEventListener('click', function(e) {
+          e.stopPropagation();
+          curPhotoIdx = (curPhotoIdx + 1) % window.kmPhotos.length;
+          if (lbImg) lbImg.src = window.kmPhotos[curPhotoIdx];
+        });
+      }
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') window.closeGalleryLightbox();
+        if (e.key === 'ArrowLeft' && lbEl && lbEl.style.display === 'flex') {
+          curPhotoIdx = (curPhotoIdx - 1 + window.kmPhotos.length) % window.kmPhotos.length;
+          if (lbImg) lbImg.src = window.kmPhotos[curPhotoIdx];
+        }
+        if (e.key === 'ArrowRight' && lbEl && lbEl.style.display === 'flex') {
+          curPhotoIdx = (curPhotoIdx + 1) % window.kmPhotos.length;
+          if (lbImg) lbImg.src = window.kmPhotos[curPhotoIdx];
+        }
+      });
+    })();
+  </script>
+
+  <!-- Universal Wedding Adapter -->
+  <script src="/scripts/wedding-adapter.js"></script>
+
+</body>
+</html>
